@@ -4,7 +4,6 @@ namespace Scraper.Services
 {
     public interface IEventScraper
     {
-        public string Source { get; }
-        public Task<List<Event>> GetEvents();
+        public Task<List<Event>> ScrapeEvents();
     }
 }

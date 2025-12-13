@@ -1,3 +1,5 @@
+using System.Text.RegularExpressions;
+
 namespace Scraper.Services
 {
     public class StringCleaner : ICleaner
@@ -7,7 +9,7 @@ namespace Scraper.Services
         /// </summary>
         /// <param name="input">The input string to clean.</param>
         /// <returns>The cleaned string.</returns>
-        public string Cleaner(string input)
+        public string EventCleaner(string input)
         {
             var cleanedString = input
             .Replace("&euro;", "€")
@@ -16,13 +18,31 @@ namespace Scraper.Services
             .Replace("&#8211;", "–")
             .Replace("&#038;", "&");
 
-            return cleanedString;
+            return cleanedString.Trim();
         }
 
-    }
+        /// <summary>
+        /// Cleans a price string by extracting price values or indicating if sold out.
+        /// </summary>
+        /// <param name="input">The input string to clean.</param>
+        /// <returns>The cleaned price string.</returns>
+        public string PriceCleaner(string input)
+        {
+            if (input.ToLower().Contains("loppuunmyyty"))
+            {
+                return "SOLD OUT!";
+            }
 
-    public interface ICleaner
-    {
-        string Cleaner(string input);
+            // Remove "Liput" and trim whitespace
+            string pricesRaw = input.Replace("Liput", "").Trim();
+
+            // Use regex to extract all price values (e.g., "32,50 €", "35 €")
+            var matches = Regex.Matches(pricesRaw, @"\d{1,3}(?:[.,]\d{2})?\s*€");
+
+            // Join the prices with " / " if there are multiple
+            string prices = string.Join(" / ", matches.Select(m => m.Value.Trim()));
+            
+            return prices;
+        }
     }
 }
