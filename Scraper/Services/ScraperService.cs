@@ -10,71 +10,84 @@ namespace Scraper.Services
     public class ScraperService : BackgroundService
     {
         private readonly ILogger _logger;
-        private readonly IServiceProvider _serviceProvider;
-        private readonly EventInspector _eventInspector;
-        private readonly EventRepository _eventRepository;
-        private readonly ResultsWriter _results;
+        private readonly IEnumerable<IEventScraper> _scrapers;
+
+        private readonly IEventInspector _eventInspector;
+        private readonly IEventRepository _eventRepository;
 
         private List<Event> _events;
 
-        public ScraperService(IServiceProvider serviceProvider)
+        public ScraperService(IEnumerable<IEventScraper> scrapers,
+            IEventInspector eventInspector,
+            IEventRepository eventRepository,
+            ILogger<ScraperService> logger)
         {
-            _serviceProvider = serviceProvider;
-            _eventInspector = serviceProvider.GetRequiredService<EventInspector>();
-            _eventRepository = serviceProvider.GetRequiredService<EventRepository>();
-            _logger = serviceProvider.GetRequiredService<ILogger<ScraperService>>();
-            _results = serviceProvider.GetRequiredService<ResultsWriter>();
+            _scrapers = scrapers;
+            _eventInspector = eventInspector;
+            _eventRepository = eventRepository;
+            _logger = logger;
 
             _events = new();
         }
 
 
+        /// <summary>
+        /// Main execution loop for the scraper service.
+        /// </summary>
+        /// <param name="stoppingToken"></param>
+        /// <returns></returns>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Scraper Service is starting...");
             _events = await _eventRepository.GetEventsAsync();
 
+            // Run main loop until cancellation is requested
             while (!stoppingToken.IsCancellationRequested)
             {
                 try
                 {
-                    // Scrapers to run
-                    var scrapers = new List<IEventScraper>
-                    {
-                         _serviceProvider.GetRequiredService<TorviScraper>(),
-                         //_serviceProvider.GetRequiredService<SibeliustaloScraper>(),
-                         //_serviceProvider.GetRequiredService<MusaklubiScraper>(),
-                         //_serviceProvider.GetRequiredService<TavastiaScraper>(),
-                         //_serviceProvider.GetRequiredService<SemifinalScraper>(),
-                        // Kapakanmäki
-                        // G Livelab Helsinki
-                        // Kulttuuritalo
-                        // Rytmikorjaamo
-                        // Sammiosalo
-                        // Vanha valimo (Lahti)
-                    };
-
-                    _logger.LogInformation("========== Scrapers collected: ========== \n\t{Scrapers}",
-                        string.Join(",\n\t", scrapers.Select(s => s.GetType().Name)));
+                    _logger.LogInformation("Starting scraping process...");
 
                     // Run each scraper and display results
-                    foreach (var scraper in scrapers)
+                    foreach (var scraper in _scrapers)
                     {
                         var events = await scraper.ScrapeEvents();
-
-                        // TODO: Compare found events with existing events in list and DB and add new ones.
-                        _events = await _eventInspector.UpdateEventsDataAsync(events, _events);
-
-                        _results.WriteResultsToConsole(events);
+                        _events = await _eventInspector.UpdateEventsRepositoriesAsync(events, _events);
                     }
+
+                    // Calculate delay until next run
+                    var delay = CalculateDelay();
+                    _logger.LogInformation("Scraping process completed. Next run in {Delay} hours.", delay.TotalHours);
+
+                    await Task.Delay(delay, stoppingToken);
                 }
                 catch (Exception ex)
                 {
-
+                    _logger.LogError(ex, "Error occurred while scraping events");
                 }
             }
 
             _logger.LogInformation("Closing down scraper service...");
+        }
+
+
+        /// <summary>
+        /// Calculates the delay until the next scheduled run at 09:00, 3 days from now.
+        /// </summary>
+        /// <returns></returns>
+        private static TimeSpan CalculateDelay()
+        {
+            // Run at 09:00, 3 days from now
+            var now = DateTime.Now;
+            var nextRun = DateTime.Today.AddDays(3).AddHours(9);
+
+            // If we've already passed 09:00 today, this ensures we don't go backwards
+            if (nextRun <= now)
+            {
+                nextRun = nextRun.AddDays(1);
+            }
+
+            return nextRun - now;
         }
     }
 }

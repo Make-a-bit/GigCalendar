@@ -3,7 +3,13 @@ using Scraper.Services.DB;
 
 namespace Scraper.Services
 {
-    public class VenueRepository
+    public interface IVenueRepository
+    {
+        public Task<int> GetVenueIdAsync(string name);
+        public Task<int> CreateVenueAsync(string name);
+    }
+
+    public class VenueRepository : IVenueRepository
     {
         private readonly DBManager _dbManager;
 
@@ -12,7 +18,14 @@ namespace Scraper.Services
             _dbManager = dbManager;
         }
 
-        public async Task<int> GetVenueByNameAsync(string name)
+
+        /// <summary>
+        /// Gets the venue ID by name. 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <remarks>If the venue does not exist, it creates a new entry.</remarks>
+        /// <returns></returns>
+        public async Task<int> GetVenueIdAsync(string name)
         {
             int venueId = 0;
 
@@ -20,33 +33,37 @@ namespace Scraper.Services
             await connection.OpenAsync();
 
             using var cmd = new MySqlCommand(@"
-                SELECT * FROM venues 
+                SELECT venue_id FROM venues 
                 WHERE venue_name = @name", connection);
             cmd.Parameters.AddWithValue("@name", name);
+            
             using var reader = await cmd.ExecuteReaderAsync();
-
             while (await reader.ReadAsync())
             {
                 venueId = reader.GetInt32("venue_id");
             }
-            
+
+            // If venue does not exist, create it
             if (venueId == 0)
             {
-                venueId = await CreateVenueByNameAsync(name);
+                venueId = await CreateVenueAsync(name);
             }
 
             return venueId;
         }
-        
-        public async Task<int> CreateVenueByNameAsync(string name)
+
+
+        /// <summary>
+        /// Creates a new venue and returns its ID.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public async Task<int> CreateVenueAsync(string name)
         {
             using var connection = _dbManager.GetConnection();
             await connection.OpenAsync();
 
-            using var cmd = new MySqlCommand(@"
-                INSERT INTO venues (venue_name) 
-                VALUES (@name); 
-                SELECT LAST_INSERT_ID();", connection);
+            using var cmd = new MySqlCommand("CALL add_venue(@name);", connection);
             cmd.Parameters.AddWithValue("@name", name);
 
             var result = await cmd.ExecuteScalarAsync();

@@ -11,6 +11,7 @@ namespace Scraper
     {
         static async Task Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -27,19 +28,16 @@ namespace Scraper
 
                     services.AddSingleton<ICleaner, StringCleaner>();
                     services.AddSingleton<DBManager>();
-                    services.AddTransient<EventAdder>();
-                    services.AddTransient<EventInspector>();
-                    services.AddSingleton<EventRepository>();
-                    services.AddTransient<MusaklubiScraper>();
-                    services.AddSingleton<ResultsWriter>();
+                    services.AddSingleton<IEventRepository, EventRepository>();
+                    services.AddTransient<IEventAdder, EventAdder>();
+                    services.AddTransient<IEventInspector, EventInspector>();
+                    services.AddTransient<IEventScraper, MusaklubiScraper>();
                     services.AddHostedService<ScraperService>();
-                    services.AddTransient<SemifinalScraper>();
-                    services.AddTransient<SibeliustaloScraper>();
-                    services.AddTransient<TavastiaScraper>();
-                    services.AddTransient<TorviScraper>();
-                    services.AddTransient<VenueRepository>();
-
-                    var serviceProvider = services.BuildServiceProvider();
+                    services.AddTransient<IEventScraper, SemifinalScraper>();
+                    services.AddTransient<IEventScraper, SibeliustaloScraper>();
+                    services.AddTransient<IEventScraper, TavastiaScraper>();
+                    services.AddTransient<IEventScraper, TorviScraper>();
+                    services.AddTransient<IVenueRepository, VenueRepository>();
                 });
 
     }

@@ -3,7 +3,12 @@ using Scraper.Models;
 
 namespace Scraper.Services.DB
 {
-    public class EventRepository
+    public interface IEventRepository
+    {
+        public Task<List<Event>> GetEventsAsync();
+    }
+
+    public class EventRepository : IEventRepository
     {
         private readonly DBManager _dbManager;
 
@@ -12,6 +17,11 @@ namespace Scraper.Services.DB
             _dbManager = dBManager;
         }
 
+
+        /// <summary>
+        /// Fetches all events from the database.
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Event>> GetEventsAsync()
         {
             var events = new List<Event>();
@@ -27,10 +37,16 @@ namespace Scraper.Services.DB
                 var ev = new Event
                 {
                     EventId = reader.GetInt32("event_id"),
-                    Artist = reader.GetString("event_artist"),
+                    Artist = reader.IsDBNull(reader.GetOrdinal("event_artist"))
+                    ? null
+                    : reader.GetString("event_artist"),
                     Date = reader.GetDateTime("event_date"),
-                    PriceAsString = reader.GetString("event_price"),
-                    Location = reader.GetString("venue_name"),
+                    PriceAsString = reader.IsDBNull(reader.GetOrdinal("event_price"))
+                    ? "Ei hintatietoja"
+                    : reader.GetString("event_price"),
+                    Location = reader.IsDBNull(reader.GetOrdinal("venue_name"))
+                    ? null
+                    : reader.GetString("venue_name"),
                     Added = reader.GetDateTime("event_added")
                 };
                 events.Add(ev);

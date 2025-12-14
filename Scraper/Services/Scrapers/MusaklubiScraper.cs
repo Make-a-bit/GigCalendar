@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using Scraper.Models;
 
 namespace Scraper.Services.Scrapers
@@ -7,66 +8,90 @@ namespace Scraper.Services.Scrapers
     {
         private ICleaner _cleaner;
         private readonly IHttpClientFactory _httpClientFactory;
-        public int LocationId;
-        public string LocationName;
+        private readonly ILogger<MusaklubiScraper> _logger;
+        private readonly IVenueRepository _venueRepository;
 
-        public MusaklubiScraper(ICleaner cleaner, IHttpClientFactory httpClientFactory)
+        public string _locationName = "Möysän Musaklubi";
+        public int _locationId = -1;
+
+        public MusaklubiScraper(ICleaner cleaner, 
+            IHttpClientFactory httpClientFactory, 
+            IVenueRepository venueRepository, 
+            ILogger<MusaklubiScraper> logger)
         {
             _cleaner = cleaner;
             _httpClientFactory = httpClientFactory;
+            _venueRepository = venueRepository;
+            _logger = logger;
         }
 
 
 
         /// <summary>
-        /// Gets the list of events from Torvi restaurant.
+        /// Gets the list of events from Musaklubi
         /// </summary>
         /// <returns></returns>
         public async Task<List<Event>> ScrapeEvents()
         {
-            // Initialize variables
-            var events = new List<Event>();
-            HtmlDocument doc = new HtmlDocument();
-            HtmlDocument innerDoc = new HtmlDocument();
-            using var client = _httpClientFactory.CreateClient();
-
-            // Fetch and parse the HTML document
-            var url = "https://moysa.fi/keikat/";
-            var html = await client.GetStringAsync(url);
-            doc.LoadHtml(html);
-
-            // Select event nodes
-            var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'mec-event-list-classic')]");
-            innerDoc.LoadHtml(htmlNodes.InnerHtml);
-            var nodes = innerDoc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
-
-            // Iterate through each event node and extract details
-            foreach (var n in nodes)
+            try
             {
-                // Extract event details
-                var titleNode = n.SelectSingleNode(".//h4");
-                var dateNode = n.SelectSingleNode(".//span[contains(@class, 'mec-start-date')]");
+                // Initialize variables
+                var events = new List<Event>();
+                HtmlDocument doc = new HtmlDocument();
+                HtmlDocument innerDoc = new HtmlDocument();
+                using var client = _httpClientFactory.CreateClient();
 
-                // Clean and parse details nicely for the Event object
-                var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
-                var eventDate = ParseDate(dateNode.InnerText.ToString());
+                // Fetch and parse the HTML document
+                var url = "https://moysa.fi/keikat/";
+                var html = await client.GetStringAsync(url);
+                doc.LoadHtml(html);
 
-                // Create new Event object with extracted details
-                var newEvent = new Event
+                // Select event nodes
+                var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'mec-event-list-classic')]");
+                innerDoc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = innerDoc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
+
+                // Check location ID
+                _locationId = await _venueRepository.GetVenueIdAsync(_locationName);
+
+                // Iterate through each event node and extract details
+                foreach (var n in nodes)
                 {
-                    Artist = eventTitle,
-                    Date = eventDate,
-                    Location = "Möysän Musaklubi"
-                };
+                    // Extract event details
+                    var titleNode = n.SelectSingleNode(".//h4");
+                    var dateNode = n.SelectSingleNode(".//span[contains(@class, 'mec-start-date')]");
 
-                // Compare if events already contains the new event. If not, add it to the list.
-                if (!events.Exists(e => e.Equals(newEvent)))
-                {
-                    events.Add(newEvent);
+                    // Clean and parse details nicely for the Event object
+                    var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    var eventDate = ParseDate(dateNode.InnerText.ToString());
+
+                    // Create new Event object with extracted details
+                    var newEvent = new Event
+                    {
+                        Artist = eventTitle,
+                        Date = eventDate,
+                        PriceAsString = "Ei hintatietoa",
+                        Location = _locationName,
+                        LocationId = _locationId
+                    };
+
+                    // Compare if events already contains the new event. If not, add it to the list.
+                    if (!events.Exists(e => e.Equals(newEvent)))
+                    {
+                        events.Add(newEvent);
+                    }
                 }
+
+                _logger.LogInformation("Scraped {events.Count} events from Musaklubi.", events.Count);
+
+                // Return the list of events
+                return events;
             }
-             // Return the list of events
-            return events;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while scraping events from Musaklubi.");
+                return new List<Event>();
+            }
         }
 
 

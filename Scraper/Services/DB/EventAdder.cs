@@ -3,7 +3,12 @@ using Scraper.Models;
 
 namespace Scraper.Services.DB
 {
-    public class EventAdder
+    public interface IEventAdder
+    {
+        public Task<bool> AddIntoDatabase(Event newEvent);
+    }
+
+    public class EventAdder : IEventAdder
     {
         private readonly DBManager _dbManager;
 
@@ -21,8 +26,11 @@ namespace Scraper.Services.DB
             using var cmd = new MySqlCommand("CALL add_event(@locationId, @artist, @date, @price);", connection);
             cmd.Parameters.AddWithValue("@locationId", newEvent.LocationId);
             cmd.Parameters.AddWithValue("@artist", newEvent.Artist);
-            cmd.Parameters.AddWithValue("@date", newEvent.Date);
-            cmd.Parameters.AddWithValue("@price", newEvent.PriceAsString);
+            var dateParam = new MySqlParameter("@date", MySqlDbType.DateTime)
+            {
+                Value = newEvent.Date
+            };
+            cmd.Parameters.Add(dateParam); cmd.Parameters.AddWithValue("@price", newEvent.PriceAsString);
 
             return await cmd.ExecuteNonQueryAsync() > 0;
         }

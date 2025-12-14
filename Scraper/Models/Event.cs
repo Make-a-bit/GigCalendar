@@ -32,5 +32,13 @@ namespace Scraper.Models
                 PriceAsString?.Trim().ToLowerInvariant()
             );
         }
+
+        public override string ToString()
+        {
+            return (Artist ?? "") + " " +
+               Date.ToString("yyyy-MM-dd HH:mm") + " " +
+               (PriceAsString ?? "") + " " +
+               (Location ?? "");
+        }
     }
 }

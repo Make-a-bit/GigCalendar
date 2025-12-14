@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using Microsoft.Extensions.Logging;
 using Scraper.Models;
 
 namespace Scraper.Services.Scrapers
@@ -7,69 +8,93 @@ namespace Scraper.Services.Scrapers
     {
         private ICleaner _cleaner;
         private readonly IHttpClientFactory _httpClientFactory;
-        public int LocationId;
-        public string LocationName;
+        private readonly ILogger<SemifinalScraper> _logger;
+        private readonly IVenueRepository _venueRepository;
 
-        public SemifinalScraper(ICleaner cleaner, IHttpClientFactory httpClientFactory)
+        public int _locationId = -1;
+        public string _locationName = "Semifinal";
+
+        public SemifinalScraper(ICleaner cleaner, 
+            IHttpClientFactory httpClientFactory, 
+            IVenueRepository venueRepository, 
+            ILogger<SemifinalScraper> logger)
         {
             _cleaner = cleaner;
             _httpClientFactory = httpClientFactory;
+            _venueRepository = venueRepository;
+            _logger = logger;
         }
 
 
         /// <summary>
-        /// Gets the list of events from Torvi restaurant.
+        /// Gets the list of events from Semifinal.
         /// </summary>
         /// <returns></returns>
         public async Task<List<Event>> ScrapeEvents()
         {
-            // Initialize variables
-            var events = new List<Event>();
-            HtmlDocument doc = new HtmlDocument();
-            HtmlDocument innerDoc = new HtmlDocument();
-            using var client = _httpClientFactory.CreateClient();
-
-            // Fetch and parse the HTML document
-            var url = "https://tavastiaklubi.fi/semifinal/?show_all=1";
-            var html = await client.GetStringAsync(url);
-            doc.LoadHtml(html);
-
-            // Select event nodes
-            var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'tiketti-list')]");
-            innerDoc.LoadHtml(htmlNodes.InnerHtml);
-            var nodes = innerDoc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
-
-            // Iterate through each event node and extract details
-            foreach (var n in nodes)
+            try
             {
-                // Extract event details
-                var titleNode = n.SelectSingleNode(".//h3");
-                var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
-                var startNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
-                var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
+                // Initialize variables
+                var events = new List<Event>();
+                HtmlDocument doc = new HtmlDocument();
+                HtmlDocument innerDoc = new HtmlDocument();
+                using var client = _httpClientFactory.CreateClient();
 
-                // Clean and parse details nicely for the Event object
-                var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
-                var eventDate = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
-                var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
+                // Fetch and parse the HTML document
+                var url = "https://tavastiaklubi.fi/semifinal/?show_all=1";
+                var html = await client.GetStringAsync(url);
+                doc.LoadHtml(html);
 
-                // Create new Event object with extracted details
-                var newEvent = new Event
+                // Select event nodes
+                var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'tiketti-list')]");
+                innerDoc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = innerDoc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
+
+                // Check location ID
+                _locationId = await _venueRepository.GetVenueIdAsync(_locationName);
+
+                // Iterate through each event node and extract details
+                foreach (var n in nodes)
                 {
-                    Artist = eventTitle,
-                    Date = eventDate,
-                    PriceAsString = eventPrice,
-                    Location = "Semifinal"
-                };
+                    // Extract event details
+                    var titleNode = n.SelectSingleNode(".//h3");
+                    var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
+                    var startNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
+                    var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
 
-                // Compare if events already contains the new event. If not, add it to the list.
-                if (!events.Exists(e => e.Equals(newEvent)))
-                {
-                    events.Add(newEvent);
+                    // Clean and parse details nicely for the Event object
+                    var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    var eventDate = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
+                    var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
+
+                    // Create new Event object with extracted details
+                    var newEvent = new Event
+                    {
+                        Artist = eventTitle,
+                        Date = eventDate,
+                        PriceAsString = eventPrice,
+                        Location = _locationName,
+                        LocationId = _locationId
+                    };
+
+                    // Compare if events already contains the new event.
+                    // If not, add it to the list.
+                    if (!events.Exists(e => e.Equals(newEvent)))
+                    {
+                        events.Add(newEvent);
+                    }
                 }
+
+                _logger.LogInformation("Scraped {events.Count} events from Semifinal.", events.Count);
+
+                // Return the list of events
+                return events;
             }
-            // Return the list of events
-            return events;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while scraping events from Semifinal.");
+                return new List<Event>();
+            }
         }
 
 
@@ -91,12 +116,14 @@ namespace Scraper.Services.Scrapers
             int hours = 0;
             int minutes = 0;
 
+            // Parse time if available
             if (!string.IsNullOrEmpty(time) && !string.IsNullOrWhiteSpace(time))
             {
                 hours = int.Parse(timeStrings[0]);
                 minutes = int.Parse(timeStrings[1].Split('\n')[0]);
             }
 
+            // Adjust year if the date has already passed this year
             if (month < now.Month || month == now.Month && day < now.Day)
             {
                 year = now.Year + 1;
@@ -104,7 +131,5 @@ namespace Scraper.Services.Scrapers
 
             return new DateTime(year, month, day, hours, minutes, 0);
         }
-
     }
-
 }

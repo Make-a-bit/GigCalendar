@@ -12,10 +12,14 @@ namespace Scraper.Services.Scrapers
         private readonly ICleaner _cleaner;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<TorviScraper> _logger;
-        private readonly VenueRepository _venueRepository;
-        private int _locationId = 0;
+        private readonly IVenueRepository _venueRepository;
 
-        public TorviScraper(ICleaner cleaner, IHttpClientFactory httpClientFactory, ILogger<TorviScraper> logger, VenueRepository venueRepository)
+        private int _locationId = -1;
+
+        public TorviScraper(ICleaner cleaner, 
+            IHttpClientFactory httpClientFactory, 
+            ILogger<TorviScraper> logger, 
+            IVenueRepository venueRepository)
         {
             _cleaner = cleaner;
             _httpClientFactory = httpClientFactory;
@@ -25,64 +29,71 @@ namespace Scraper.Services.Scrapers
 
 
         /// <summary>
-        /// Gets the list of events from Torvi restaurant.
+        /// Gets the list of events from Torvi.
         /// </summary>
         /// <returns></returns>
         public async Task<List<Event>> ScrapeEvents()
         {
-            // Initialize variables
-            var events = new List<Event>();
-            var doc = new HtmlDocument();
-            using var client = _httpClientFactory.CreateClient();
-
-            // Fetch and parse the HTML document
-            var url = "https://ravintolatorvi.fi/tapahtumat/";
-            var html = await client.GetStringAsync(url);
-            doc.LoadHtml(html);
-
-            // Select event nodes
-            var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'event')]");
-
-            // Iterate through each event node and extract details
-            foreach (var n in nodes)
+            try
             {
-                // Extract event details
-                var titleNode = n.SelectSingleNode(".//h3");
-                var dateNode = n.SelectSingleNode(".//p[contains(@class, 'date')]");
-                var startNode = n.SelectSingleNode(".//li[contains(@class, 'start')]");
-                var priceNode = n.SelectSingleNode(".//li[contains(@class, 'price')]");
-                var placeNode = n.SelectSingleNode(".//li[contains(@class, 'place')]");
+                // Initialize variables
+                var events = new List<Event>();
+                var doc = new HtmlDocument();
+                using var client = _httpClientFactory.CreateClient();
 
-                if (_locationId == 0)
+                // Fetch and parse the HTML document
+                var url = "https://ravintolatorvi.fi/tapahtumat/";
+                var html = await client.GetStringAsync(url);
+                doc.LoadHtml(html);
+
+                // Select event nodes
+                var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'event')]");
+
+                // Iterate through each event node and extract details
+                foreach (var n in nodes)
                 {
-                    _locationId = await _venueRepository.GetVenueByNameAsync(placeNode.InnerText.Trim());
+                    // Extract event details
+                    var titleNode = n.SelectSingleNode(".//h3");
+                    var dateNode = n.SelectSingleNode(".//p[contains(@class, 'date')]");
+                    var startNode = n.SelectSingleNode(".//li[contains(@class, 'start')]");
+                    var priceNode = n.SelectSingleNode(".//li[contains(@class, 'price')]");
+                    var placeNode = n.SelectSingleNode(".//li[contains(@class, 'place')]");
+
+                    _locationId = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim());
+
+                    // Clean and parse details nicely for the Event object
+                    var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    var eventDate = ParseDate(dateNode.InnerText.ToString(), startNode.InnerText.ToString());
+                    var eventPrice = _cleaner.EventCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
+
+                    // Create new Event object with extracted details
+                    var newEvent = new Event
+                    {
+                        Artist = eventTitle,
+                        Date = eventDate,
+                        PriceAsString = eventPrice,
+                        Location = placeNode.InnerText.Trim() ?? "",
+                        LocationId = _locationId
+                    };
+
+                    // Compare if events already contains the new scraped event.
+                    // If not, add it to the list.
+                    if (!events.Exists(e => e.Equals(newEvent)))
+                    {
+                        events.Add(newEvent);
+                    }
                 }
 
-                // Clean and parse details nicely for the Event object
-                var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
-                var eventDate = ParseDate(dateNode.InnerText.ToString(), startNode.InnerText.ToString());
-                var eventPrice = _cleaner.EventCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
+                _logger.LogInformation("Scraped {events.Count} events from Torvi.", events.Count);
 
-                // Create new Event object with extracted details
-                var newEvent = new Event
-                {
-                    Artist = eventTitle,
-                    Date = eventDate,
-                    PriceAsString = eventPrice,
-                    Location = placeNode.InnerText.Trim() ?? "",
-                    LocationId = _locationId                    
-                };
-
-                // Compare if events already contains the new scraped event.
-                // If not, add it to the list.
-                if (!events.Exists(e => e.Equals(newEvent)))
-                {
-                    events.Add(newEvent);
-                    _logger.LogInformation("Added new event: {EventName} on {EventDate}", newEvent.Artist, newEvent.Date);
-                }
+                // Return the list of events
+                return events;
             }
-            // Return the list of events
-            return events;
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while scraping events from Torvi.");
+                return new List<Event>();
+            }
         }
 
 
@@ -108,11 +119,13 @@ namespace Scraper.Services.Scrapers
             int day = int.Parse(dates[0]);
             int hours = int.Parse(times[0]);
 
+            // Handle cases where minutes might not be provided
             if (times.Length == 4)
             {
                 minutes = int.Parse(times[1].Split('-')[0]);
             }
 
+            // Adjust year if the date has already passed this year
             if (month < now.Month || month == now.Month && day < now.Day)
             {
                 year = now.Year + 1;
