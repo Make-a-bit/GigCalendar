@@ -30,6 +30,7 @@ namespace Scraper
                     services.AddSingleton<DBManager>();
                     services.AddSingleton<IEventRepository, EventRepository>();
                     services.AddTransient<IEventAdder, EventAdder>();
+                    services.AddTransient<IEventRemover, EventRemover>();
                     services.AddTransient<IEventInspector, EventInspector>();
                     services.AddTransient<IEventScraper, MusaklubiScraper>();
                     services.AddHostedService<ScraperService>();

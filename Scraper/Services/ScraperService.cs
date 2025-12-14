@@ -1,9 +1,7 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
 using Scraper.Services.DB;
-using Scraper.Services.Scrapers;
 
 namespace Scraper.Services
 {
@@ -14,13 +12,15 @@ namespace Scraper.Services
 
         private readonly IEventInspector _eventInspector;
         private readonly IEventRepository _eventRepository;
+        private readonly IEventRemover _remover;
 
         private List<Event> _events;
 
         public ScraperService(IEnumerable<IEventScraper> scrapers,
             IEventInspector eventInspector,
             IEventRepository eventRepository,
-            ILogger<ScraperService> logger)
+            ILogger<ScraperService> logger,
+            IEventRemover remover)
         {
             _scrapers = scrapers;
             _eventInspector = eventInspector;
@@ -28,6 +28,7 @@ namespace Scraper.Services
             _logger = logger;
 
             _events = new();
+            _remover = remover;
         }
 
 
@@ -52,8 +53,12 @@ namespace Scraper.Services
                     foreach (var scraper in _scrapers)
                     {
                         var events = await scraper.ScrapeEvents();
-                        _events = await _eventInspector.UpdateEventsRepositoriesAsync(events, _events);
+                        _events = await _eventInspector.UpdateRepositoriesAsync(events, _events);
                     }
+                    
+                    // Remove old events from the database and list
+                    await _remover.CleanUpOldEvents(_events);
+                    _events.RemoveAll(e => e.Date.Date < DateTime.Now.Date);
 
                     // Calculate delay until next run
                     var delay = CalculateDelay();
@@ -77,11 +82,11 @@ namespace Scraper.Services
         /// <returns></returns>
         private static TimeSpan CalculateDelay()
         {
-            // Run at 09:00, 3 days from now
+            // Run at 03:00, 3 days from now
             var now = DateTime.Now;
-            var nextRun = DateTime.Today.AddDays(3).AddHours(9);
+            var nextRun = DateTime.Today.AddDays(3).AddHours(3);
 
-            // If we've already passed 09:00 today, this ensures we don't go backwards
+            // If we've already passed 03:00 today, this ensures we don't go backwards
             if (nextRun <= now)
             {
                 nextRun = nextRun.AddDays(1);

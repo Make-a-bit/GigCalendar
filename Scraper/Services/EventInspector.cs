@@ -6,7 +6,7 @@ namespace Scraper.Services
 {
     public interface IEventInspector
     {
-        public Task<List<Event>> UpdateEventsRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents);
+        public Task<List<Event>> UpdateRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents);
     }
 
     public class EventInspector : IEventInspector
@@ -28,7 +28,7 @@ namespace Scraper.Services
         /// <remarks>If an event from scrapedEvents is not found in currentEvents, 
         /// it is added to the current list as well as into the database.</remarks>
         /// <returns></returns>
-        public async Task<List<Event>> UpdateEventsRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents)
+        public async Task<List<Event>> UpdateRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents)
         {
             // Initialize temporary list and result flag
             var tempList = currentEvents;
