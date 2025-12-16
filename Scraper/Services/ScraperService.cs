@@ -57,7 +57,7 @@ namespace Scraper.Services
                     }
                     
                     // Remove old events from the database and list
-                    await _remover.CleanUpOldEvents(_events);
+                    await _remover.CleanupOldEvents(_events);
                     _events.RemoveAll(e => e.Date.Date < DateTime.Now.Date);
 
                     // Calculate delay until next run

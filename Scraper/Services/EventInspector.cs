@@ -30,25 +30,21 @@ namespace Scraper.Services
         /// <returns></returns>
         public async Task<List<Event>> UpdateRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents)
         {
-            // Initialize temporary list and result flag
-            var tempList = currentEvents;
-            var result = false;
-
-            // Check each scraped event against current events
+            // Check each scraped event against current events list
             foreach (var item in scrapedEvents)
             {
-                // If event already exists, skip to next
+                // If scraped event already exists on the list, skip to next
                 if (currentEvents.Contains(item))
                 {
                     continue;
                 }
 
-                // Add new event to database
-                result = await _adder.AddIntoDatabase(item);
+                // Add new event to database and current events list
+                var result = await _adder.AddIntoDatabase(item);
 
                 if (result)
                 {
-                    tempList.Add(item);
+                    currentEvents.Add(item);
                     _logger.LogInformation("Added new event to database: {Event}", item);
                 }
                 else
@@ -56,7 +52,7 @@ namespace Scraper.Services
                     _logger.LogWarning("Failed to add event to database: {Event}", item);
                 }
             }
-            return tempList;
+            return currentEvents;
         }
     }
 }
