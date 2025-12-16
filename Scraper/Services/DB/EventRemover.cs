@@ -6,8 +6,9 @@ namespace Scraper.Services.DB
 {
     public interface IEventRemover
     {
-        public Task CleanUpOldEvents(List<Event> events);
+        public Task CleanupOldEvents(List<Event> events);
     }
+
     public class EventRemover : IEventRemover
     {
         private readonly ILogger<EventRemover> _logger;
@@ -19,7 +20,13 @@ namespace Scraper.Services.DB
             _logger = logger;
         }
 
-        public async Task CleanUpOldEvents(List<Event> events)
+
+        /// <summary>
+        /// Cleans up old events from the database.
+        /// </summary>
+        /// <param name="events"></param>
+        /// <returns></returns>
+        public async Task CleanupOldEvents(List<Event> events)
         {
             var tempEvents = events;
 
