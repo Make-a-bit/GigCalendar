@@ -28,7 +28,7 @@ namespace Scraper.Services
         /// <returns>The cleaned price string.</returns>
         public string PriceCleaner(string input)
         {
-            if (input.ToLower().Contains("loppuunmyyty"))
+            if (input.ToLower().Contains("loppuunmyyty") || input.ToLower().Contains("loppuunvarattu"))
             {
                 return "SOLD OUT!";
             }
@@ -37,11 +37,11 @@ namespace Scraper.Services
             string pricesRaw = input.Replace("Liput", "").Trim();
 
             // Use regex to extract all price values (e.g., "32,50 €", "35 €")
-            var matches = Regex.Matches(pricesRaw, @"\d{1,3}(?:[.,]\d{2})?€");
+            var matches = Regex.Matches(pricesRaw, @"\d{1,3}(?:[.,]\d{2})?\s*€");
 
             // Join the prices with " / " if there are multiple
-            string prices = string.Join(" / ", matches.Select(m => m.Value.Trim()));
-            
+            string prices = string.Join(" / ", matches.Select(m => m.Value.Replace(" ", "")));
+
             return prices;
         }
     }
