@@ -62,13 +62,24 @@ namespace Scraper.Services
 
                     // Calculate delay until next run
                     var delay = CalculateDelay();
-                    _logger.LogInformation("Scraping process completed. Next run in {Delay} hours.", delay.TotalHours);
+                    _logger.LogInformation("Scraping completed. Next run at {NextRun}",
+                        DateTime.Now.Add(delay).ToString("yyyy-MM-dd HH:mm"));
 
                     await Task.Delay(delay, stoppingToken);
+                }
+                catch (OperationCanceledException) 
+                {
+                    break;
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError(ex, "Error occurred while scraping events");
+
+                    // Wait 1 hour before retrying on error to avoid tight error loop
+                    var errorDelay = TimeSpan.FromHours(1);
+                    _logger.LogInformation("Retrying in {Hours} hour(s)...", errorDelay.TotalHours);
+
+                    await Task.Delay(errorDelay, stoppingToken);
                 }
             }
 
@@ -77,22 +88,24 @@ namespace Scraper.Services
 
 
         /// <summary>
-        /// Calculates the delay until the next scheduled run at 09:00, 3 days from now.
+        /// Calculates the delay until the next scheduled run at 03:00
         /// </summary>
         /// <returns></returns>
         private static TimeSpan CalculateDelay()
         {
-            // Run at 03:00, 3 days from now
             var now = DateTime.Now;
-            var nextRun = DateTime.Today.AddDays(3).AddHours(3);
+            var nextRun = DateTime.Today.AddDays(1).AddHours(3);
 
-            // If we've already passed 03:00 today, this ensures we don't go backwards
-            if (nextRun <= now)
+            var delay = nextRun - now;
+
+            // Safety check: if delay is negative or too small, schedule for next day
+            if (delay.TotalHours < 1)
             {
                 nextRun = nextRun.AddDays(1);
+                delay = nextRun - now;
             }
 
-            return nextRun - now;
+            return delay;
         }
     }
 }
