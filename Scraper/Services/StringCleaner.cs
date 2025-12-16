@@ -16,6 +16,7 @@ namespace Scraper.Services
             .Replace("&#8364;", "€")
             .Replace("&#x20AC;", "€")
             .Replace("&#8211;", "–")
+            .Replace("&amp;", "&")
             .Replace("&#038;", "&");
 
             return cleanedString.Trim();
