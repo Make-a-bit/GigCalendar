@@ -37,7 +37,7 @@ namespace Scraper.Services
             string pricesRaw = input.Replace("Liput", "").Trim();
 
             // Use regex to extract all price values (e.g., "32,50 €", "35 €")
-            var matches = Regex.Matches(pricesRaw, @"\d{1,3}(?:[.,]\d{2})?\s*€");
+            var matches = Regex.Matches(pricesRaw, @"\d{1,3}(?:[.,]\d{2})?€");
 
             // Join the prices with " / " if there are multiple
             string prices = string.Join(" / ", matches.Select(m => m.Value.Trim()));
