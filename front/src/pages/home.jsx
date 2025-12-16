@@ -7,7 +7,7 @@ import theme from "../utils/theme.js";
 // Function to fetch data from the API
 const fetchData = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/events");
+    const response = await fetch("/keikat/api/events");
     const data = await response.json();
     return data;
   } catch (error) {
