@@ -1,5 +1,4 @@
 import React from "react";
-import { Box, Paper } from "@mui/material";
 
 const LocationComponent = ({ location, price, theme }) => {
   return (
@@ -10,7 +9,7 @@ const LocationComponent = ({ location, price, theme }) => {
         color: theme.textSecondary,
       }}
     >
-      {location} / {price}
+      {price ? `${location}: ${price}` : location}
     </div>
   );
 };

@@ -23,7 +23,7 @@ const Home = () => {
   useEffect(() => {
     const loadEvents = async () => {
       const data = await fetchData();
-      setEvents(data);
+      setEvents(data || []);
     };
     loadEvents();
   }, []);

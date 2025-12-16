@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 
 const MonthComponent = ({ month, theme }) => {
   const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1);
