@@ -1,0 +1,1866 @@
+[
+    {
+        "event_id": 801,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Anna Von Hausswolff (SWE)",
+        "event_date": "2025-12-14T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 894,
+        "venue_name": "Semifinal",
+        "event_artist": "Kuudesta Kymmeneen",
+        "event_date": "2025-12-16T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 709,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Joulun ihmemaa -joulukonsertti",
+        "event_date": "2025-12-17T11:00:00.000Z",
+        "event_price": "14 € / 13 € / 8 € / 55 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 710,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Joulun ihmemaa -joulukonsertti",
+        "event_date": "2025-12-17T16:30:00.000Z",
+        "event_price": "14 € / 13 € / 8 € / 55 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 895,
+        "venue_name": "Semifinal",
+        "event_artist": "Kaila, Ylävire",
+        "event_date": "2025-12-17T17:00:00.000Z",
+        "event_price": "10 € / 12 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 802,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Don Johnson Big Band X-mas special",
+        "event_date": "2025-12-17T17:00:00.000Z",
+        "event_price": "27 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 711,
+        "venue_name": "Metsähalli",
+        "event_artist": "Sibeliustalon joululounas",
+        "event_date": "2025-12-18T09:00:00.000Z",
+        "event_price": "42,50 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 712,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Lumiukko-elokuvakonsertti",
+        "event_date": "2025-12-18T14:30:00.000Z",
+        "event_price": "20 € / 10 € / 40 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 713,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Lumiukko-elokuvakonsertti",
+        "event_date": "2025-12-18T16:00:00.000Z",
+        "event_price": "20 € / 10 € / 40 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 803,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Tuomari Nurmio & Luupäät",
+        "event_date": "2025-12-18T17:00:00.000Z",
+        "event_price": "35 € / 36 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 714,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Lumiukko-elokuvakonsertti",
+        "event_date": "2025-12-18T17:30:00.000Z",
+        "event_price": "20 € / 10 € / 40 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 715,
+        "venue_name": "Metsähalli",
+        "event_artist": "Sibeliustalon joululounas",
+        "event_date": "2025-12-19T09:00:00.000Z",
+        "event_price": "42,50 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 896,
+        "venue_name": "Semifinal",
+        "event_artist": "Jokrates (Ikärajaton)",
+        "event_date": "2025-12-19T15:45:00.000Z",
+        "event_price": "18 € / 20 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 716,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Rajaton Joulu",
+        "event_date": "2025-12-19T16:00:00.000Z",
+        "event_price": "49 € / 40 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 897,
+        "venue_name": "Semifinal",
+        "event_artist": "Jokrates",
+        "event_date": "2025-12-19T18:00:00.000Z",
+        "event_price": "18 € / 20 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 804,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Hassan Maikal & Sointi Jazz Orchestra",
+        "event_date": "2025-12-19T18:00:00.000Z",
+        "event_price": "25 € / 28 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 685,
+        "venue_name": "Torvi",
+        "event_artist": "Warmoon Lord, The Chamberlain, Frost Chapel",
+        "event_date": "2025-12-19T18:00:00.000Z",
+        "event_price": "ovelta 20 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 789,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "BAY CITY DEATHFEST",
+        "event_date": "2025-12-19T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 687,
+        "venue_name": "Torvi",
+        "event_artist": "Torven Lauantaidisko",
+        "event_date": "2025-12-19T22:00:00.000Z",
+        "event_price": "Vapaa pääsy",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 898,
+        "venue_name": "Semifinal",
+        "event_artist": "Wendela (Levyjulkkarit)",
+        "event_date": "2025-12-20T17:00:00.000Z",
+        "event_price": "15 € / 17 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 805,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "MOUHOUS - 10V.",
+        "event_date": "2025-12-20T18:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 686,
+        "venue_name": "Torvi",
+        "event_artist": "Joni Ekman Group, Kummipojat",
+        "event_date": "2025-12-20T18:00:00.000Z",
+        "event_price": "ovelta 10 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 688,
+        "venue_name": "Torvi",
+        "event_artist": "Torven Jouludisco",
+        "event_date": "2025-12-25T20:00:00.000Z",
+        "event_price": "ovelta 5 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 806,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Tapsantanssit: Turbodisco",
+        "event_date": "2025-12-26T18:00:00.000Z",
+        "event_price": "10 € / 12 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 689,
+        "venue_name": "Torvi",
+        "event_artist": "Asa – Leijonaa metsästän 20v",
+        "event_date": "2025-12-26T20:00:00.000Z",
+        "event_price": "Liput ennakkoon 20 €, ovelta 25 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 790,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Amorphis (sold out)",
+        "event_date": "2025-12-26T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 807,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Notkea Rotta Allstars",
+        "event_date": "2025-12-27T18:00:00.000Z",
+        "event_price": "32 € / 35 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 690,
+        "venue_name": "Torvi",
+        "event_artist": "Rock Siltanen Group, Janne Laurila Double Denim",
+        "event_date": "2025-12-27T18:00:00.000Z",
+        "event_price": "ovelta 10 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 808,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "MELO (Ikärajaton)",
+        "event_date": "2025-12-30T15:30:00.000Z",
+        "event_price": "29,99 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 691,
+        "venue_name": "Torvi",
+        "event_artist": "Uuden vuoden TÄPINÄT!",
+        "event_date": "2025-12-31T17:00:00.000Z",
+        "event_price": "Liput ennakkoon 25 €, ovelta 30 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 809,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "MELO",
+        "event_date": "2025-12-31T17:30:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 899,
+        "venue_name": "Semifinal",
+        "event_artist": "The Vantages",
+        "event_date": "2025-12-31T18:00:00.000Z",
+        "event_price": "20 € / 22 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 810,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Tavastian uusivuosi: Lauantaidisko",
+        "event_date": "2025-12-31T21:30:00.000Z",
+        "event_price": "12 € / 12 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 811,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Warmen (levyjulkkarit), Omnivortex",
+        "event_date": "2026-01-02T18:00:00.000Z",
+        "event_price": "33 € / 36 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 692,
+        "venue_name": "Torvi",
+        "event_artist": "Zyprexa, Korkkivika, Loinen",
+        "event_date": "2026-01-02T18:00:00.000Z",
+        "event_price": "ovelta 10 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 900,
+        "venue_name": "Semifinal",
+        "event_artist": "Bad Apples plays Guns N’ Roses",
+        "event_date": "2026-01-03T18:00:00.000Z",
+        "event_price": "12 € / 15 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 812,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Kaunis Kuolematon",
+        "event_date": "2026-01-03T18:00:00.000Z",
+        "event_price": "24 € / 28 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 693,
+        "venue_name": "Torvi",
+        "event_artist": "Kollectivist, Deathropy, Kaira",
+        "event_date": "2026-01-03T18:00:00.000Z",
+        "event_price": "ovelta 10 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 901,
+        "venue_name": "Semifinal",
+        "event_artist": "Kuudesta Kymmeneen",
+        "event_date": "2026-01-05T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 813,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Jätkäjätkät - Jäähyväiskeikka",
+        "event_date": "2026-01-06T17:00:00.000Z",
+        "event_price": "28 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 902,
+        "venue_name": "Semifinal",
+        "event_artist": "Mount Palatine, Zombie Eater, Heezer, Warchief",
+        "event_date": "2026-01-08T17:00:00.000Z",
+        "event_price": "14 € / 16 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 814,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Sur-rur, Seksihullut, Nuoruus",
+        "event_date": "2026-01-08T18:00:00.000Z",
+        "event_price": "20 € / 22 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 717,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Wienin Lumoissa – Uudenvuoden konsertti",
+        "event_date": "2026-01-09T11:00:00.000Z",
+        "event_price": "15 € / 15 € / 15 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 718,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Wienin Lumoissa – Uudenvuoden konsertti",
+        "event_date": "2026-01-09T16:30:00.000Z",
+        "event_price": "15 € / 15 € / 15 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 815,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Heavy Metal Perse, Arteon",
+        "event_date": "2026-01-09T18:00:00.000Z",
+        "event_price": "20 € / 23 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 694,
+        "venue_name": "Torvi",
+        "event_artist": "Inferia, Cannibal Accident, Indemon",
+        "event_date": "2026-01-09T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 10 €, ovelta 12 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 695,
+        "venue_name": "Torvi",
+        "event_artist": "Torven Lauantaidisko",
+        "event_date": "2026-01-09T22:00:00.000Z",
+        "event_price": "Vapaa pääsy",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 719,
+        "venue_name": "Puusepän Sali",
+        "event_artist": "Kööri 2026 – Päivä täynnä musiikin iloa",
+        "event_date": "2026-01-10T08:00:00.000Z",
+        "event_price": "127 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 816,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "WÖYH! – WOOPPERA-LEVYNJULKAISUKIERTUE 2026",
+        "event_date": "2026-01-10T18:00:00.000Z",
+        "event_price": "30 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 903,
+        "venue_name": "Semifinal",
+        "event_artist": "Night After, Bisa, In Thorns",
+        "event_date": "2026-01-10T18:00:00.000Z",
+        "event_price": "15 € / 17 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 817,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "For My Pain..., Melankolia",
+        "event_date": "2026-01-14T17:00:00.000Z",
+        "event_price": "32 € / 35 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 904,
+        "venue_name": "Semifinal",
+        "event_artist": "Kvart, LUNK",
+        "event_date": "2026-01-14T17:00:00.000Z",
+        "event_price": "12 € / 14 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 720,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Kolmoiskonsertto",
+        "event_date": "2026-01-15T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 696,
+        "venue_name": "Torvi",
+        "event_artist": "Alun Loppu, Barrel, Void Monarch",
+        "event_date": "2026-01-16T18:00:00.000Z",
+        "event_price": "ovelta 10 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 721,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Dancing Queen – The Show -a tribute to ABBA",
+        "event_date": "2026-01-17T17:00:00.000Z",
+        "event_price": "79,90 € / 69,90 € / 59,90 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 818,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Töölön Ketterä 10v+ 6kulma!",
+        "event_date": "2026-01-17T18:00:00.000Z",
+        "event_price": "18 € / 20 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 819,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Isaac Sene (Levyjulkkarit)",
+        "event_date": "2026-01-17T18:00:00.000Z",
+        "event_price": "",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 722,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "UK Pink Floyd Experience",
+        "event_date": "2026-01-18T17:00:00.000Z",
+        "event_price": "79,90 € / 69,90 € / 59,90 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 905,
+        "venue_name": "Semifinal",
+        "event_artist": "Kuudesta Kymmeneen",
+        "event_date": "2026-01-20T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 820,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Tortoise (USA), David Grubbs (USA)",
+        "event_date": "2026-01-20T17:00:00.000Z",
+        "event_price": "48,50 € / 49 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 821,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Sylosis - European & UK Tour 2026 with supports: Revocation, Distant and Life Cycles",
+        "event_date": "2026-01-21T16:30:00.000Z",
+        "event_price": "50 € / 50 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 723,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "The Music of Ennio Morricone (ITA)",
+        "event_date": "2026-01-21T17:00:00.000Z",
+        "event_price": "79,90 € / 69,90 € / 59,90 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 724,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Romeo ja Julia",
+        "event_date": "2026-01-22T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 822,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Havukruunu, Hellripper (SCO)",
+        "event_date": "2026-01-22T17:00:00.000Z",
+        "event_price": "28 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 906,
+        "venue_name": "Semifinal",
+        "event_artist": "Juhani Tikkanen",
+        "event_date": "2026-01-22T17:00:00.000Z",
+        "event_price": "20 € / 22 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 823,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Aaro630, Pihalla",
+        "event_date": "2026-01-23T18:00:00.000Z",
+        "event_price": "25 € / 27 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 907,
+        "venue_name": "Semifinal",
+        "event_artist": "Rasvamaksa, Rustopora",
+        "event_date": "2026-01-23T18:00:00.000Z",
+        "event_price": "12 € / 14 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 824,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Omnium Gatherum",
+        "event_date": "2026-01-24T18:00:00.000Z",
+        "event_price": "29 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 697,
+        "venue_name": "Torvi",
+        "event_artist": "Drug Store Raid, Ghosts on TV, Bobomobile",
+        "event_date": "2026-01-24T18:00:00.000Z",
+        "event_price": "ovelta 12 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 908,
+        "venue_name": "Semifinal",
+        "event_artist": "Spettbros",
+        "event_date": "2026-01-24T18:00:00.000Z",
+        "event_price": "15 € / 17 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 825,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Kruna goes Tavastia",
+        "event_date": "2026-01-27T15:30:00.000Z",
+        "event_price": "25 € / 25 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 826,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Frank Zappa Memorial Pancake Breakfast",
+        "event_date": "2026-01-28T18:00:00.000Z",
+        "event_price": "28 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 725,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: A Savage Beat",
+        "event_date": "2026-01-29T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 726,
+        "venue_name": "Sibeliustalo",
+        "event_artist": "Winter of Sales",
+        "event_date": "2026-01-30T11:00:00.000Z",
+        "event_price": "139 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 827,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Lasten Hautausmaa",
+        "event_date": "2026-01-30T17:00:00.000Z",
+        "event_price": "25 € / 28 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 698,
+        "venue_name": "Torvi",
+        "event_artist": "Last Call Disaster, Blood Red Delusion, Traumateatteri, Bloodstained Halo",
+        "event_date": "2026-01-30T18:00:00.000Z",
+        "event_price": "ovelta 10 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 909,
+        "venue_name": "Semifinal",
+        "event_artist": "ELLIMEI",
+        "event_date": "2026-01-30T18:00:00.000Z",
+        "event_price": "18,50 € / 20 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 727,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "KULTALEVYT – Varusmiessoittokunnan reserviläiset",
+        "event_date": "2026-01-31T16:00:00.000Z",
+        "event_price": "30 € / 26 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 828,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Dingo – Pyhä klaani 40v",
+        "event_date": "2026-01-31T18:00:00.000Z",
+        "event_price": "29 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 910,
+        "venue_name": "Semifinal",
+        "event_artist": "Padelclub, Joona & Linnut, Itcevät",
+        "event_date": "2026-01-31T18:00:00.000Z",
+        "event_price": "12 € / 14 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 728,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Swallow the Sun + Vermilia",
+        "event_date": "2026-01-31T18:30:00.000Z",
+        "event_price": "32 € / 37 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 699,
+        "venue_name": "Torvi",
+        "event_artist": "Jaakko Laitinen & Väärä Raha",
+        "event_date": "2026-01-31T19:00:00.000Z",
+        "event_price": "ovelta Tba €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 729,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Maagikot 5 – Variety of Wonders",
+        "event_date": "2026-02-04T16:30:00.000Z",
+        "event_price": "49,90 € / 44,90 €",
+        "event_added": "2025-12-14T08:05:26.000Z"
+    },
+    {
+        "event_id": 829,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Leavings-Orkesteri solistinaan Timo Rautiainen",
+        "event_date": "2026-02-04T17:00:00.000Z",
+        "event_price": "36 € / 39 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 830,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Mauron Maiden",
+        "event_date": "2026-02-05T17:00:00.000Z",
+        "event_price": "22 € / 25 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 917,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "The Grand Stars Orchestra: Hollywood Music Experience",
+        "event_date": "2026-02-06T17:00:00.000Z",
+        "event_price": "79,90 € / 69,90 € / 59,90 € / 49,90 € / 39,90 € / 34,90 €",
+        "event_added": "2025-12-14T15:47:52.000Z"
+    },
+    {
+        "event_id": 831,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Swallow The Sun, Vermilia",
+        "event_date": "2026-02-06T18:00:00.000Z",
+        "event_price": "39,50 € / 43€",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 700,
+        "venue_name": "Torvi",
+        "event_artist": "Liisa Akimof & Yökerho",
+        "event_date": "2026-02-06T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 16 €, ovelta 20 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 911,
+        "venue_name": "Semifinal",
+        "event_artist": "Saamelaisten kansallispäivä Helsingissä",
+        "event_date": "2026-02-06T18:00:00.000Z",
+        "event_price": "13,50 € / 16 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 701,
+        "venue_name": "Torvi",
+        "event_artist": "JXO",
+        "event_date": "2026-02-06T21:00:00.000Z",
+        "event_price": "Liput ennakkoon 16 €, ovelta 20 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 730,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Taylor Fever (UK)",
+        "event_date": "2026-02-07T17:00:00.000Z",
+        "event_price": "79,90 € / 69,90 € / 59,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 832,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Scandinavian Music Group",
+        "event_date": "2026-02-07T18:00:00.000Z",
+        "event_price": "35 € / 38 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 833,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Adept (SE), Rain City Drive (US), Resolve (FR), Abbie Falls (CZ)",
+        "event_date": "2026-02-08T16:00:00.000Z",
+        "event_price": "42,50 € / 45 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 912,
+        "venue_name": "Semifinal",
+        "event_artist": "Kuudesta Kymmeneen",
+        "event_date": "2026-02-10T16:00:00.000Z",
+        "event_price": "16,50 € / 18 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 834,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Diablo",
+        "event_date": "2026-02-11T18:00:00.000Z",
+        "event_price": "27 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 731,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Okko Kamu 80 vuotta",
+        "event_date": "2026-02-12T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 913,
+        "venue_name": "Semifinal",
+        "event_artist": "AB",
+        "event_date": "2026-02-12T17:00:00.000Z",
+        "event_price": "12 € / 15 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 835,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Uniklubi – Kehä 20v",
+        "event_date": "2026-02-13T18:00:00.000Z",
+        "event_price": "29,50 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 791,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "K-40 klubi – DANCEFEST",
+        "event_date": "2026-02-13T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 836,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Ares (Ikärajaton)",
+        "event_date": "2026-02-14T14:00:00.000Z",
+        "event_price": "32 € / 35 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 837,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Ares",
+        "event_date": "2026-02-14T18:00:00.000Z",
+        "event_price": "32 € / 35 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 838,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "MØ (DK)",
+        "event_date": "2026-02-17T17:00:00.000Z",
+        "event_price": "38,50 € / 40 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 839,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Graveyard (SWE)",
+        "event_date": "2026-02-18T17:00:00.000Z",
+        "event_price": "34 € / 37 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 732,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Paradise Lost (UK)",
+        "event_date": "2026-02-18T17:30:00.000Z",
+        "event_price": "40 € / 45 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 733,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Harry Potter ja Viisasten kivi™ -elokuvakonsertti",
+        "event_date": "2026-02-19T16:00:00.000Z",
+        "event_price": "50 € / 46 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 840,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Vesta (Ikärajaton)",
+        "event_date": "2026-02-19T17:00:00.000Z",
+        "event_price": "39,90 € / 42 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 792,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "D-A-D + support: The Baboon Show (sold out)",
+        "event_date": "2026-02-19T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 734,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Harry Potter ja Viisasten kivi™ -elokuvakonsertti",
+        "event_date": "2026-02-20T16:00:00.000Z",
+        "event_price": "50 € / 46 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 841,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Vesta",
+        "event_date": "2026-02-20T18:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 702,
+        "venue_name": "Torvi",
+        "event_artist": "Rooster Fest 2026",
+        "event_date": "2026-02-20T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 25 €, ovelta 15 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 793,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Averagekidluke (S/K18)",
+        "event_date": "2026-02-20T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 735,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Juhoflow, Satusetä & Tiia Weckström: TubeTrio-kiertue",
+        "event_date": "2026-02-21T14:00:00.000Z",
+        "event_price": "25 € / 23,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 842,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Vesta",
+        "event_date": "2026-02-21T18:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 703,
+        "venue_name": "Torvi",
+        "event_artist": "Rooster Fest 2026",
+        "event_date": "2026-02-21T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 25 €, ovelta 15 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 914,
+        "venue_name": "Semifinal",
+        "event_artist": "Silence The Echo, No Man’s Band",
+        "event_date": "2026-02-21T18:00:00.000Z",
+        "event_price": "16,50 € / 18 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 736,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Diablo",
+        "event_date": "2026-02-21T19:00:00.000Z",
+        "event_price": "30 € / 35 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 737,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Eppu Normaali: Kaikki häipyy, on vain nyt — akustinen konsertti",
+        "event_date": "2026-02-25T17:00:00.000Z",
+        "event_price": "69,90 € / 64,90 € / 59,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 843,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "CHILDREN OF BODOM - A Celebration of Music",
+        "event_date": "2026-02-26T17:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 794,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Aaro630 + Pihalla",
+        "event_date": "2026-02-26T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 844,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "CHILDREN OF BODOM - A Celebration of Music",
+        "event_date": "2026-02-27T18:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 915,
+        "venue_name": "Semifinal",
+        "event_artist": "Creek Road Eleven, Ethel Suspense",
+        "event_date": "2026-02-27T18:00:00.000Z",
+        "event_price": "14 € / 16 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 738,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Ismo Alanko – Kevyt ja kohtuuton kiertue",
+        "event_date": "2026-02-27T19:00:00.000Z",
+        "event_price": "44 € / 49 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 845,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Steve 'n' Seagulls",
+        "event_date": "2026-02-28T18:00:00.000Z",
+        "event_price": "33 € / 35 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 704,
+        "venue_name": "Torvi",
+        "event_artist": "Eternal Erection",
+        "event_date": "2026-02-28T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 25 €, ovelta 30 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 846,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Kake Randelin",
+        "event_date": "2026-03-04T17:00:00.000Z",
+        "event_price": "33 € / 36 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 739,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Konserttojen kolossi",
+        "event_date": "2026-03-05T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 13 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 847,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Between The Buried and Me (USA)",
+        "event_date": "2026-03-05T18:00:00.000Z",
+        "event_price": "42 € / 45 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 795,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Stam1na – Käärmeennyrkki 2026",
+        "event_date": "2026-03-05T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 740,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Eppu Normaali: Kaikki häipyy, on vain nyt — akustinen konsertti",
+        "event_date": "2026-03-06T17:00:00.000Z",
+        "event_price": "69,90 € / 64,90 € / 59,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 848,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Eevil Stöö - Iso vauva Jeesus 10v",
+        "event_date": "2026-03-06T18:00:00.000Z",
+        "event_price": "28 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 849,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Stam1na",
+        "event_date": "2026-03-07T18:00:00.000Z",
+        "event_price": "39 € / 42 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 741,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Absoluuttinen Nollapiste",
+        "event_date": "2026-03-07T19:00:00.000Z",
+        "event_price": "30 € / 35 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 742,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Letz Zep (UK)",
+        "event_date": "2026-03-09T17:00:00.000Z",
+        "event_price": "59,90 € / 49,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 850,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Granfelt & Nikku Classic Guitar Rock",
+        "event_date": "2026-03-10T17:00:00.000Z",
+        "event_price": "27 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 851,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Komiat",
+        "event_date": "2026-03-11T17:00:00.000Z",
+        "event_price": "34 € / 36 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 743,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Vivaldi & Villi Luonto",
+        "event_date": "2026-03-12T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 852,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Mira Luoti",
+        "event_date": "2026-03-12T17:00:00.000Z",
+        "event_price": "27 € / 30 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 744,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Ilta: Jokaisen hymyn takana",
+        "event_date": "2026-03-13T17:00:00.000Z",
+        "event_price": "42,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 745,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Kake Randelin",
+        "event_date": "2026-03-13T19:00:00.000Z",
+        "event_price": "32,50 € / 37,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 705,
+        "venue_name": "Torvi",
+        "event_artist": "Eevil Stöö: Iso vauva Jeesus 10v",
+        "event_date": "2026-03-13T20:00:00.000Z",
+        "event_price": "Liput ennakkoon 20 €, ovelta 25 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 796,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Portion Boys – 15-vuotisjuhlakiertue",
+        "event_date": "2026-03-13T22:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 853,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Pete Parkkonen",
+        "event_date": "2026-03-14T17:00:00.000Z",
+        "event_price": "34 € / 36 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 746,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Muumimusiikkia",
+        "event_date": "2026-03-14T17:00:00.000Z",
+        "event_price": "54,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 706,
+        "venue_name": "Torvi",
+        "event_artist": "Asla Jo, helmi marleena",
+        "event_date": "2026-03-14T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 16 €, ovelta 20 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 854,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Tohtori Getto",
+        "event_date": "2026-03-14T21:30:00.000Z",
+        "event_price": "26 € / 28 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 747,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Elämäni Biisi -konsertti",
+        "event_date": "2026-03-15T16:00:00.000Z",
+        "event_price": "59,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 855,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Mustasch (SWE)",
+        "event_date": "2026-03-16T17:00:00.000Z",
+        "event_price": "39,90 € / 43 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 856,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "LORD OF THE LOST (GER) - TOVR NOIR",
+        "event_date": "2026-03-17T17:00:00.000Z",
+        "event_price": "52,50 € / 55 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 857,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Virve Rosti, Freeman ja Menneisyyden vangit",
+        "event_date": "2026-03-18T18:00:00.000Z",
+        "event_price": "33 € / 35 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 748,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Arppa & Sinfonia Lahti",
+        "event_date": "2026-03-19T16:30:00.000Z",
+        "event_price": "38 € / 32 € / 30 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 749,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Arppa & Sinfonia Lahti",
+        "event_date": "2026-03-20T16:30:00.000Z",
+        "event_price": "38 € / 32 € / 30 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 858,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Mokoma - Kuoleman laulukunnaat 20 vuotta",
+        "event_date": "2026-03-20T18:00:00.000Z",
+        "event_price": "35 € / 38 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 750,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Ares",
+        "event_date": "2026-03-20T19:00:00.000Z",
+        "event_price": "32 € / 37 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 751,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Katson sineen taivaan -musikaali",
+        "event_date": "2026-03-21T14:00:00.000Z",
+        "event_price": "54,50 € / 51,50 € / 49,50 € / 43 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 752,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Maaliskuun Musta Messu",
+        "event_date": "2026-03-21T16:00:00.000Z",
+        "event_price": "49,90 € / 53,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 859,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Mokoma - Kuoleman laulukunnaat 20 vuotta",
+        "event_date": "2026-03-21T18:00:00.000Z",
+        "event_price": "35 € / 38 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 860,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Primal Fear (DE)",
+        "event_date": "2026-03-24T18:00:00.000Z",
+        "event_price": "34,50 € / 37 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 753,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Erja Lyytinen – 50th Rock Blues Birthday – Juhlakiertue 2026",
+        "event_date": "2026-03-25T17:30:00.000Z",
+        "event_price": "33 € / 38 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 754,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Enigma – Arvoitus",
+        "event_date": "2026-03-26T16:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 755,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Neljä Ruusua: Akustinen unelma – Sähköinen sydän",
+        "event_date": "2026-03-27T17:00:00.000Z",
+        "event_price": "42,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 861,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Stam1na",
+        "event_date": "2026-03-27T18:00:00.000Z",
+        "event_price": "39 € / 42 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 707,
+        "venue_name": "Torvi",
+        "event_artist": "Luukas Oja, Aston Kalmari",
+        "event_date": "2026-03-27T18:00:00.000Z",
+        "event_price": "Liput ennakkoon 18 €, ovelta 22 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 862,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Arppa",
+        "event_date": "2026-03-28T17:00:00.000Z",
+        "event_price": "38 € / 40 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 756,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Köpi Kallio – Huono Suoritus",
+        "event_date": "2026-03-28T17:00:00.000Z",
+        "event_price": "39 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 757,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "AMADEUS – A Requiem of Love",
+        "event_date": "2026-03-29T16:00:00.000Z",
+        "event_price": "82,50 € / 72,50 € / 62,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 758,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Carmina Burana -baletti",
+        "event_date": "2026-03-29T16:00:00.000Z",
+        "event_price": "82,50 € / 72,50 € / 62,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 759,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Pääsiäiskonsertti – Johannes-Passio",
+        "event_date": "2026-04-01T15:30:00.000Z",
+        "event_price": "15 € / 15 € / 15 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 760,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "The Magical Music of Harry Potter",
+        "event_date": "2026-04-02T13:00:00.000Z",
+        "event_price": "85 € / 74 € / 64 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 761,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "The Music of Hans Zimmer and Others",
+        "event_date": "2026-04-02T17:00:00.000Z",
+        "event_price": "85 € / 74 € / 64 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 797,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Finntroll &amp; Metsatöll (EST)",
+        "event_date": "2026-04-03T21:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 863,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Antti Autio",
+        "event_date": "2026-04-04T16:00:00.000Z",
+        "event_price": "35 € / 40 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 864,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Hypocrisy (SE) – Mass Hallucination Tour 2026, Abbath (NO), Vomitory (SE), Vreid (NO)",
+        "event_date": "2026-04-07T15:00:00.000Z",
+        "event_price": "53,50 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 865,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Solence (SWE) – Angels Calling Tour – Europe 2026",
+        "event_date": "2026-04-08T15:00:00.000Z",
+        "event_price": "47,50 € / 50 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 762,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "VIIVI",
+        "event_date": "2026-04-08T16:00:00.000Z",
+        "event_price": "38 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 763,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Elokuvakonsertti – Tunturin tarina",
+        "event_date": "2026-04-09T15:00:00.000Z",
+        "event_price": "29 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 866,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Machinae Supremacy (SWE)",
+        "event_date": "2026-04-09T16:00:00.000Z",
+        "event_price": "29 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 798,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Mokoma – Kuoleman laulukunnaat 20 vuotta",
+        "event_date": "2026-04-09T21:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 764,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Elokuvakonsertti – Tunturin tarina",
+        "event_date": "2026-04-10T15:00:00.000Z",
+        "event_price": "29 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 765,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Egotrippi",
+        "event_date": "2026-04-10T18:00:00.000Z",
+        "event_price": "37,50 € / 42,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 867,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Senya - Crash Out -levyjulkkarit",
+        "event_date": "2026-04-11T16:00:00.000Z",
+        "event_price": "22 € / 25 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 766,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Jonna Tervomaa",
+        "event_date": "2026-04-11T16:00:00.000Z",
+        "event_price": "42 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 868,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Stepa (Levyjulkkarit)",
+        "event_date": "2026-04-11T20:00:00.000Z",
+        "event_price": "25 € / 28 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 869,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Maija Vilkkumaa - Meikit, ketjut ja vyöt - 25v. juhlakeikka",
+        "event_date": "2026-04-12T15:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 767,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Markku Aro Greatest Hits – Suurimmat hitit konserttikiertue",
+        "event_date": "2026-04-12T16:00:00.000Z",
+        "event_price": "45 € / 49,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 870,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Maija Vilkkumaa - Meikit, ketjut ja vyöt - 25v. juhlakeikka",
+        "event_date": "2026-04-13T15:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 768,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Romantiikan Lumoissa",
+        "event_date": "2026-04-16T15:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 769,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Olavi Uusivirta",
+        "event_date": "2026-04-17T18:00:00.000Z",
+        "event_price": "35 € / 40 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 770,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "We are The Champions -juhlakiertue",
+        "event_date": "2026-04-18T15:00:00.000Z",
+        "event_price": "53,50 € / 49,50 € / 47,50 € / 42 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 871,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Egotrippi: Jossain täytyy olla päivänvaloo",
+        "event_date": "2026-04-18T17:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 708,
+        "venue_name": "Torvi",
+        "event_artist": "Stepa",
+        "event_date": "2026-04-18T19:00:00.000Z",
+        "event_price": "Liput ennakkoon 17 €, ovelta 20 €",
+        "event_added": "2025-12-14T08:05:24.000Z"
+    },
+    {
+        "event_id": 872,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Egotrippi: Jossain täytyy olla päivänvaloo",
+        "event_date": "2026-04-19T15:00:00.000Z",
+        "event_price": "45 € / 49 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 799,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Kuumaa (K18)",
+        "event_date": "2026-04-21T21:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 800,
+        "venue_name": "Möysän Musaklubi",
+        "event_artist": "Kuumaa (S)",
+        "event_date": "2026-04-22T21:00:00.000Z",
+        "event_price": "Ei hintatietoa",
+        "event_added": "2025-12-14T08:05:31.000Z"
+    },
+    {
+        "event_id": 771,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Primavera in the Embrace of Tango (UKR)",
+        "event_date": "2026-04-23T16:00:00.000Z",
+        "event_price": "43 € / 37 € / 32 € / 29 € / 14 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 873,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Maustetytöt",
+        "event_date": "2026-04-24T16:00:00.000Z",
+        "event_price": "35 € / 40 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 772,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Kiittäen ja kunnioittaen – Paula Koivuniemi",
+        "event_date": "2026-04-24T16:00:00.000Z",
+        "event_price": "49,90 € / 44,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 773,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Ursus Factory",
+        "event_date": "2026-04-24T18:00:00.000Z",
+        "event_price": "29,50 € / 35 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 874,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Ursus Factory",
+        "event_date": "2026-04-25T17:00:00.000Z",
+        "event_price": "35 € / 38 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 774,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Magic Men",
+        "event_date": "2026-04-26T17:00:00.000Z",
+        "event_price": "206 € / 136 € / 96 € / 70 € / 54,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 875,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "KUUMAA",
+        "event_date": "2026-04-28T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 775,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Vapun lähtölaukaus – Suomipopin hitit",
+        "event_date": "2026-04-29T15:00:00.000Z",
+        "event_price": "15 € / 15 € / 15 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 876,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "KUUMAA (ikärajaton)",
+        "event_date": "2026-04-29T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 877,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "KUUMAA",
+        "event_date": "2026-04-30T16:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 776,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Vappumatinea",
+        "event_date": "2026-05-01T10:00:00.000Z",
+        "event_price": "25 € / 10 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 878,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "KUUMAA",
+        "event_date": "2026-05-01T17:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 879,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "KUUMAA",
+        "event_date": "2026-05-02T17:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 777,
+        "venue_name": "Finlandia-klubi",
+        "event_artist": "Michael Monroe",
+        "event_date": "2026-05-02T18:00:00.000Z",
+        "event_price": "32,90 € / 37,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 880,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Marcos Valle (BRA)",
+        "event_date": "2026-05-04T16:00:00.000Z",
+        "event_price": "35,50 € / 37 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 778,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Joutsenlampi",
+        "event_date": "2026-05-07T15:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 779,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Juha Tapio: Toisillemme parhaat",
+        "event_date": "2026-05-08T16:00:00.000Z",
+        "event_price": "49,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 881,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Asla Jo (Levyjulkkarit)",
+        "event_date": "2026-05-08T17:00:00.000Z",
+        "event_price": "22 € / 25 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 882,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Cemetery Skyline",
+        "event_date": "2026-05-10T15:00:00.000Z",
+        "event_price": "49,50 € / 52 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 883,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Olavi Uusivirta",
+        "event_date": "2026-05-15T17:00:00.000Z",
+        "event_price": "42 € / 45 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 884,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Olavi Uusivirta",
+        "event_date": "2026-05-16T17:00:00.000Z",
+        "event_price": "42 € / 45 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 780,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Planeetat",
+        "event_date": "2026-05-21T15:30:00.000Z",
+        "event_price": "13 € / 13 € / 8 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 916,
+        "venue_name": "Semifinal",
+        "event_artist": "Aukusti Koivisto (Levyjulkkarit)",
+        "event_date": "2026-05-21T16:00:00.000Z",
+        "event_price": "22 € / 24 €",
+        "event_added": "2025-12-14T08:05:33.000Z"
+    },
+    {
+        "event_id": 885,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Viikate 30v",
+        "event_date": "2026-05-22T17:00:00.000Z",
+        "event_price": "37 € / 40 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 886,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Viikate 30v",
+        "event_date": "2026-05-23T17:00:00.000Z",
+        "event_price": "SOLD OUT!",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 887,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Popedan Ajajat",
+        "event_date": "2026-05-28T16:00:00.000Z",
+        "event_price": "29 € / 32 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 888,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Pariisin Kevät",
+        "event_date": "2026-05-30T16:00:00.000Z",
+        "event_price": "42 € / 45 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 781,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Christoffer Strandberg – Kansanmies",
+        "event_date": "2026-06-06T16:00:00.000Z",
+        "event_price": "39,50 € / 36,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 782,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Sibelius-festivaali 2026 – Avajaiskonsertti",
+        "event_date": "2026-08-27T15:30:00.000Z",
+        "event_price": "25 € / 12,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 783,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Sibelius-festivaali 2026 – Kamarimusiikkikonsertti",
+        "event_date": "2026-08-28T12:30:00.000Z",
+        "event_price": "25 € / 12,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 784,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Sibelius-festivaali 2026 – Sinfoniakonsertti",
+        "event_date": "2026-08-28T15:30:00.000Z",
+        "event_price": "25 € / 12,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 785,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Sibelius-festivaali 2026 – Kamarimusiikkikonsertti",
+        "event_date": "2026-08-29T11:30:00.000Z",
+        "event_price": "25 € / 12,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 786,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Sinfonia Lahti: Sibelius-festivaali 2026 – Päätöskonsertti",
+        "event_date": "2026-08-29T14:00:00.000Z",
+        "event_price": "25 € / 12,50 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 889,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Eini",
+        "event_date": "2026-09-23T16:00:00.000Z",
+        "event_price": "34 € / 36 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 890,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Future Palace (GER) - Deep Blue Tour 2026",
+        "event_date": "2026-10-01T16:00:00.000Z",
+        "event_price": "37,50 € / 40 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 787,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Wardruna (NO)",
+        "event_date": "2026-10-13T17:00:00.000Z",
+        "event_price": "84,90 € / 95,90 € / 105,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 891,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Banned From Utopia (USA), Mavon Safia",
+        "event_date": "2026-10-21T16:00:00.000Z",
+        "event_price": "42,50 € / 45 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 788,
+        "venue_name": "Sibeliustalon Pääsali",
+        "event_artist": "Diandra – Hymni rakkaudelle",
+        "event_date": "2026-10-21T16:00:00.000Z",
+        "event_price": "59,90 € / 49,90 €",
+        "event_added": "2025-12-14T08:05:27.000Z"
+    },
+    {
+        "event_id": 892,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "Gloryhammer - 5th Album Release Tour 2026",
+        "event_date": "2026-10-28T16:00:00.000Z",
+        "event_price": "55,50 € / 58 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    },
+    {
+        "event_id": 893,
+        "venue_name": "Tavastiaklubi",
+        "event_artist": "THE HARDKISS (UA)",
+        "event_date": "2026-12-01T17:00:00.000Z",
+        "event_price": "52,50 €",
+        "event_added": "2025-12-14T08:05:32.000Z"
+    }
+]
