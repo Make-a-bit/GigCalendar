@@ -20,6 +20,10 @@ jobs:
 
       - name: Run deployment script
         run: |
+          echo "Current user: $(whoami)"
+          echo "Current directory: $(pwd)"
+          echo "Home directory: $HOME"
+          echo "PATH: $PATH"
           bash ~/scripts/deploy-gigcalendar.sh
 
       - name: Deployment notification
