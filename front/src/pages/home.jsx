@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Select,
-  TextField,
-  Autocomplete,
-} from "@mui/material";
+import { Autocomplete, Box, FormControl, Paper, TextField } from "@mui/material";
 import Event from "../components/Event.jsx";
 import MonthComponent from "../components/MonthComponent.jsx";
 import theme from "../utils/theme.js";
