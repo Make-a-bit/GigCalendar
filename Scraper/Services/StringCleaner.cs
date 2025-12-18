@@ -4,8 +4,6 @@ namespace Scraper.Services
 {
     public class StringCleaner : ICleaner
     {
-        // Test automated deployment
-
         /// <summary>
         /// Cleans a string by replacing HTML entities with their corresponding characters.
         /// </summary>
