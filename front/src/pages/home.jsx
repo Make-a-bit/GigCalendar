@@ -7,7 +7,8 @@ import theme from "../utils/theme.js";
 // Function to fetch data from the API
 const fetchData = async () => {
   try {
-    const response = await fetch("/api/events");
+    const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3011";
+    const response = await fetch(`${apiUrl}/api/events`);
     const data = await response.json();
     return data;
   } catch (error) {

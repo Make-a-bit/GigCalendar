@@ -362,5 +362,11 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 
-# Ignore .env
-*/.env
+# Environment files
+# Ignore ALL .env files except .env.example (which has no real credentials)
+**/.env
+**/.env.development
+**/.env.production
+**/.env.local
+# Only allow .env.example to be committed (template with no secrets):
+!**/.env.example

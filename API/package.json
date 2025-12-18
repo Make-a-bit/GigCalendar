@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "node -r dotenv/config server.js dotenv_config_path=.env.development",
+    "dev:watch": "nodemon -r dotenv/config server.js dotenv_config_path=.env.development",
+    "prod": "node -r dotenv/config server.js dotenv_config_path=.env.production"
   },
   "keywords": [],
   "author": "",
