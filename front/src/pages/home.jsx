@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Box, FormControl, InputLabel, MenuItem, Paper, Select } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Autocomplete,
+} from "@mui/material";
 import Event from "../components/Event.jsx";
 import MonthComponent from "../components/MonthComponent.jsx";
 import theme from "../utils/theme.js";
@@ -7,7 +16,7 @@ import theme from "../utils/theme.js";
 // Function to fetch data from the API
 const fetchData = async () => {
   try {
-    const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3011";
+    const apiUrl = process.env.REACT_APP_API_URL;
     const response = await fetch(`${apiUrl}/api/events`);
     const data = await response.json();
     return data;
@@ -18,7 +27,8 @@ const fetchData = async () => {
 
 const Home = () => {
   const [events, setEvents] = useState([]);
-  const [selectedVenue, setSelectedVenue] = useState("all");
+  const [selectedCities, setSelectedCities] = useState([]);
+  const [selectedVenues, setSelectedVenues] = useState([]);
 
   // Fetch data on component mount
   useEffect(() => {
@@ -29,9 +39,32 @@ const Home = () => {
     loadEvents();
   }, []);
 
+  // Get unique cities:
+  const getUniqueCities = (events) => {
+    const cities = [...new Set(events.map((event) => event.city_name))];
+    return cities.sort() || [];
+  };
+
+  // Get filtered venues
+  const getFilteredVenues = (events, selectedCities) => {
+    let eventsToProcess = events;
+
+    // If cities are selected, filter events by those cities first
+    if (selectedCities.length > 0) {
+      eventsToProcess = events.filter((event) => selectedCities.includes(event.city_name));
+    }
+
+    const venues = [...new Set(eventsToProcess.map((event) => event.venue_name))];
+    return venues.sort() || [];
+  };
+
   // Filter events based on selected venue
-  const filteredEvents =
-    selectedVenue === "all" ? events : events.filter((event) => event.venue_name === selectedVenue);
+  const filteredEvents = events.filter((event) => {
+    const cityMatch = selectedCities.length === 0 || selectedCities.includes(event.city_name);
+    const venueMatch = selectedVenues.length === 0 || selectedVenues.includes(event.venue_name);
+
+    return cityMatch && venueMatch;
+  });
 
   // Group events by month
   const groupEventsByMonth = (events) => {
@@ -56,12 +89,6 @@ const Home = () => {
 
   // Get grouped events
   const groupedEvents = groupEventsByMonth(filteredEvents);
-
-  // Get unique venues for the dropdown
-  const getUniqueVenues = (events) => {
-    const venues = [...new Set(events.map((event) => event.venue_name))];
-    return venues.sort();
-  };
 
   return (
     <Box
@@ -113,24 +140,61 @@ const Home = () => {
 
         <FormControl
           sx={{
-            mt: 5,
+            mt: 2,
             width: "100%",
             maxWidth: 300,
           }}
         >
-          <InputLabel>Tapahtumapaikka</InputLabel>
-          <Select
-            value={selectedVenue}
-            label="Tapahtumapaikka"
-            onChange={(e) => setSelectedVenue(e.target.value)}
-          >
-            <MenuItem value="all">Kaikki</MenuItem>
-            {getUniqueVenues(events).map((venue) => (
-              <MenuItem key={venue} value={venue}>
-                {venue}
-              </MenuItem>
-            ))}
-          </Select>
+          <Autocomplete
+            multiple
+            id="city-filter"
+            options={getUniqueCities(events)}
+            value={selectedCities}
+            onChange={(event, newValue) => {
+              setSelectedCities(newValue);
+
+              // Clear selected venues if they're not in the new city selection
+              if (newValue.length > 0 && selectedVenues.length > 0) {
+                const validVenues = getFilteredVenues(events, newValue);
+                const stillValidVenues = selectedVenues.filter((venue) =>
+                  validVenues.includes(venue)
+                );
+                setSelectedVenues(stillValidVenues);
+              }
+            }}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Valitse kaupungit"
+                placeholder={selectedCities.length === 0 ? "Valitse kaupungit" : ""}
+              />
+            )}
+            sx={{
+              mt: 5,
+              width: "100%",
+              maxWidth: 300,
+            }}
+          />
+
+          <Autocomplete
+            multiple
+            id="venue-filter"
+            options={getFilteredVenues(events, selectedCities)}
+            value={selectedVenues}
+            onChange={(event, newValue) => setSelectedVenues(newValue)}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Valitse tapahtumapaikat"
+                placeholder={selectedVenues.length === 0 ? "Valitse tapahtumapaikat" : ""}
+              />
+            )}
+            sx={{
+              mt: "10px",
+              width: "100%",
+              maxWidth: 300,
+            }}
+          />
         </FormControl>
 
         {/* Display grouped events by month */}
