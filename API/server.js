@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 app.use("/api/events", eventRoutes);
 
 // Global Error Handler. IMPORTANT function params MUST start with err
@@ -34,7 +38,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Server listening on http://localhost:${port}`);
-  console.log(`Health check: http://localhost:${port}/`);
-  console.log(`Events endpoint: http://localhost:${port}/api/events`);
+  console.log(`Server listening on http://[server]:${port}`);
+  console.log(`Health check: http://[server]:${port}/health`);
+  console.log(`Events endpoint: http://[server]:${port}/api/events`);
 });
