@@ -1,0 +1,33 @@
+name: Deploy GigCalendar
+
+# Trigger on push to main/master branch
+on:
+  push:
+    branches: [ main, master ]
+
+  # Allow manual trigger from GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    # IMPORTANT: Use self-hosted runner
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run deployment script
+        run: |
+          bash ~/scripts/deploy-gigcalendar.sh
+
+      - name: Deployment notification
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Deployment successful!"
+          else
+            echo "❌ Deployment failed!"
+            exit 1
+          fi
