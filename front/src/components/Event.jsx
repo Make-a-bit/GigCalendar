@@ -6,12 +6,12 @@ import LocationComponent from "./LocationComponent";
 
 const Event = ({ props, theme }) => {
   // Parse the date to get day number
-  const date = new Date(props.event_date);
-  const day = date.getDate();
+  const dateStr = props.event_date;
+  const [datePart, timePart] = dateStr.split("T");
+  const [year, month, dayNum] = datePart.split("-");
+  const [hours, minutes] = timePart.split(":");
 
-  // Parse the time to get hours and minutes
-  const hours = date.getHours().toString().padStart(2, "0");
-  const minutes = date.getMinutes().toString().padStart(2, "0");
+  const day = parseInt(dayNum, 10);
   const formattedTime = `${hours}:${minutes}`;
 
   return (
