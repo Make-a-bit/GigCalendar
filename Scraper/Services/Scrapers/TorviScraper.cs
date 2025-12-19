@@ -16,8 +16,6 @@ namespace Scraper.Services.Scrapers
         private readonly ICityRepository _cityRepository;
         private readonly IVenueRepository _venueRepository;
 
-        private int _locationId = -1;
-
         public TorviScraper(ICleaner cleaner, 
             IHttpClientFactory httpClientFactory, 
             ILogger<TorviScraper> logger, 
