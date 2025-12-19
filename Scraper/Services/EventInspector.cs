@@ -23,7 +23,7 @@ namespace Scraper.Services
         private readonly IEventAdder _adder;
         private readonly IEventUpdate _updater;
 
-        public EventInspector(IEventAdder adder,  ILogger<EventInspector> logger, IEventUpdate updater)
+        public EventInspector(IEventAdder adder, ILogger<EventInspector> logger, IEventUpdate updater)
         {
             _adder = adder;
             _logger = logger;
@@ -32,6 +32,9 @@ namespace Scraper.Services
 
         public async Task<List<Event>> UpdateRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents)
         {
+            _logger.LogInformation("Processing {ScrapedCount} scraped events against {CurrentCount} current events",
+          scrapedEvents.Count, currentEvents.Count);
+
             // Check each scraped event against current events list
             foreach (var item in scrapedEvents)
             {
@@ -47,6 +50,9 @@ namespace Scraper.Services
                 // If event exists but price has changed, update the price
                 if (existingEvent != null && (existingEvent.PriceAsString != item.PriceAsString))
                 {
+                    _logger.LogInformation("Price change detected - DB: '{OldPrice}' -> New: '{NewPrice}' for {Event}",
+                  existingEvent.PriceAsString, item.PriceAsString, item.Artist);
+
                     existingEvent.PriceAsString = item.PriceAsString;
                     var result = await _updater.UpdatePriceAsync(existingEvent);
 
@@ -68,20 +74,22 @@ namespace Scraper.Services
                 // If event does not exist, add it to database
                 if (existingEvent == null)
                 {
+                    _logger.LogInformation("New event detected: {Event}", item);
                     var result = await _adder.AddIntoDatabase(item);
 
                     // If addition was successful, add to current events list and log it
                     if (result)
                     {
                         currentEvents.Add(item);
-                        _logger.LogInformation("Added new event to database: {Event}", item);
+                        _logger.LogInformation("Added new event succesfully");
                     }
                     else
                     {
-                        _logger.LogWarning("Failed to add event to database: {Event}", item);
+                        _logger.LogWarning("Failed to add event to database (may be duplicate from DB constraint)");
                     }
                 }
             }
+            _logger.LogInformation("Processing complete. Current events count: {Count}", currentEvents.Count);
             return currentEvents;
         }
     }
