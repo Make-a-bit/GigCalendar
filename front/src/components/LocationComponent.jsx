@@ -9,7 +9,9 @@ const LocationComponent = ({ location, price, theme }) => {
         color: theme.textSecondary,
       }}
     >
-      {price ? `${location}: ${price}` : location}
+      {price == null || price === "Ei hintatietoa"
+        ? `${location}: Tarkista liput`
+        : `${location}: ${price}`}
     </div>
   );
 };

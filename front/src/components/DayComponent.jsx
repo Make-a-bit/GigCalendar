@@ -33,7 +33,7 @@ const DayComponent = ({ day, time, theme }) => {
           mt: 0.5,
         }}
       >
-        {time === "00:00" ? "klo ?" : time}
+        {time !== null ? `${time}` : "Showtime?"}
       </Box>
     </Box>
   );

@@ -27,7 +27,12 @@ const Event = ({ props, theme }) => {
         },
       }}
     >
-      <DayComponent day={day} time={formattedTime} theme={theme} />
+      {props.event_has_showtime ? (
+        <DayComponent day={day} time={formattedTime} theme={theme} />
+      ) : (
+        <DayComponent day={day} time={null} theme={theme} />
+      )}
+
       <Box
         sx={{
           display: "flex",
