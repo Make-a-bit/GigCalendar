@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
+using Scraper.Repositories;
 
 namespace Scraper.Services.Scrapers
 {
@@ -54,7 +55,7 @@ namespace Scraper.Services.Scrapers
                 var nodes = innerDoc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
 
                 // Check location ID
-                City.Id = await _cityRepository.GetCityIdAsync(Venue.Name);
+                City.Id = await _cityRepository.GetCityIdAsync(City.Name);
                 Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
@@ -75,6 +76,9 @@ namespace Scraper.Services.Scrapers
                     var newEvent = new Event();
 
                     newEvent.EventVenue.Id = Venue.Id;
+                    newEvent.EventVenue.Name = Venue.Name;
+                    newEvent.EventCity.Id = City.Id;
+                    newEvent.EventCity.Name = City.Name;
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
                     newEvent.PriceAsString = eventPrice;

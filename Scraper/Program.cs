@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Scraper.Repositories;
 using Scraper.Services;
 using Scraper.Services.DB;
 using Scraper.Services.Scrapers;
@@ -29,7 +30,10 @@ namespace Scraper
                     services.AddHostedService<ScraperService>();
                     services.AddSingleton<ICleaner, StringCleaner>();
                     services.AddSingleton<DBManager>();
+                    services.AddSingleton<ICityRepository, CityRepository>();
                     services.AddSingleton<IEventRepository, EventRepository>();
+                    services.AddSingleton<IVenueRepository, VenueRepository>();
+                    services.AddSingleton<IEventUpdate, EventUpdate>();
                     services.AddTransient<IEventAdder, EventAdder>();
                     services.AddTransient<IEventRemover, EventRemover>();
                     services.AddTransient<IEventInspector, EventInspector>();
@@ -38,8 +42,6 @@ namespace Scraper
                     services.AddTransient<IEventScraper, SibeliustaloScraper>();
                     services.AddTransient<IEventScraper, TavastiaScraper>();
                     services.AddTransient<IEventScraper, TorviScraper>();
-                    services.AddTransient<ICityRepository, CityRepository>();
-                    services.AddTransient<IVenueRepository, VenueRepository>();
                 });
 
     }

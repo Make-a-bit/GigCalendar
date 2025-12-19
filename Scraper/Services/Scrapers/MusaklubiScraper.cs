@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
+using Scraper.Repositories;
 
 namespace Scraper.Services.Scrapers
 {
@@ -53,7 +54,7 @@ namespace Scraper.Services.Scrapers
                 var nodes = innerDoc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
 
                 // Update CityID and VenueID from database
-                City.Id = await _cityRepository.GetCityIdAsync(Venue.Name);
+                City.Id = await _cityRepository.GetCityIdAsync(City.Name);
                 Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
@@ -71,9 +72,13 @@ namespace Scraper.Services.Scrapers
                     var newEvent = new Event();
 
                     newEvent.EventVenue.Id = Venue.Id; 
+                    newEvent.EventVenue.Name = Venue.Name;
+                    newEvent.EventCity.Id = City.Id;
+                    newEvent.EventCity.Name = City.Name;
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
                     newEvent.PriceAsString = "Ei hintatietoa";
+                    
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.

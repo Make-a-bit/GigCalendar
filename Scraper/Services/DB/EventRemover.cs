@@ -4,8 +4,16 @@ using Scraper.Models;
 
 namespace Scraper.Services.DB
 {
+    /// <summary>
+    /// Interface for removing old events from the database.
+    /// </summary>
     public interface IEventRemover
     {
+        /// <summary>
+        /// Cleans up old events from the database that are before the current date.
+        /// </summary>
+        /// <param name="events">List of events to consider for cleanup</param>
+        /// <returns></returns>
         public Task CleanupOldEvents(List<Event> events);
     }
 
@@ -20,12 +28,6 @@ namespace Scraper.Services.DB
             _logger = logger;
         }
 
-
-        /// <summary>
-        /// Cleans up old events from the database.
-        /// </summary>
-        /// <param name="events"></param>
-        /// <returns></returns>
         public async Task CleanupOldEvents(List<Event> events)
         {
             var tempEvents = events;

@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
+using Scraper.Repositories;
 using Scraper.Services.DB;
 
 namespace Scraper.Services

@@ -1,10 +1,18 @@
 using MySqlConnector;
 using Scraper.Models;
+using Scraper.Services.DB;
 
-namespace Scraper.Services.DB
+namespace Scraper.Repositories
 {
+    /// <summary>
+    /// Repository for managing event data in the database.
+    /// </summary>
     public interface IEventRepository
     {
+        /// <summary>
+        /// Fetches all events from the database.
+        /// </summary>
+        /// <returns></returns>
         public Task<List<Event>> GetEventsAsync();
     }
 
@@ -17,11 +25,6 @@ namespace Scraper.Services.DB
             _dbManager = dBManager;
         }
 
-
-        /// <summary>
-        /// Fetches all events from the database.
-        /// </summary>
-        /// <returns></returns>
         public async Task<List<Event>> GetEventsAsync()
         {
             var events = new List<Event>();
@@ -34,25 +37,28 @@ namespace Scraper.Services.DB
 
             while (await reader.ReadAsync())
             {
-                var ev = new Event
-                {
-                    EventId = reader.GetInt32("event_id"),
-                    Artist = reader.IsDBNull(reader.GetOrdinal("event_artist"))
-                    ? ""
-                    : reader.GetString("event_artist"),
-                    Date = reader.GetDateTime("event_date"),
-                    PriceAsString = reader.IsDBNull(reader.GetOrdinal("event_price"))
-                    ? "Ei hintatietoja"
-                    : reader.GetString("event_price"),
-                    Added = reader.GetDateTime("event_added")
-                };
+                var ev = new Event();
 
+                ev.EventId = reader.GetInt32("event_id");
+                ev.EventVenue.Id = reader.IsDBNull(reader.GetOrdinal("venue_id"))
+                    ? 0
+                    : reader.GetInt32("venue_id");
                 ev.EventVenue.Name = reader.IsDBNull(reader.GetOrdinal("venue_name"))
                     ? ""
                     : reader.GetString("venue_name");
                 ev.EventCity.Name = reader.IsDBNull(reader.GetOrdinal("city_name"))
                     ? ""
                     : reader.GetString("city_name");
+                ev.EventCity.Id = reader.IsDBNull(reader.GetOrdinal("city_id"))
+                    ? 0
+                    : reader.GetInt32("city_id");
+                ev.Artist = reader.IsDBNull(reader.GetOrdinal("event_artist"))
+                    ? ""
+                    : reader.GetString("event_artist");
+                ev.Date = reader.GetDateTime("event_date");
+                ev.PriceAsString = reader.IsDBNull(reader.GetOrdinal("event_price"))
+                    ? "Ei hintatietoja"
+                    : reader.GetString("event_price");
 
                 events.Add(ev);
             }

@@ -1,7 +1,7 @@
 using MySqlConnector;
 using Scraper.Services.DB;
 
-namespace Scraper.Services
+namespace Scraper.Repositories
 {
     /// <summary>
     /// Repository for managing venue data in the database.

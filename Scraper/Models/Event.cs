@@ -8,11 +8,16 @@ namespace Scraper.Models
         public string? PriceAsString { get; set; }
         public City EventCity { get; set; } = new City();
         public Venue EventVenue { get; set; } = new Venue();
-        public string? Location { get; set; }
-        public int LocationId { get; set; }
         public DateTime Added { get; set; }
 
-        // TODO: Refactor location to have VENUE and CITY classes 
+        
+        public bool IsSameEvent(Event other)
+        {
+            if (other == null) return false;
+            return string.Equals(Artist?.Trim(), other.Artist?.Trim(), StringComparison.OrdinalIgnoreCase)
+                && Date == other.Date
+                && string.Equals(EventVenue.Name?.Trim(), other.EventVenue.Name?.Trim(), StringComparison.OrdinalIgnoreCase);
+        }
 
         public override bool Equals(object? obj)
         {

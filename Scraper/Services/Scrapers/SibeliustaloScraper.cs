@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
+using Scraper.Repositories;
 
 namespace Scraper.Services.Scrapers
 {
@@ -24,7 +25,6 @@ namespace Scraper.Services.Scrapers
             _cityRepository = cityRepository;
             _venueRepository = venueRepository;
 
-            Venue.Name = "Sibeliustalo";
             City.Name = "Lahti";
         }
 
@@ -51,7 +51,7 @@ namespace Scraper.Services.Scrapers
                 var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'col-md-9')]");
 
                 // Update CityId from database
-                City.Id = await _cityRepository.GetCityIdAsync(Venue.Name);
+                City.Id = await _cityRepository.GetCityIdAsync(City.Name);
 
                 // Iterate through each event node and extract details
                 foreach (var n in nodes)
@@ -64,6 +64,7 @@ namespace Scraper.Services.Scrapers
 
                     // Update VenueId from database
                     Venue.Id = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim(), City.Id);
+                    Venue.Name = placeNode.InnerText.Trim();
 
                     // Clean and parse details nicely for the Event object
                     var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
@@ -74,6 +75,9 @@ namespace Scraper.Services.Scrapers
                     var newEvent = new Event();
 
                     newEvent.EventVenue.Id = Venue.Id;
+                    newEvent.EventVenue.Name = Venue.Name;
+                    newEvent.EventCity.Id = City.Id;
+                    newEvent.EventCity.Name = City.Name;
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
                     newEvent.PriceAsString = eventPrice;
