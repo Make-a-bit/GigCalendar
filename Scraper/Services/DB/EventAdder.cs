@@ -30,7 +30,7 @@ namespace Scraper.Services.DB
             using var connection = _dbManager.GetConnection();
             await connection.OpenAsync();
 
-            using var cmd = new MySqlCommand("CALL add_event(@venueId, @artist, @date, @price);", connection);
+            using var cmd = new MySqlCommand("CALL add_event(@venueId, @artist, @date, @price, @showtime);", connection);
             cmd.Parameters.AddWithValue("@venueId", newEvent.EventVenue.Id);
             cmd.Parameters.AddWithValue("@locationId", newEvent.EventVenue.Id);
             cmd.Parameters.AddWithValue("@artist", newEvent.Artist);
@@ -39,6 +39,7 @@ namespace Scraper.Services.DB
                 Value = newEvent.Date
             };
             cmd.Parameters.Add(dateParam); cmd.Parameters.AddWithValue("@price", newEvent.PriceAsString);
+            cmd.Parameters.AddWithValue("@showtime", newEvent.HasShowtime);
 
             return await cmd.ExecuteNonQueryAsync() > 0;
         }

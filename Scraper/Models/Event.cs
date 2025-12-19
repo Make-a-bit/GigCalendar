@@ -8,9 +8,9 @@ namespace Scraper.Models
         public string? PriceAsString { get; set; }
         public City EventCity { get; set; } = new City();
         public Venue EventVenue { get; set; } = new Venue();
-        public DateTime Added { get; set; }
+        public bool HasShowtime { get; set; } = true;
 
-        
+
         public bool IsSameEvent(Event other)
         {
             if (other == null) return false;

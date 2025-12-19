@@ -84,6 +84,7 @@ namespace Scraper.Services.Scrapers
                     newEvent.EventCity.Name = City.Name;
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
+                    newEvent.HasShowtime = true;
                     newEvent.PriceAsString = eventPrice;
 
                     // Compare if events already contains the new scraped event.

@@ -77,8 +77,9 @@ namespace Scraper.Services.Scrapers
                     newEvent.EventCity.Name = City.Name;
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
-                    newEvent.PriceAsString = "Ei hintatietoa";
-                    
+                    newEvent.HasShowtime = false;
+                    newEvent.PriceAsString = null;
+
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
