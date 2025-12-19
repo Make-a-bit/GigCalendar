@@ -8,7 +8,7 @@ const Event = ({ props, theme }) => {
   // Parse the date to get day number
   const dateStr = props.event_date;
   const [datePart, timePart] = dateStr.split("T");
-  const [year, month, dayNum] = datePart.split("-");
+  const dayNum = datePart.split("-")[2];
   const [hours, minutes] = timePart.split(":");
 
   const day = parseInt(dayNum, 10);
