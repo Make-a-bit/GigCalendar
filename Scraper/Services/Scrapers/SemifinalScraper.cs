@@ -4,25 +4,28 @@ using Scraper.Models;
 
 namespace Scraper.Services.Scrapers
 {
-    public class SemifinalScraper : IEventScraper
+    public class SemifinalScraper : BaseScraper, IEventScraper
     {
-        private ICleaner _cleaner;
+        private readonly ICleaner _cleaner;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<SemifinalScraper> _logger;
+        private readonly ICityRepository _cityRepository;
         private readonly IVenueRepository _venueRepository;
-
-        public int _locationId = -1;
-        public string _locationName = "Semifinal";
 
         public SemifinalScraper(ICleaner cleaner, 
             IHttpClientFactory httpClientFactory, 
+            ICityRepository cityRepository,
             IVenueRepository venueRepository, 
             ILogger<SemifinalScraper> logger)
         {
             _cleaner = cleaner;
             _httpClientFactory = httpClientFactory;
+            _cityRepository = cityRepository;
             _venueRepository = venueRepository;
             _logger = logger;
+
+            Venue.Name = "Semifinal";
+            City.Name = "Helsinki";
         }
 
 
@@ -50,8 +53,9 @@ namespace Scraper.Services.Scrapers
                 innerDoc.LoadHtml(htmlNodes.InnerHtml);
                 var nodes = innerDoc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
 
-                // Check location ID
-                _locationId = await _venueRepository.GetVenueIdAsync(_locationName);
+                // Update CityID and VenueID from database
+                City.Id = await _cityRepository.GetCityIdAsync(Venue.Name);
+                Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
                 foreach (var n in nodes)
@@ -68,14 +72,12 @@ namespace Scraper.Services.Scrapers
                     var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
 
                     // Create new Event object with extracted details
-                    var newEvent = new Event
-                    {
-                        Artist = eventTitle,
-                        Date = eventDate,
-                        PriceAsString = eventPrice,
-                        Location = _locationName,
-                        LocationId = _locationId
-                    };
+                    var newEvent = new Event();
+
+                    newEvent.EventVenue.Id = Venue.Id;
+                    newEvent.Artist = eventTitle;
+                    newEvent.Date = eventDate;
+                    newEvent.PriceAsString = eventPrice;                  
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.

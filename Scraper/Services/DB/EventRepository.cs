@@ -38,17 +38,22 @@ namespace Scraper.Services.DB
                 {
                     EventId = reader.GetInt32("event_id"),
                     Artist = reader.IsDBNull(reader.GetOrdinal("event_artist"))
-                    ? null
+                    ? ""
                     : reader.GetString("event_artist"),
                     Date = reader.GetDateTime("event_date"),
                     PriceAsString = reader.IsDBNull(reader.GetOrdinal("event_price"))
                     ? "Ei hintatietoja"
                     : reader.GetString("event_price"),
-                    Location = reader.IsDBNull(reader.GetOrdinal("venue_name"))
-                    ? null
-                    : reader.GetString("venue_name"),
                     Added = reader.GetDateTime("event_added")
                 };
+
+                ev.EventVenue.Name = reader.IsDBNull(reader.GetOrdinal("venue_name"))
+                    ? ""
+                    : reader.GetString("venue_name");
+                ev.EventCity.Name = reader.IsDBNull(reader.GetOrdinal("city_name"))
+                    ? ""
+                    : reader.GetString("city_name");
+
                 events.Add(ev);
             }
             return events;

@@ -1,6 +1,3 @@
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
-
 namespace Scraper.Models
 {
     public class Event
@@ -9,17 +6,20 @@ namespace Scraper.Models
         public string? Artist { get; set; }
         public DateTime Date { get; set; }
         public string? PriceAsString { get; set; }
+        public City EventCity { get; set; } = new City();
+        public Venue EventVenue { get; set; } = new Venue();
         public string? Location { get; set; }
         public int LocationId { get; set; }
         public DateTime Added { get; set; }
 
+        // TODO: Refactor location to have VENUE and CITY classes 
 
         public override bool Equals(object? obj)
         {
             if (obj is not Event other) return false;
             return string.Equals(Artist?.Trim(), other.Artist?.Trim(), StringComparison.OrdinalIgnoreCase)
                 && Date == other.Date
-                && string.Equals(Location?.Trim(), other.Location?.Trim(), StringComparison.OrdinalIgnoreCase)
+                && string.Equals(EventVenue.Name?.Trim(), other.EventVenue.Name?.Trim(), StringComparison.OrdinalIgnoreCase)
                 && string.Equals(PriceAsString?.Trim(), other.PriceAsString?.Trim(), StringComparison.OrdinalIgnoreCase);
         }
 
@@ -28,7 +28,7 @@ namespace Scraper.Models
             return HashCode.Combine(
                 Artist?.Trim().ToLowerInvariant(),
                 Date,
-                Location?.Trim().ToLowerInvariant(),
+                EventVenue.Name?.Trim().ToLowerInvariant(),
                 PriceAsString?.Trim().ToLowerInvariant()
             );
         }
@@ -37,8 +37,8 @@ namespace Scraper.Models
         {
             return (Artist ?? "") + " " +
                Date.ToString("yyyy-MM-dd HH:mm") + " " +
-               (PriceAsString ?? "") + " " +
-               (Location ?? "");
+               (EventVenue.Name ?? "") + " " +
+               (PriceAsString ?? "");
         }
     }
 }

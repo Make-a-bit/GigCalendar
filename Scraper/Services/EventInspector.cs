@@ -6,6 +6,14 @@ namespace Scraper.Services
 {
     public interface IEventInspector
     {
+        /// <summary>
+        /// Updates the event repositories with new events. 
+        /// </summary>
+        /// <param name="scrapedEvents">Scraped events updated from the source</param>
+        /// <param name="currentEvents">Current events fetched from database</param>
+        /// <remarks>If an event from scrapedEvents is not found in currentEvents, 
+        /// it is added to the current list as well as into the database.</remarks>
+        /// <returns></returns>
         public Task<List<Event>> UpdateRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents);
     }
 
@@ -20,14 +28,6 @@ namespace Scraper.Services
             _logger = logger;
         }
 
-        /// <summary>
-        /// Updates the event repositories with new events. 
-        /// </summary>
-        /// <param name="scrapedEvents">Scraped events updated from the source</param>
-        /// <param name="currentEvents">Current events fetched from database</param>
-        /// <remarks>If an event from scrapedEvents is not found in currentEvents, 
-        /// it is added to the current list as well as into the database.</remarks>
-        /// <returns></returns>
         public async Task<List<Event>> UpdateRepositoriesAsync(List<Event> scrapedEvents, List<Event> currentEvents)
         {
             // Check each scraped event against current events list

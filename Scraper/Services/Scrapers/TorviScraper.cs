@@ -7,11 +7,12 @@ namespace Scraper.Services.Scrapers
     /// <summary>
     /// Scraper for Torvi restaurant events.
     /// </summary>
-    public class TorviScraper : IEventScraper
+    public class TorviScraper : BaseScraper, IEventScraper
     {
         private readonly ICleaner _cleaner;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<TorviScraper> _logger;
+        private readonly ICityRepository _cityRepository;
         private readonly IVenueRepository _venueRepository;
 
         private int _locationId = -1;
@@ -19,12 +20,17 @@ namespace Scraper.Services.Scrapers
         public TorviScraper(ICleaner cleaner, 
             IHttpClientFactory httpClientFactory, 
             ILogger<TorviScraper> logger, 
+            ICityRepository cityRepository,
             IVenueRepository venueRepository)
         {
             _cleaner = cleaner;
             _httpClientFactory = httpClientFactory;
             _logger = logger;
+            _cityRepository = cityRepository;
             _venueRepository = venueRepository;
+
+            Venue.Name = "Torvi";
+            City.Name = "Lahti";
         }
 
 
@@ -49,6 +55,9 @@ namespace Scraper.Services.Scrapers
                 // Select event nodes
                 var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'event')]");
 
+                // Update CityID from database
+                City.Id = await _cityRepository.GetCityIdAsync(Venue.Name);
+
                 // Iterate through each event node and extract details
                 foreach (var n in nodes)
                 {
@@ -59,7 +68,8 @@ namespace Scraper.Services.Scrapers
                     var priceNode = n.SelectSingleNode(".//li[contains(@class, 'price')]");
                     var placeNode = n.SelectSingleNode(".//li[contains(@class, 'place')]");
 
-                    _locationId = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim());
+                    // Update VenueID from database
+                    Venue.Id = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim(), City.Id);
 
                     // Clean and parse details nicely for the Event object
                     var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
@@ -67,14 +77,12 @@ namespace Scraper.Services.Scrapers
                     var eventPrice = _cleaner.EventCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
 
                     // Create new Event object with extracted details
-                    var newEvent = new Event
-                    {
-                        Artist = eventTitle,
-                        Date = eventDate,
-                        PriceAsString = eventPrice,
-                        Location = placeNode.InnerText.Trim() ?? "",
-                        LocationId = _locationId
-                    };
+                    var newEvent = new Event();
+
+                    newEvent.EventVenue.Id = Venue.Id;
+                    newEvent.Artist = eventTitle;
+                    newEvent.Date = eventDate;
+                    newEvent.PriceAsString = eventPrice;
 
                     // Compare if events already contains the new scraped event.
                     // If not, add it to the list.

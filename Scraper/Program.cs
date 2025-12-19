@@ -26,6 +26,7 @@ namespace Scraper
                         configure.AddFilter("Scraper.Services", LogLevel.Information);
                     });
 
+                    services.AddHostedService<ScraperService>();
                     services.AddSingleton<ICleaner, StringCleaner>();
                     services.AddSingleton<DBManager>();
                     services.AddSingleton<IEventRepository, EventRepository>();
@@ -33,11 +34,11 @@ namespace Scraper
                     services.AddTransient<IEventRemover, EventRemover>();
                     services.AddTransient<IEventInspector, EventInspector>();
                     services.AddTransient<IEventScraper, MusaklubiScraper>();
-                    services.AddHostedService<ScraperService>();
                     services.AddTransient<IEventScraper, SemifinalScraper>();
                     services.AddTransient<IEventScraper, SibeliustaloScraper>();
                     services.AddTransient<IEventScraper, TavastiaScraper>();
                     services.AddTransient<IEventScraper, TorviScraper>();
+                    services.AddTransient<ICityRepository, CityRepository>();
                     services.AddTransient<IVenueRepository, VenueRepository>();
                 });
 
