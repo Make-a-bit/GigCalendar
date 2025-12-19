@@ -1,8 +1,9 @@
 import express from "express";
-import mysql from "mysql2";
 import cors from "cors";
 import dotenv from "dotenv";
 import eventRoutes from "./routes/eventRoutes.js";
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
