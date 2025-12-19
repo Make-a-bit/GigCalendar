@@ -8,6 +8,8 @@ const pool = mysql.createPool({
   user: process.env.GIGS_DB_USER,
   database: process.env.GIGS_DB_NAME,
   password: process.env.GIGS_DB_PASSWORD,
+  timezone: "+00:00",
+  dateStrings: true,
 });
 
 export default pool;
