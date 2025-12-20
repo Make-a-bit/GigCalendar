@@ -40,8 +40,9 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
+                _logger.LogInformation("Starting to scrape Torvi events...");
+
                 // Initialize variables
-                var events = new List<Event>();
                 var doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
@@ -52,6 +53,9 @@ namespace Scraper.Services.Scrapers
 
                 // Select event nodes
                 var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'event')]");
+
+                _logger.LogInformation("Found {events.count} nodes from Torvi", nodes.Count);
+                _logger.LogInformation("Starting to parse event details...");
 
                 // Update CityID from database
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
@@ -70,40 +74,39 @@ namespace Scraper.Services.Scrapers
                     Venue.Id = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim(), City.Id);
                     Venue.Name = placeNode.InnerText.Trim();
 
-                    // Clean and parse details nicely for the Event object
-                    var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    // Clean and parse event details for the Event object
+                    var eventTitle = _cleaner.Clean(titleNode.InnerText.Trim());
                     var eventDate = ParseDate(dateNode.InnerText.ToString(), startNode.InnerText.ToString());
-                    var eventPrice = _cleaner.Clean(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
+                    var eventPrice = _cleaner.Clean(priceNode.InnerText.Trim());
 
                     // Create new Event object with extracted details
-                    var newEvent = new Event();
-
-                    newEvent.EventVenue.Id = Venue.Id;
-                    newEvent.EventVenue.Name = Venue.Name;
-                    newEvent.EventCity.Id = City.Id;
-                    newEvent.EventCity.Name = City.Name;
-                    newEvent.Artist = eventTitle;
-                    newEvent.Date = eventDate;
-                    newEvent.HasShowtime = true;
-                    newEvent.Price = eventPrice;
+                    var newEvent = new Event
+                    {
+                        EventCity = City,
+                        EventVenue = Venue,
+                        Artist = eventTitle,
+                        Date = eventDate,
+                        HasShowtime = true,
+                        Price = eventPrice
+                    };
 
                     // Compare if events already contains the new scraped event.
                     // If not, add it to the list.
-                    if (!events.Exists(e => e.Equals(newEvent)))
+                    if (!Events.Exists(e => e.Equals(newEvent)))
                     {
-                        events.Add(newEvent);
+                        Events.Add(newEvent);
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.Count} events from Torvi.", events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from Torvi.", Events.Count);
 
                 // Return the list of events
-                return events;
+                return Events;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while scraping events from Torvi.");
-                return new List<Event>();
+                return Events;
             }
         }
 
