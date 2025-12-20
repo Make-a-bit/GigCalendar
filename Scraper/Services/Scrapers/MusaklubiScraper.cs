@@ -37,10 +37,10 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
+                _logger.LogInformation("Starting to scrape Musaklubi events...");
+
                 // Initialize variables
-                var events = new List<Event>();
                 HtmlDocument doc = new HtmlDocument();
-                HtmlDocument innerDoc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
@@ -50,49 +50,40 @@ namespace Scraper.Services.Scrapers
 
                 // Select event nodes
                 var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'mec-event-list-classic')]");
-                innerDoc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = innerDoc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
+                doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = doc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
+
+                _logger.LogInformation("Found {events.count} events from Möysän Musaklubi.", nodes.Count);
 
                 // Update CityID and VenueID from database
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
                 Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
-                foreach (var n in nodes)
+                foreach (var node in nodes)
                 {
-                    // Extract event details
-                    var titleNode = n.SelectSingleNode(".//h4");
-                    var dateNode = n.SelectSingleNode(".//span[contains(@class, 'mec-start-date')]");
+                    // Initialize new Event object
+                    var newEvent = new Event
+                    {
+                        EventCity = City,
+                        EventVenue = Venue,
+                    };
 
-                    // Clean and parse details nicely for the Event object
-                    var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
-                    var eventDate = ParseDate(dateNode.InnerText.ToString());
-
-                    // Create new Event object with extracted details
-                    var newEvent = new Event();
-
-                    newEvent.EventVenue.Id = Venue.Id; 
-                    newEvent.EventVenue.Name = Venue.Name;
-                    newEvent.EventCity.Id = City.Id;
-                    newEvent.EventCity.Name = City.Name;
-                    newEvent.Artist = eventTitle;
-                    newEvent.Date = eventDate;
-                    newEvent.HasShowtime = false;
-                    newEvent.Price = null;
-
+                    // Parse event detail page and extract event details
+                    newEvent = await ParseEventDetailsPage(node.InnerHtml, newEvent);
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
-                    if (!events.Exists(e => e.Equals(newEvent)))
+                    if (!Events.Exists(e => e.Equals(newEvent)))
                     {
-                        events.Add(newEvent);
+                        Events.Add(newEvent);
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.Count} events from Musaklubi.", events.Count);
+                _logger.LogInformation("Scraped {events.Count} events from Musaklubi.", Events.Count);
 
                 // Return the list of events
-                return events;
+                return Events;
             }
             catch (Exception ex)
             {
@@ -102,65 +93,51 @@ namespace Scraper.Services.Scrapers
         }
 
 
-        /// <summary>
-        /// Parses a date string in the format dd.MM and returns a DateTime object.
-        /// </summary>
-        /// <param name="date">The date string to parse.</param>
-        /// <returns>A DateTime object representing the parsed date.</returns>
-        private static DateTime ParseDate(string date)
+        private async Task<Event> ParseEventDetailsPage(string text, Event newEvent)
         {
-            var now = DateTime.Now;
-
-            var dateStrings = date.Split(' ');
-
-            int year = int.Parse(dateStrings[2]);
-            int month = MonthConvert(dateStrings[0]);
-            int day = int.Parse(dateStrings[1]);
-
-            if (month < now.Month || month == now.Month && day < now.Day)
+            try
             {
-                year = now.Year + 1;
+                _logger.LogInformation("Parsing event detail page...");
+
+                var strings = text.Split("href=");
+                var eventUrl = strings[2].Split('"')[1];
+
+                var doc = new HtmlDocument();
+                using var client = _httpClientFactory.CreateClient();
+                var html = await client.GetStringAsync(eventUrl);
+                doc.LoadHtml(html);
+
+                var nodes = doc.DocumentNode.SelectNodes("//article[contains(@class, 'event')]");
+
+                foreach (var node in nodes)
+                {
+                    var titleNode = node.SelectSingleNode(".//h1");
+                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
+
+                    var detailNodes = node.SelectNodes(".//dd");
+                    DateOnly date = DateOnly.Parse(detailNodes[0].InnerText);
+                    TimeOnly showtime = TimeOnly.Parse(detailNodes[1].InnerText);
+                    DateTime eventDate = new DateTime(date, showtime);
+                    
+                    newEvent.Date = eventDate;
+                    newEvent.HasShowtime = true;
+
+                    if (detailNodes.Count > 2)
+                    {
+                        newEvent.Price = detailNodes[2].InnerText;
+                    }
+                    else
+                    {
+                        newEvent.Price = "SOLD OUT!";
+                    }
+                }
+
+                return newEvent;
             }
-
-            return new DateTime(year, month, day);
-        }
-
-
-        /// <summary>
-        /// Converts Finnish month names to their corresponding month numbers.
-        /// </summary>
-        /// <param name="month">The Finnish month name to convert.</param>
-        /// <returns>The corresponding month number, or 0 if not found.</returns>
-        private static int MonthConvert(string month)
-        {
-            switch (month.ToLower())
+            catch (Exception ex)
             {
-                case "tammi":
-                    return 1;
-                case "helmi":
-                    return 2;
-                case "maalis":
-                    return 3;
-                case "huhti":
-                    return 4;
-                case "touko":
-                    return 5;
-                case "kesä":
-                    return 6;
-                case "heinä":
-                    return 7;
-                case "elo":
-                    return 8;
-                case "syys":
-                    return 9;
-                case "loka":
-                    return 10;
-                case "marras":
-                    return 11;
-                case "joulu":
-                    return 12;
-                default:
-                    return 0;
+                _logger.LogError(ex, "An error occurred while parsing event detail page.");
+                return newEvent;
             }
         }
     }
