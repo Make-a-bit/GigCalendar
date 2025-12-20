@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Scraper.Services
 {
-    public class StringCleaner : ICleaner
+    public class Cleaner : ICleaner
     {
         public string Clean(string input)
         {

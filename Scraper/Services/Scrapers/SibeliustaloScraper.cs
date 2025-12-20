@@ -37,8 +37,9 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
+                _logger.LogInformation("Starting to scrape Sibeliustalo events...");
+
                 // Initialize variables
-                var events = new List<Event>();
                 var doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
@@ -50,6 +51,9 @@ namespace Scraper.Services.Scrapers
                 // Select event nodes
                 var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'col-md-9')]");
 
+                _logger.LogInformation("Found {events.count} nodes from Sibeliustalo.", nodes.Count);
+                _logger.LogInformation("Starting to parse event details...");
+
                 // Update CityId from database
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
 
@@ -60,45 +64,50 @@ namespace Scraper.Services.Scrapers
                     var titleNode = n.SelectSingleNode(".//h2");
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'field-type-datetime')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'ticket-info')]");
+                    var priceText = priceNode.InnerText
+                        .Replace("Liput:", "")
+                        .Replace("(Lippu.fi)", "")
+                        .Replace("(Ticketmaster", "")
+                        .Trim();
+                    var prices = priceText.Split("/");               
                     var placeNode = n.SelectSingleNode(".//h6");
 
                     // Update VenueId from database
                     Venue.Id = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim(), City.Id);
                     Venue.Name = placeNode.InnerText.Trim();
 
-                    // Clean and parse details nicely for the Event object
-                    var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    // Clean and parse event details for the Event object
+                    var eventTitle = _cleaner.Clean(titleNode.InnerText.Trim());
                     var eventDate = ParseDate(dateNode.InnerText.ToString().Trim());
-                    var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
+                    var eventPrice = _cleaner.CleanPrice(prices);
 
                     // Create new Event object with extracted details
-                    var newEvent = new Event();
-
-                    newEvent.EventVenue.Id = Venue.Id;
-                    newEvent.EventVenue.Name = Venue.Name;
-                    newEvent.EventCity.Id = City.Id;
-                    newEvent.EventCity.Name = City.Name;
-                    newEvent.Artist = eventTitle;
-                    newEvent.Date = eventDate;
-                    newEvent.HasShowtime = true;
-                    newEvent.Price = eventPrice;
-                    
-                    // Compare if events already contains the new event. If not, add it to the list.
-                    if (!events.Exists(e => e.Equals(newEvent)))
+                    var newEvent = new Event
                     {
-                        events.Add(newEvent);
+                        EventCity = City,
+                        EventVenue = Venue,
+                        Artist = eventTitle,
+                        Date = eventDate,
+                        HasShowtime = true,
+                        Price = eventPrice
+                    };
+                   
+                    // Compare if events already contains the new event. If not, add it to the list.
+                    if (!Events.Exists(e => e.Equals(newEvent)))
+                    {
+                        Events.Add(newEvent);
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.Count} events from Sibeliustalo.", events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from Sibeliustalo.", Events.Count);
 
                 // Return the list of events
-                return events;
+                return Events;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while scraping Sibeliustalo events.");
-                return new List<Event>();
+                _logger.LogError(ex, "An error occurred while parsing Sibeliustalo events.");
+                return Events;
             }
         }
 
