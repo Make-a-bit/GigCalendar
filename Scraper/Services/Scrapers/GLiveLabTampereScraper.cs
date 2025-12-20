@@ -86,13 +86,13 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.count} events from G Livelab Tampere. Skipped {skipped} nodes.", Events.Count, skippedCount);
+                _logger.LogInformation("Parsed {events.count} events from G Livelab Tampere. Skipped {skipped} nodes.", Events.Count, skippedCount);
                 return Events;
             }
             catch (Exception ex) 
             {
                 _logger.LogError(ex, "An error occurred while scraping G Livelab Tampere events.");
-                return new List<Event>();
+                return Events;
             }
         }
 
