@@ -52,8 +52,9 @@ namespace Scraper.Services.Scrapers
                 doc.LoadHtml(htmlNodes.InnerHtml);
                 var nodes = doc.DocumentNode.SelectNodes(".//li[contains(@class, 'item')]");
 
-                _logger.LogInformation("Found {events.count} events from G Livelab Tampere.", nodes.Count);
+                _logger.LogInformation("Found {events.count} nodes from G Livelab Tampere.", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");
+
                 // Update CityID and VenueID from database
                 City.Id = await  _cityRepository.GetCityIdAsync(City.Name);
                 Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
@@ -85,7 +86,7 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.count} events from G Livelab Tampere. Skipped {skipped} ads.", Events.Count, skippedCount);
+                _logger.LogInformation("Scraped {events.count} events from G Livelab Tampere. Skipped {skipped} nodes.", Events.Count, skippedCount);
                 return Events;
             }
             catch (Exception ex) 
@@ -121,14 +122,14 @@ namespace Scraper.Services.Scrapers
                 foreach (var node in nodes)
                 {
                     var titleNode = node.SelectSingleNode(".//h1");
-                    newEvent.Artist = titleNode.InnerText.Split(',')[0].Trim();
+                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Split(',')[0].Trim());
 
                     var dateNode = node.SelectSingleNode(".//div[contains(@class, 'datetime')]");
                     newEvent.Date = ParseDate(dateNode?.InnerText.Trim() ?? string.Empty);
                     newEvent.HasShowtime = true;
 
                     var priceNode = node.SelectNodes(".//span[contains(@class, 'prices')]");
-                    newEvent.Price = ParseEventPrices(priceNode);
+                    newEvent.Price = _cleaner.Clean(ParseEventPrices(priceNode));
                 }
 
                 _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
@@ -162,8 +163,9 @@ namespace Scraper.Services.Scrapers
                     priceString += " / ";
                 }
 
-                var price = _cleaner.Clean(node.InnerText);
-                priceString += price;
+                var cleanedPrice = _cleaner.Clean(node.InnerText);
+                cleanedPrice = cleanedPrice.Replace(" €", "€");
+                priceString += cleanedPrice;
             }
 
             return priceString;
