@@ -24,12 +24,5 @@ namespace Scraper.Services
         /// <param name="prices"></param>
         /// <returns>Concatenated string of event prices</returns>
         string CleanPrice(string[] prices);
-
-        /// <summary>
-        /// Cleans a price string by extracting price values or indicating if sold out.
-        /// </summary>
-        /// <param name="input">The input string to clean.</param>
-        /// <returns>The cleaned price string.</returns>
-        string PriceCleaner(string input);
     }
 }
