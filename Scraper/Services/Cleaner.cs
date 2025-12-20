@@ -62,7 +62,9 @@ namespace Scraper.Services
                 var cleanedPrice = Clean(price);
                 cleanedPrice = cleanedPrice
                     .Replace(" €", "€")
-                    .Replace("Loppuunmyyty", "SOLD OUT!");
+                    .Replace("Liput", "")
+                    .Replace("Loppuunmyyty", "SOLD OUT!")
+                    .Trim();
                 priceString += cleanedPrice;
             }
 

@@ -38,10 +38,10 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
+                _logger.LogInformation("Starting to scrape Tavastiaklubi events...");
+
                 // Initialize variables
-                var events = new List<Event>();
                 HtmlDocument doc = new HtmlDocument();
-                HtmlDocument innerDoc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
@@ -51,8 +51,11 @@ namespace Scraper.Services.Scrapers
 
                 // Select event nodes
                 var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'tiketti-list')]");
-                innerDoc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = innerDoc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
+                doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = doc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
+
+                _logger.LogInformation("Found {events.count} nodes from Tavastiaklubi", nodes.Count);
+                _logger.LogInformation("Starting to parse event details...");
 
                 // Check location ID
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
@@ -66,40 +69,48 @@ namespace Scraper.Services.Scrapers
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
                     var startNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
+                    var priceText = priceNode.InnerText
+                        .Replace(" ", "")
+                        .Replace("Loppuunmyyty", "SOLD OUT!")
+                        .Trim();
+                    var prices = priceText.Split("/");
+
+                    if (prices.Length > 1)
+                    {
+                        priceText = _cleaner.CleanPrice(prices);
+                    }
 
                     // Clean and parse details nicely for the Event object
                     var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
                     var eventDate = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
-                    var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
 
                     // Create new Event object with extracted details
-                    var newEvent = new Event();
-
-                    newEvent.EventVenue.Id = Venue.Id;
-                    newEvent.EventVenue.Name = Venue.Name;
-                    newEvent.EventCity.Id = City.Id;
-                    newEvent.EventCity.Name = City.Name;
-                    newEvent.Artist = eventTitle;
-                    newEvent.Date = eventDate;
-                    newEvent.HasShowtime = true;
-                    newEvent.Price = eventPrice;
+                    var newEvent = new Event
+                    {
+                        EventCity = City,
+                        EventVenue = Venue,
+                        Artist = eventTitle,
+                        Date = eventDate,
+                        HasShowtime = true,
+                        Price = priceText,
+                    };
 
                     // Compare if events already contains the new event. If not, add it to the list.
-                    if (!events.Exists(e => e.Equals(newEvent)))
+                    if (!Events.Exists(e => e.Equals(newEvent)))
                     {
-                        events.Add(newEvent);
+                        Events.Add(newEvent);
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.Count} events from Tavastia.", events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from Tavastia.", Events.Count);
 
                 // Return the list of events
-                return events;
+                return Events;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while scraping events from Tavastiaklubi.");
-                return new List<Event>();
+                return Events;
             }
         }
 

@@ -27,7 +27,7 @@ namespace Scraper
                     });
 
                     services.AddHostedService<ScraperService>();
-                    services.AddSingleton<ICleaner, StringCleaner>();
+                    services.AddSingleton<ICleaner, Cleaner>();
                     services.AddSingleton<DBManager>();
                     services.AddSingleton<ICityRepository, CityRepository>();
                     services.AddSingleton<IEventRepository, EventRepository>();
