@@ -54,6 +54,7 @@ namespace Scraper.Services.Scrapers
                 var nodes = doc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
 
                 _logger.LogInformation("Found {events.count} events from Möysän Musaklubi.", nodes.Count);
+                _logger.LogInformation("Starting to parse event details...");
 
                 // Update CityID and VenueID from database
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
@@ -80,7 +81,7 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.Count} events from Musaklubi.", Events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from Musaklubi.", Events.Count);
 
                 // Return the list of events
                 return Events;
@@ -88,7 +89,7 @@ namespace Scraper.Services.Scrapers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while scraping events from Musaklubi.");
-                return new List<Event>();
+                return Events;
             }
         }
 
@@ -132,6 +133,7 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
+                _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
                 return newEvent;
             }
             catch (Exception ex)
