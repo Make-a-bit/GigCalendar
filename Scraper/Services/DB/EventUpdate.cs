@@ -33,7 +33,7 @@ namespace Scraper.Services.DB
             using var cmd = new MySqlCommand(@"
                 UPDATE events SET event_price = @price
                 WHERE event_id = @id;", connection);
-            cmd.Parameters.AddWithValue("@price", eventToUpdate.PriceAsString);
+            cmd.Parameters.AddWithValue("@price", eventToUpdate.Price);
             cmd.Parameters.AddWithValue("@id", eventToUpdate.EventId);
 
             var result = await cmd.ExecuteNonQueryAsync();

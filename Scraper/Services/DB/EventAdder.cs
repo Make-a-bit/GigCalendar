@@ -38,7 +38,7 @@ namespace Scraper.Services.DB
             {
                 Value = newEvent.Date
             };
-            cmd.Parameters.Add(dateParam); cmd.Parameters.AddWithValue("@price", newEvent.PriceAsString);
+            cmd.Parameters.Add(dateParam); cmd.Parameters.AddWithValue("@price", newEvent.Price);
             cmd.Parameters.AddWithValue("@showtime", newEvent.HasShowtime);
 
             return await cmd.ExecuteNonQueryAsync() > 0;

@@ -10,7 +10,7 @@ namespace Scraper.Services
         /// </summary>
         /// <param name="input">The input string to clean.</param>
         /// <returns>The cleaned string.</returns>
-        public string EventCleaner(string input)
+        public string Clean(string input)
         {
             var cleanedString = input
             .Replace("&euro;", "€")
@@ -18,6 +18,7 @@ namespace Scraper.Services
             .Replace("&#x20AC;", "€")
             .Replace("&#8211;", "–")
             .Replace("&amp;", "&")
+            .Replace("&nbsp;", " ")
             .Replace("&#038;", "&");
 
             return cleanedString.Trim();

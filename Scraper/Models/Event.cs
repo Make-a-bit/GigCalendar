@@ -5,7 +5,7 @@ namespace Scraper.Models
         public int EventId { get; set; }
         public string? Artist { get; set; }
         public DateTime Date { get; set; }
-        public string? PriceAsString { get; set; }
+        public string? Price { get; set; }
         public City EventCity { get; set; } = new City();
         public Venue EventVenue { get; set; } = new Venue();
         public bool HasShowtime { get; set; } = true;
@@ -25,7 +25,7 @@ namespace Scraper.Models
             return string.Equals(Artist?.Trim(), other.Artist?.Trim(), StringComparison.OrdinalIgnoreCase)
                 && Date == other.Date
                 && string.Equals(EventVenue.Name?.Trim(), other.EventVenue.Name?.Trim(), StringComparison.OrdinalIgnoreCase)
-                && string.Equals(PriceAsString?.Trim(), other.PriceAsString?.Trim(), StringComparison.OrdinalIgnoreCase);
+                && string.Equals(Price?.Trim(), other.Price?.Trim(), StringComparison.OrdinalIgnoreCase);
         }
 
         public override int GetHashCode()
@@ -34,7 +34,7 @@ namespace Scraper.Models
                 Artist?.Trim().ToLowerInvariant(),
                 Date,
                 EventVenue.Name?.Trim().ToLowerInvariant(),
-                PriceAsString?.Trim().ToLowerInvariant()
+                Price?.Trim().ToLowerInvariant()
             );
         }
 
@@ -43,7 +43,7 @@ namespace Scraper.Models
             return (Artist ?? "") + " " +
                Date.ToString("yyyy-MM-dd HH:mm") + " " +
                (EventVenue.Name ?? "") + " " +
-               (PriceAsString ?? "");
+               (Price ?? "");
         }
     }
 }

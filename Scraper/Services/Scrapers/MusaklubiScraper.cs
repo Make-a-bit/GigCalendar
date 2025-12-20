@@ -65,7 +65,7 @@ namespace Scraper.Services.Scrapers
                     var dateNode = n.SelectSingleNode(".//span[contains(@class, 'mec-start-date')]");
 
                     // Clean and parse details nicely for the Event object
-                    var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
                     var eventDate = ParseDate(dateNode.InnerText.ToString());
 
                     // Create new Event object with extracted details
@@ -78,7 +78,7 @@ namespace Scraper.Services.Scrapers
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
                     newEvent.HasShowtime = false;
-                    newEvent.PriceAsString = null;
+                    newEvent.Price = null;
 
 
                     // Compare if events already contains the new event.

@@ -68,7 +68,7 @@ namespace Scraper.Services.Scrapers
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
 
                     // Clean and parse details nicely for the Event object
-                    var eventTitle = _cleaner.EventCleaner(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
+                    var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
                     var eventDate = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
                     var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
 
@@ -82,7 +82,7 @@ namespace Scraper.Services.Scrapers
                     newEvent.Artist = eventTitle;
                     newEvent.Date = eventDate;
                     newEvent.HasShowtime = true;
-                    newEvent.PriceAsString = eventPrice;
+                    newEvent.Price = eventPrice;
 
                     // Compare if events already contains the new event. If not, add it to the list.
                     if (!events.Exists(e => e.Equals(newEvent)))

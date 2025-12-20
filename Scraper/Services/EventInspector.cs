@@ -48,12 +48,12 @@ namespace Scraper.Services
                 var existingEvent = currentEvents.Find(e => e.IsSameEvent(item));
 
                 // If event exists but price has changed, update the price
-                if (existingEvent != null && (existingEvent.PriceAsString != item.PriceAsString))
+                if (existingEvent != null && (existingEvent.Price != item.Price))
                 {
                     _logger.LogInformation("Price change detected - DB: '{OldPrice}' -> New: '{NewPrice}' for {Event}",
-                  existingEvent.PriceAsString, item.PriceAsString, item.Artist);
+                  existingEvent.Price, item.Price, item.Artist);
 
-                    existingEvent.PriceAsString = item.PriceAsString;
+                    existingEvent.Price = item.Price;
                     var result = await _updater.UpdatePriceAsync(existingEvent);
 
                     // If update was successful, update current events list and log it

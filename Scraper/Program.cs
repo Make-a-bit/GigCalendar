@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Scraper.Repositories;
 using Scraper.Services;
 using Scraper.Services.DB;
-using Scraper.Services.Scrapers;
 
 namespace Scraper
 {
@@ -33,15 +32,21 @@ namespace Scraper
                     services.AddSingleton<ICityRepository, CityRepository>();
                     services.AddSingleton<IEventRepository, EventRepository>();
                     services.AddSingleton<IVenueRepository, VenueRepository>();
-                    services.AddSingleton<IEventUpdate, EventUpdate>();
                     services.AddTransient<IEventAdder, EventAdder>();
-                    services.AddTransient<IEventRemover, EventRemover>();
                     services.AddTransient<IEventInspector, EventInspector>();
-                    services.AddTransient<IEventScraper, MusaklubiScraper>();
-                    services.AddTransient<IEventScraper, SemifinalScraper>();
-                    services.AddTransient<IEventScraper, SibeliustaloScraper>();
-                    services.AddTransient<IEventScraper, TavastiaScraper>();
-                    services.AddTransient<IEventScraper, TorviScraper>();
+                    services.AddTransient<IEventRemover, EventRemover>();
+                    services.AddTransient<IEventUpdate, EventUpdate>();
+
+                    // Automated registration for all scrapers
+                    var scraperTypes = typeof(Program).Assembly.GetTypes()
+                    .Where(t => typeof(IEventScraper).IsAssignableFrom(t)
+                    && !t.IsInterface
+                    && !t.IsAbstract);
+
+                    foreach (var scraperType in scraperTypes)
+                    {
+                        services.AddTransient(typeof(IEventScraper), scraperType);
+                    }
                 });
 
     }
