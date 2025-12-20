@@ -129,7 +129,7 @@ namespace Scraper.Services.Scrapers
                     newEvent.HasShowtime = true;
 
                     var priceNode = node.SelectNodes(".//span[contains(@class, 'prices')]");
-                    newEvent.Price = _cleaner.Clean(ParseEventPrices(priceNode));
+                    newEvent.Price = _cleaner.CleanPrice(priceNode);
                 }
 
                 _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
@@ -142,34 +142,6 @@ namespace Scraper.Services.Scrapers
             }
         }
 
-        /// <summary>
-        /// Parses event prices from the given HTML nodes.
-        /// </summary>
-        /// <param name="nodes">HTML nodes containing price information</param>
-        /// <returns>Concatenated string of event prices</returns>
-        private string ParseEventPrices(HtmlNodeCollection nodes)
-        {
-            var priceString = string.Empty;
-
-            if (nodes == null)
-            {
-                return priceString;
-            }
-
-            foreach (var node in nodes)
-            {
-                if (priceString != string.Empty)
-                {
-                    priceString += " / ";
-                }
-
-                var cleanedPrice = _cleaner.Clean(node.InnerText);
-                cleanedPrice = cleanedPrice.Replace(" €", "€");
-                priceString += cleanedPrice;
-            }
-
-            return priceString;
-        }
 
         /// <summary>
         /// Parses a date string in the format dd.MM and returns a DateTime object.

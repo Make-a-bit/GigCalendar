@@ -13,10 +13,10 @@ namespace Scraper.Services.Scrapers
         private readonly ICityRepository _cityRepository;
         private readonly IVenueRepository _venueRepository;
 
-        public SemifinalScraper(ICleaner cleaner, 
-            IHttpClientFactory httpClientFactory, 
+        public SemifinalScraper(ICleaner cleaner,
+            IHttpClientFactory httpClientFactory,
             ICityRepository cityRepository,
-            IVenueRepository venueRepository, 
+            IVenueRepository venueRepository,
             ILogger<SemifinalScraper> logger)
         {
             _cleaner = cleaner;
@@ -39,9 +39,7 @@ namespace Scraper.Services.Scrapers
             try
             {
                 // Initialize variables
-                var events = new List<Event>();
                 HtmlDocument doc = new HtmlDocument();
-                HtmlDocument innerDoc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
@@ -51,8 +49,11 @@ namespace Scraper.Services.Scrapers
 
                 // Select event nodes
                 var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'tiketti-list')]");
-                innerDoc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = innerDoc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
+                doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = doc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
+
+                _logger.LogInformation("Fount {events.count} nodes from Semifinal.", nodes.Count);
+                _logger.LogInformation("Starting to parse event details...");
 
                 // Update CityID and VenueID from database
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
@@ -61,49 +62,46 @@ namespace Scraper.Services.Scrapers
                 // Iterate through each event node and extract details
                 foreach (var n in nodes)
                 {
-                    // Extract event details
+                    // Create new event
+                    var newEvent = new Event
+                    {
+                        EventCity = City,
+                        EventVenue = Venue,
+                    };
+
+                    // Parse event details
                     var titleNode = n.SelectSingleNode(".//h3");
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
                     var startNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
 
-                    // Clean and parse details nicely for the Event object
-                    var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
-                    var eventDate = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
-                    var eventPrice = _cleaner.PriceCleaner(priceNode?.InnerText.Trim() ?? "Ei hintatietoa");
-
-                    // Create new Event object with extracted details
-                    var newEvent = new Event();
-
-                    newEvent.EventVenue.Id = Venue.Id;
-                    newEvent.EventVenue.Name = Venue.Name;
-                    newEvent.EventCity.Id = City.Id;
-                    newEvent.EventCity.Name = City.Name;
-                    newEvent.Artist = eventTitle;
-                    newEvent.Date = eventDate;
+                    // Extract parsed details into Event object
+                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
+                    newEvent.Date = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
                     newEvent.HasShowtime = true;
-                    newEvent.Price = eventPrice;                  
+
+                    var eventPrices = priceNode.InnerText.Replace("Liput", "").Trim().Split('/');
+                    newEvent.Price = _cleaner.CleanPrice(eventPrices);
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
-                    if (!events.Exists(e => e.Equals(newEvent)))
+                    if (!Events.Exists(e => e.Equals(newEvent)))
                     {
-                        events.Add(newEvent);
+                        Events.Add(newEvent);
                     }
                 }
 
-                _logger.LogInformation("Scraped {events.Count} events from Semifinal.", events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from Semifinal.", Events.Count);
 
                 // Return the list of events
-                return events;
+                return Events;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while scraping events from Semifinal.");
-                return new List<Event>();
+                return Events;
             }
         }
-
 
         /// <summary>
         /// Parses a date string in the format dd.MM and returns a DateTime object.
