@@ -62,6 +62,8 @@ namespace Scraper.Services.Scrapers
                 int eventIndex = 0;
                 foreach (var node in nodes)
                 {
+                    eventIndex++;
+
                     // Skip sticky events and advertisements
                     if (node.InnerHtml.Contains("stickyevent") || node.InnerHtml.Contains("advert"))
                     {
@@ -89,7 +91,7 @@ namespace Scraper.Services.Scrapers
                     if (eventIndex < nodes.Count)
                     {
                         var delayMs = Delay.Calculate();
-                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex, nodes.Count);
+                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex + 1, nodes.Count);
 
                         await Task.Delay(delayMs);
                     }

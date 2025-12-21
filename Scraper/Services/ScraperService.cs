@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Scraper.Models;
 using Scraper.Repositories;
 using Scraper.Services.DB;
+using System.Diagnostics;
 
 namespace Scraper.Services
 {
@@ -48,6 +49,9 @@ namespace Scraper.Services
             {
                 try
                 {
+                    Stopwatch watch = new Stopwatch();
+                    watch.Start();
+
                     _logger.LogInformation("Starting scraping process...");
 
                     // Run each scraper and display results
@@ -61,9 +65,14 @@ namespace Scraper.Services
                     await _remover.CleanupOldEvents(_events);
                     _events.RemoveAll(e => e.Date.Date < DateTime.Now.Date);
 
+                    watch.Stop();
+
                     // Calculate delay until next run
                     var delay = CalculateDelay();
-                    _logger.LogInformation("Scraping completed. Next run at {NextRun}",
+                    _logger.LogInformation("Scraping completed and took {hours}:{minutes}:{seconds}. Next run at {NextRun}",
+                        watch.Elapsed.Hours,
+                        watch.Elapsed.Minutes,
+                        watch.Elapsed.Seconds,
                         DateTime.Now.Add(delay).ToString("yyyy-MM-dd HH:mm"));
 
                     await Task.Delay(delay, stoppingToken);
