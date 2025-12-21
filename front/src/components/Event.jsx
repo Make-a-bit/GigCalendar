@@ -4,7 +4,7 @@ import DayComponent from "./DayComponent";
 import ArtistComponent from "./ArtistComponent";
 import LocationComponent from "./LocationComponent";
 
-const Event = ({ props, theme }) => {
+const Event = ({ props, theme, isFavorite }) => {
   // Parse the date to get day number
   const dateStr = props.event_date;
   const [datePart, timePart] = dateStr.split(" ");
@@ -22,8 +22,17 @@ const Event = ({ props, theme }) => {
         mb: 1,
         borderBottom: `1px solid ${theme.primary}`,
         pb: 1,
+        backgroundColor: isFavorite ? "#fff9c4" : "transparent",
+        borderLeft: isFavorite ? `4px solid #FFD700` : "none", // Gold left border
+        pl: isFavorite ? 1 : 0, // Add padding if highlighted
+        borderRadius: isFavorite ? 1 : 0,
+        transition: "all 0.2s ease-in-out", // Smooth transition
         "&:last-child": {
           borderBottom: "none",
+        },
+        // Optional: Add hover effect for favorites
+        "&:hover": {
+          backgroundColor: isFavorite ? "rgba(255, 235, 59, 0.3)" : "transparent",
         },
       }}
     >

@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { Autocomplete, Box, FormControl, Paper, TextField } from "@mui/material";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { Autocomplete, Box, Button, FormControl, Paper, TextField } from "@mui/material";
 import Event from "../components/Event.jsx";
 import MonthComponent from "../components/MonthComponent.jsx";
+import FavoriteArtists from "../components/favoriteArtists.jsx";
+import { isFavoriteArtist, countFavoriteEvents } from "../utils/favoriteHelpers.js";
 import theme from "../utils/theme.js";
+import FavoriteDrawer from "../components/FavoriteDrawer.jsx";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 // Function to fetch data from the API
 const fetchData = async () => {
@@ -20,6 +25,9 @@ const Home = () => {
   const [events, setEvents] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
   const [selectedVenues, setSelectedVenues] = useState([]);
+  const [favoriteArtists, setFavoriteArtists] = useState([]);
+  const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   // Fetch data on component mount
   useEffect(() => {
@@ -29,6 +37,12 @@ const Home = () => {
     };
     loadEvents();
   }, []);
+
+  useEffect(() => {
+    if (favoriteArtists.length === 0 && showOnlyFavorites) {
+      setShowOnlyFavorites(false);
+    }
+  }, [favoriteArtists, showOnlyFavorites]);
 
   // Get unique cities:
   const getUniqueCities = (events) => {
@@ -50,12 +64,16 @@ const Home = () => {
   };
 
   // Filter events based on selected venue
-  const filteredEvents = events.filter((event) => {
-    const cityMatch = selectedCities.length === 0 || selectedCities.includes(event.city_name);
-    const venueMatch = selectedVenues.length === 0 || selectedVenues.includes(event.venue_name);
+  const filteredEvents = useMemo(() => {
+    return events.filter((event) => {
+      const cityMatch = selectedCities.length === 0 || selectedCities.includes(event.city_name);
+      const venueMatch = selectedVenues.length === 0 || selectedVenues.includes(event.venue_name);
+      const favoriteMatch =
+        !showOnlyFavorites || isFavoriteArtist(event.event_artist, favoriteArtists);
 
-    return cityMatch && venueMatch;
-  });
+      return cityMatch && venueMatch && favoriteMatch;
+    });
+  }, [events, selectedCities, selectedVenues, showOnlyFavorites, favoriteArtists]);
 
   // Group events by month
   const groupEventsByMonth = (events) => {
@@ -80,6 +98,10 @@ const Home = () => {
 
   // Get grouped events
   const groupedEvents = groupEventsByMonth(filteredEvents);
+
+  const handleFavoritesChange = useCallback((newFavorites) => {
+    setFavoriteArtists(newFavorites);
+  }, []);
 
   return (
     <Box
@@ -127,6 +149,52 @@ const Home = () => {
               borderRadius: "2px",
             }}
           />
+        </Box>
+
+        {/* Favorite controls */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 2,
+            mb: 3,
+            flexWrap: "wrap",
+          }}
+        >
+          {/* Button to open favorites drawer */}
+          <Button
+            variant="outlined"
+            onClick={() => setDrawerOpen(true)}
+            startIcon={favoriteArtists.length > 0 ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            sx={{
+              borderColor: theme.primary,
+              color: theme.primary,
+              "&:hover": {
+                borderColor: theme.accent,
+                backgroundColor: "rgba(255, 99, 132, 0.1)",
+              },
+            }}
+          >
+            Suosikit ({favoriteArtists.length})
+          </Button>
+
+          {/* Toggle to show only favorites */}
+          {favoriteArtists.length > 0 && (
+            <Button
+              variant={showOnlyFavorites ? "contained" : "outlined"}
+              onClick={() => setShowOnlyFavorites(!showOnlyFavorites)}
+              sx={{
+                backgroundColor: showOnlyFavorites ? theme.primary : "transparent",
+                color: showOnlyFavorites ? "#fff" : theme.primary,
+                borderColor: theme.primary,
+                "&:hover": {
+                  backgroundColor: showOnlyFavorites ? theme.accent : "rgba(255, 99, 132, 0.1)",
+                },
+              }}
+            >
+              {showOnlyFavorites ? "Näytä kaikki" : "Näytä vain suosikit"}
+            </Button>
+          )}
         </Box>
 
         <FormControl
@@ -194,7 +262,12 @@ const Home = () => {
             <Box component="section" key={month} sx={{ mb: 3 }}>
               <MonthComponent month={month} theme={theme} />
               {monthEvents.map((event) => (
-                <Event key={event.event_id} props={event} theme={theme} />
+                <Event
+                  key={event.event_id}
+                  props={event}
+                  theme={theme}
+                  isFavorite={isFavoriteArtist(event.event_artist, favoriteArtists)}
+                />
               ))}
             </Box>
           ))
@@ -202,6 +275,14 @@ const Home = () => {
           <Box sx={{ textAlign: "center", color: theme.textSecondary, py: 4 }}>Ei keikkoja</Box>
         )}
       </Paper>
+
+      {/* Drawer for managing favorites */}
+      <FavoriteDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        theme={theme}
+        onFavoritesChange={handleFavoritesChange}
+      />
     </Box>
   );
 };
