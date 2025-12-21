@@ -43,16 +43,15 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Starting to scrape Torvi events...");
 
                 // Initialize variables
-                var doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
                 var url = "https://ravintolatorvi.fi/tapahtumat/";
                 var html = await client.GetStringAsync(url);
-                doc.LoadHtml(html);
+                Doc.LoadHtml(html);
 
                 // Select event nodes
-                var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'event')]");
+                var nodes = Doc.DocumentNode.SelectNodes("//div[contains(@class,'event')]");
 
                 _logger.LogInformation("Found {events.count} nodes from Torvi", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");

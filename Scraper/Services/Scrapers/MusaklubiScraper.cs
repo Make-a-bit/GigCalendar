@@ -40,18 +40,17 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Starting to scrape Musaklubi events...");
 
                 // Initialize variables
-                HtmlDocument doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
                 var url = "https://moysa.fi/keikat/";
                 var html = await client.GetStringAsync(url);
-                doc.LoadHtml(html);
+                Doc.LoadHtml(html);
 
                 // Select event nodes
-                var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'mec-event-list-classic')]");
-                doc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = doc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
+                var htmlNodes = Doc.DocumentNode.SelectSingleNode("//div[contains(@class,'mec-event-list-classic')]");
+                Doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = Doc.DocumentNode.SelectNodes(".//article[contains(@class,'mec-event-article')]");
 
                 _logger.LogInformation("Found {events.count} events from Möysän Musaklubi.", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");
@@ -61,6 +60,7 @@ namespace Scraper.Services.Scrapers
                 Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
+                int eventIndex = 0;
                 foreach (var node in nodes)
                 {
                     // Initialize new Event object
@@ -71,13 +71,22 @@ namespace Scraper.Services.Scrapers
                     };
 
                     // Parse event detail page and extract event details
-                    newEvent = await ParseEventDetailsPage(node.InnerHtml, newEvent);
+                    newEvent = await ParseEventDetailsPage(node.InnerHtml, newEvent, client);
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
                     if (!Events.Exists(e => e.Equals(newEvent)))
                     {
                         Events.Add(newEvent);
+                    }
+
+                    // Add delay before next iteration
+                    if (eventIndex < nodes.Count)
+                    {
+                        var delayMs = Delay.Calculate();
+                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex, nodes.Count);
+
+                        await Task.Delay(delayMs);
                     }
                 }
 
@@ -94,7 +103,7 @@ namespace Scraper.Services.Scrapers
         }
 
 
-        private async Task<Event> ParseEventDetailsPage(string text, Event newEvent)
+        private async Task<Event> ParseEventDetailsPage(string text, Event newEvent, HttpClient client)
         {
             try
             {
@@ -104,7 +113,6 @@ namespace Scraper.Services.Scrapers
                 var eventUrl = strings[2].Split('"')[1];
 
                 var doc = new HtmlDocument();
-                using var client = _httpClientFactory.CreateClient();
                 var html = await client.GetStringAsync(eventUrl);
                 doc.LoadHtml(html);
 

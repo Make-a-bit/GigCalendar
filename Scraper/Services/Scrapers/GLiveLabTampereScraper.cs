@@ -38,19 +38,18 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Starting to scrape G Livelab Tampere events...");
 
                 // Initialize variables
-                HtmlDocument doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
                 int skippedCount = 0;
 
                 // Fetch and parse the HTML document
                 var url = "https://glivelab.fi/tampere/?show_all=1";
                 var html = await client.GetStringAsync(url);
-                doc.LoadHtml(html);
+                Doc.LoadHtml(html);
 
                 // Select event nodes
-                var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'segmented-control-tab')]");
-                doc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = doc.DocumentNode.SelectNodes(".//li[contains(@class, 'item')]");
+                var htmlNodes = Doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'segmented-control-tab')]");
+                Doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = Doc.DocumentNode.SelectNodes(".//li[contains(@class, 'item')]");
 
                 _logger.LogInformation("Found {events.count} nodes from G Livelab Tampere.", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");
@@ -60,6 +59,7 @@ namespace Scraper.Services.Scrapers
                 Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
+                int eventIndex = 0;
                 foreach (var node in nodes)
                 {
                     // Skip sticky events and advertisements
@@ -77,12 +77,21 @@ namespace Scraper.Services.Scrapers
                     };
 
                     // Parse event detail page for more information
-                    newEvent = await ParseEventDetailPage(node.InnerHtml, newEvent);
+                    newEvent = await ParseEventDetailPage(node.InnerHtml, newEvent, client);
 
                     // Compare if events already contains the new event. If not, add it to the list.
                     if (!Events.Exists(e => e.Equals(newEvent)))
                     {
                         Events.Add(newEvent);
+                    }
+
+                    // Add delay before next iteration
+                    if (eventIndex < nodes.Count)
+                    {
+                        var delayMs = Delay.Calculate();
+                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex, nodes.Count);
+
+                        await Task.Delay(delayMs);
                     }
                 }
 
@@ -102,7 +111,7 @@ namespace Scraper.Services.Scrapers
         /// <param name="text">HTML content of the event detail page</param>
         /// <param name="newEvent">Event object to populate with parsed details</param>
         /// <returns>Populated Event object with details extracted from the page</returns>
-        private async Task<Event> ParseEventDetailPage(string text, Event newEvent)
+        private async Task<Event> ParseEventDetailPage(string text, Event newEvent, HttpClient client)
         {
             try
             {
@@ -112,7 +121,6 @@ namespace Scraper.Services.Scrapers
                 var pageUrl = strings[1];
 
                 var doc = new HtmlDocument();
-                using var client = _httpClientFactory.CreateClient();
                 var html = await client.GetStringAsync(pageUrl);
                 doc.LoadHtml(html);
 

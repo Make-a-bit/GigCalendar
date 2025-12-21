@@ -36,7 +36,6 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Starting to scrape Kulttuuritalo events...");
 
                 //Initialize variables
-                HtmlDocument doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Add Browser headers
@@ -49,12 +48,12 @@ namespace Scraper.Services.Scrapers
                 await Task.Delay(Random.Shared.Next(1000, 2000));
 
                 var html = await client.GetStringAsync(url);
-                doc.LoadHtml(html);
+                Doc.LoadHtml(html);
 
                 // Select event nodes
-                var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'pp-content-posts')]");
-                doc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = doc.DocumentNode.SelectNodes(".//div[contains(@class, 'tapahtuma type-tapahtuma')]");
+                var htmlNodes = Doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'pp-content-posts')]");
+                Doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = Doc.DocumentNode.SelectNodes(".//div[contains(@class, 'tapahtuma type-tapahtuma')]");
 
                 _logger.LogInformation("Found {events.count} nodes from Kulttuuritalo.", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");
@@ -85,10 +84,9 @@ namespace Scraper.Services.Scrapers
                     // Add delay before next iteration
                     if (eventIndex < nodes.Count) 
                     {
-                        // Random delay between 3-5 seconds
-                        var delayMs = Random.Shared.Next(3000, 5000);
-                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...",
-                            delayMs, eventIndex, nodes.Count);
+                        var delayMs = Delay.Calculate();
+                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex, nodes.Count);
+
                         await Task.Delay(delayMs);
                     }
                 }

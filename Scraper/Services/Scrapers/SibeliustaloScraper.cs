@@ -41,16 +41,15 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Starting to scrape Sibeliustalo events...");
 
                 // Initialize variables
-                var doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
                 var url = "https://www.sibeliustalo.fi/tapahtumakalenteri/";
                 var html = await client.GetStringAsync(url);
-                doc.LoadHtml(html);
+                Doc.LoadHtml(html);
 
                 // Select event nodes
-                var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class,'col-md-9')]");
+                var nodes = Doc.DocumentNode.SelectNodes("//div[contains(@class,'col-md-9')]");
 
                 _logger.LogInformation("Found {events.count} nodes from Sibeliustalo.", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");

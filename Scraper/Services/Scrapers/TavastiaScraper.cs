@@ -41,18 +41,17 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Starting to scrape Tavastiaklubi events...");
 
                 // Initialize variables
-                HtmlDocument doc = new HtmlDocument();
                 using var client = _httpClientFactory.CreateClient();
 
                 // Fetch and parse the HTML document
                 var url = "https://tavastiaklubi.fi/?show_all=1";
                 var html = await client.GetStringAsync(url);
-                doc.LoadHtml(html);
+                Doc.LoadHtml(html);
 
                 // Select event nodes
-                var htmlNodes = doc.DocumentNode.SelectSingleNode("//div[contains(@class,'tiketti-list')]");
-                doc.LoadHtml(htmlNodes.InnerHtml);
-                var nodes = doc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
+                var htmlNodes = Doc.DocumentNode.SelectSingleNode("//div[contains(@class,'tiketti-list')]");
+                Doc.LoadHtml(htmlNodes.InnerHtml);
+                var nodes = Doc.DocumentNode.SelectNodes(".//a[contains(@class,'tiketti-list-item')]");
 
                 _logger.LogInformation("Found {events.count} nodes from Tavastiaklubi", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");

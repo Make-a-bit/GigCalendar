@@ -1,5 +1,5 @@
 using HtmlAgilityPack;
-using System.Text.RegularExpressions;
+using System.Net;
 
 namespace Scraper.Services
 {
@@ -7,14 +7,20 @@ namespace Scraper.Services
     {
         public string Clean(string input)
         {
-            var cleanedString = input
-            .Replace("&euro;", "€")
-            .Replace("&#8364;", "€")
-            .Replace("&#x20AC;", "€")
-            .Replace("&#8211;", "–")
-            .Replace("&amp;", "&")
-            .Replace("&nbsp;", " ")
-            .Replace("&#038;", "&");
+            if (string.IsNullOrEmpty(input))
+                return string.Empty;
+
+            var decoded = WebUtility.HtmlDecode(input);
+            decoded = HtmlEntity.DeEntitize(decoded);
+
+            var cleanedString = decoded
+                .Replace("&euro;", "€")
+                .Replace("&#8364;", "€")
+                .Replace("&#x20AC;", "€")
+                .Replace("&#8211;", "–")
+                .Replace("&amp;", "&")
+                .Replace("&nbsp;", " ")
+                .Replace("&#038;", "&");
 
             return cleanedString.Trim();
         }
