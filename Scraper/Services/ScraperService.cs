@@ -89,13 +89,13 @@ namespace Scraper.Services
 
 
         /// <summary>
-        /// Calculates the delay until the next scheduled run at 03:00
+        /// Calculates the delay until the next scheduled run at 01:00
         /// </summary>
         /// <returns></returns>
         private static TimeSpan CalculateDelay()
         {
             var now = DateTime.Now;
-            var nextRun = DateTime.Today.AddDays(1).AddHours(3);
+            var nextRun = DateTime.Today.AddDays(1).AddHours(1);
 
             var delay = nextRun - now;
 

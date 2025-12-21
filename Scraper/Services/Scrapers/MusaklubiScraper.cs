@@ -125,7 +125,8 @@ namespace Scraper.Services.Scrapers
 
                     if (detailNodes.Count > 2)
                     {
-                        newEvent.Price = detailNodes[2].InnerText;
+                        newEvent.Price = detailNodes[2].InnerText
+                            .Replace(".", ",");
                     }
                     else
                     {

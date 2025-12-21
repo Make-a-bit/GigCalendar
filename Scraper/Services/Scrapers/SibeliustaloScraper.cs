@@ -26,6 +26,7 @@ namespace Scraper.Services.Scrapers
             _venueRepository = venueRepository;
 
             City.Name = "Lahti";
+            Venue.Name = "Sibeliustalo";
         }
 
 
@@ -54,8 +55,9 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Found {events.count} nodes from Sibeliustalo.", nodes.Count);
                 _logger.LogInformation("Starting to parse event details...");
 
-                // Update CityId from database
+                // Update CityId and VenueId from database
                 City.Id = await _cityRepository.GetCityIdAsync(City.Name);
+                Venue.Id = await _venueRepository.GetVenueIdAsync(Venue.Name, City.Id);
 
                 // Iterate through each event node and extract details
                 foreach (var n in nodes)
@@ -67,14 +69,10 @@ namespace Scraper.Services.Scrapers
                     var priceText = priceNode.InnerText
                         .Replace("Liput:", "")
                         .Replace("(Lippu.fi)", "")
-                        .Replace("(Ticketmaster", "")
+                        .Replace("(Ticketmaster)", "")
                         .Trim();
                     var prices = priceText.Split("/");               
                     var placeNode = n.SelectSingleNode(".//h6");
-
-                    // Update VenueId from database
-                    Venue.Id = await _venueRepository.GetVenueIdAsync(placeNode.InnerText.Trim(), City.Id);
-                    Venue.Name = placeNode.InnerText.Trim();
 
                     // Clean and parse event details for the Event object
                     var eventTitle = _cleaner.Clean(titleNode.InnerText.Trim());
