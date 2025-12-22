@@ -86,7 +86,7 @@ namespace Scraper.Services.Scrapers
                     // Add delay before next iteration
                     if (eventIndex < nodes.Count) 
                     {
-                        var delayMs = Delay.Calculate();
+                        var delayMs = Delay.CalculateSeconds();
                         _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex + 1, nodes.Count);
 
                         await Task.Delay(delayMs);

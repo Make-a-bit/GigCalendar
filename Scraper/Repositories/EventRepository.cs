@@ -12,7 +12,7 @@ namespace Scraper.Repositories
         /// <summary>
         /// Fetches all events from the database.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>List of events</returns>
         public Task<List<Event>> GetEventsAsync();
     }
 

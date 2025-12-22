@@ -51,8 +51,8 @@ namespace Scraper.Services.Scrapers
                 Doc.LoadHtml(htmlNodes.InnerHtml);
                 var nodes = Doc.DocumentNode.SelectNodes(".//li[contains(@class, 'item')]");
 
-                _logger.LogInformation("Found {events.count} nodes from G Livelab Tampere.", nodes.Count);
-                _logger.LogInformation("Starting to parse event details...");
+                _logger.LogInformation("Found {events.count} event pages from G Livelab Tampere.", nodes.Count);
+                _logger.LogInformation("Starting to parse event pages...");
 
                 // Update CityID and VenueID from database
                 City.Id = await  _cityRepository.GetCityIdAsync(City.Name);
@@ -67,6 +67,7 @@ namespace Scraper.Services.Scrapers
                     // Skip sticky events and advertisements
                     if (node.InnerHtml.Contains("stickyevent") || node.InnerHtml.Contains("advert"))
                     {
+                        _logger.LogInformation("Skipping an ad or other non-event node...");
                         skippedCount++;
                         continue;
                     }
@@ -90,14 +91,14 @@ namespace Scraper.Services.Scrapers
                     // Add delay before next iteration
                     if (eventIndex < nodes.Count)
                     {
-                        var delayMs = Delay.Calculate();
+                        var delayMs = Delay.CalculateSeconds();
                         _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex + 1, nodes.Count);
 
                         await Task.Delay(delayMs);
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.count} events from G Livelab Tampere. Skipped {skipped} nodes.", Events.Count, skippedCount);
+                _logger.LogInformation("Parsed {events.count} events from G Livelab Tampere. Skipped {skipped} pages.", Events.Count, skippedCount);
                 return Events;
             }
             catch (Exception ex) 
@@ -117,7 +118,7 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
-                _logger.LogInformation("Parsing event detail page...");
+                _logger.LogInformation("Parsing event page...");
 
                 var strings = text.Split('"');
                 var pageUrl = strings[1];
@@ -147,7 +148,7 @@ namespace Scraper.Services.Scrapers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while parsing event detail page.");
+                _logger.LogError(ex, "An error occurred while parsing event page.");
                 return newEvent;
             }
         }

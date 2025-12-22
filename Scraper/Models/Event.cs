@@ -10,7 +10,11 @@ namespace Scraper.Models
         public Venue EventVenue { get; set; } = new Venue();
         public bool HasShowtime { get; set; } = true;
 
-
+        /// <summary>
+        /// Compares if two events are the same based on Artist, Date, and Venue Name.
+        /// </summary>
+        /// <param name="other">The other event to compare with.</param>
+        /// <returns>True if the events are the same; otherwise, false.</returns>
         public bool IsSameEvent(Event other)
         {
             if (other == null) return false;

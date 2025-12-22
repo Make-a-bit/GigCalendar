@@ -67,12 +67,14 @@ namespace Scraper.Services
 
                     watch.Stop();
 
-                    // Calculate delay until next run
-                    var delay = CalculateDelay();
-                    _logger.LogInformation("Scraping completed and took {hours}:{minutes}:{seconds}. Next run at {NextRun}",
+                    // CalculateSeconds delay until next run
+                    var delay = Delay.CalculateNextRun();
+                    _logger.LogInformation("Scraping completed and took {hours}:{minutes}:{seconds}. " +
+                        "Current events count {events}. Next run at {NextRun}",
                         watch.Elapsed.Hours,
                         watch.Elapsed.Minutes,
                         watch.Elapsed.Seconds,
+                        _events.Count,
                         DateTime.Now.Add(delay).ToString("yyyy-MM-dd HH:mm"));
 
                     await Task.Delay(delay, stoppingToken);
@@ -94,28 +96,6 @@ namespace Scraper.Services
             }
 
             _logger.LogInformation("Closing down scraper service...");
-        }
-
-
-        /// <summary>
-        /// Calculates the delay until the next scheduled run at 01:00
-        /// </summary>
-        /// <returns></returns>
-        private static TimeSpan CalculateDelay()
-        {
-            var now = DateTime.Now;
-            var nextRun = DateTime.Today.AddDays(1).AddHours(1);
-
-            var delay = nextRun - now;
-
-            // Safety check: if delay is negative or too small, schedule for next day
-            if (delay.TotalHours < 1)
-            {
-                nextRun = nextRun.AddDays(1);
-                delay = nextRun - now;
-            }
-
-            return delay;
         }
     }
 }
