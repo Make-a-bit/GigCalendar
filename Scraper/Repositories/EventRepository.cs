@@ -55,7 +55,7 @@ namespace Scraper.Repositories
                 ev.Artist = reader.IsDBNull(reader.GetOrdinal("event_artist"))
                     ? ""
                     : reader.GetString("event_artist");
-                ev.Date = reader.GetDateTime("event_date");
+                ev.Showtime = reader.GetDateTime("event_date");
                 ev.Price = reader.IsDBNull(reader.GetOrdinal("event_price"))
                     ? string.Empty
                     : reader.GetString("event_price");

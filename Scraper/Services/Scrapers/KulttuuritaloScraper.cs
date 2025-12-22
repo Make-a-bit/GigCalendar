@@ -133,7 +133,7 @@ namespace Scraper.Services.Scrapers
 
                     var dateNode = node.SelectSingleNode(".//h2");
                     var timeNode = node.SelectSingleNode(".//div[contains(@class, 'fl-callout-text-wrap')]");
-                    newEvent.Date = ParseShowtime(dateNode.InnerText, timeNode.InnerText);
+                    newEvent.Showtime = ParseShowtime(dateNode.InnerText, timeNode.InnerText);
                     newEvent.HasShowtime = true;
 
                     var pricenodes = node.SelectNodes("//div[contains(@class, 'fl-module fl-module-rich-text fl-rich-text')]");

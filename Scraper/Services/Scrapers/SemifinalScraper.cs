@@ -76,7 +76,7 @@ namespace Scraper.Services.Scrapers
 
                     // Extract parsed details into Event object
                     newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
-                    newEvent.Date = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
+                    newEvent.Showtime = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
                     newEvent.HasShowtime = true;
 
                     var eventPrices = priceNode.InnerText.Replace("Liput", "").Trim().Split('/');

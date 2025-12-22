@@ -130,7 +130,7 @@ namespace Scraper.Services.Scrapers
                     TimeOnly showtime = TimeOnly.Parse(detailNodes[1].InnerText);
                     DateTime eventDate = new DateTime(date, showtime);
                     
-                    newEvent.Date = eventDate;
+                    newEvent.Showtime = eventDate;
                     newEvent.HasShowtime = true;
 
                     if (detailNodes.Count > 2)

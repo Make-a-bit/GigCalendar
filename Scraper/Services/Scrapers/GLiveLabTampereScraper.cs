@@ -135,7 +135,7 @@ namespace Scraper.Services.Scrapers
                     newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Split(',')[0].Trim());
 
                     var dateNode = node.SelectSingleNode(".//div[contains(@class, 'datetime')]");
-                    newEvent.Date = ParseDate(dateNode?.InnerText.Trim() ?? string.Empty);
+                    newEvent.Showtime = ParseDate(dateNode?.InnerText.Trim() ?? string.Empty);
                     newEvent.HasShowtime = true;
 
                     var priceNode = node.SelectNodes(".//span[contains(@class, 'prices')]");

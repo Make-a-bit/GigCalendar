@@ -64,7 +64,7 @@ namespace Scraper.Services
                     
                     // Remove old events from the database and list
                     await _remover.CleanupOldEvents(_events);
-                    _events.RemoveAll(e => e.Date.Date < DateTime.Now.Date);
+                    _events.RemoveAll(e => e.Showtime.Date < DateTime.Now.Date);
 
                     watch.Stop();
 

@@ -118,7 +118,7 @@ namespace Scraper.Services.Scrapers
 
                 var dateNode = details.SelectSingleNode(".//span[contains(@class, 'mec-start-date-label')]");
                 var timeNode = details.SelectSingleNode(".//div[contains(@class, 'single-event-time')]");
-                newEvent.Date = ParseShowtime(dateNode.InnerText, timeNode.InnerText);
+                newEvent.Showtime = ParseShowtime(dateNode.InnerText, timeNode.InnerText);
                 newEvent.HasShowtime = true;
 
                 var priceNode = details.SelectSingleNode(".//dd[contains(@class, 'event-cost')]");

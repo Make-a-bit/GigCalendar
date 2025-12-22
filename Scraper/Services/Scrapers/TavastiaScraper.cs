@@ -89,7 +89,7 @@ namespace Scraper.Services.Scrapers
                         EventCity = City,
                         EventVenue = Venue,
                         Artist = eventTitle,
-                        Date = eventDate,
+                        Showtime = eventDate,
                         HasShowtime = true,
                         Price = priceText,
                     };

@@ -70,7 +70,7 @@ namespace Scraper.Services.Scrapers
 
                     // Extract parsed details for Event object
                     newEvent.Artist = CleanEventTitle(titleNode.InnerText.Trim());
-                    newEvent.Date = ParseDate(dateNode.InnerText, infoNode.InnerText.Trim());
+                    newEvent.Showtime = ParseDate(dateNode.InnerText, infoNode.InnerText.Trim());
                     newEvent.HasShowtime = true;
                     newEvent.Price = ParsePrice(infoNode.InnerText);
 

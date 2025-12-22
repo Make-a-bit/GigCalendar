@@ -36,7 +36,7 @@ namespace Scraper.Services.DB
             cmd.Parameters.AddWithValue("@artist", newEvent.Artist);
             var dateParam = new MySqlParameter("@date", MySqlDbType.DateTime)
             {
-                Value = newEvent.Date
+                Value = newEvent.Showtime
             };
             cmd.Parameters.Add(dateParam); cmd.Parameters.AddWithValue("@price", newEvent.Price);
             cmd.Parameters.AddWithValue("@showtime", newEvent.HasShowtime);
