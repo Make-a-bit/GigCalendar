@@ -119,7 +119,7 @@ namespace Scraper.Services.Scrapers
         {
             var priceString = string.Empty;
             var infoStrings = infoNode.Split('\n');
-            
+
             foreach (var info in infoStrings)
             {
                 if (info.Contains(" €"))
@@ -143,7 +143,8 @@ namespace Scraper.Services.Scrapers
         private static DateTime ParseDate(string date, string time)
         {
             var now = DateTime.Now;
-            int year, month, day, hours, minutes = 0;
+            int year, month, day, hours;
+            int minutes = 0;
 
             // Parse event date
             var dateStrings = date.Split(' ');
