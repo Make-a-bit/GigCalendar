@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Scraper.Models;
 using Scraper.Repositories;
 using Scraper.Services.DB;
+using Scraper.Services.Scrapers;
 using System.Diagnostics;
 
 namespace Scraper.Services
@@ -81,6 +82,7 @@ namespace Scraper.Services
                 }
                 catch (OperationCanceledException) 
                 {
+                    _logger.LogInformation("Scraper service is stopping due to cancellation request...");
                     break;
                 }
                 catch (Exception ex)
@@ -94,7 +96,6 @@ namespace Scraper.Services
                     await Task.Delay(errorDelay, stoppingToken);
                 }
             }
-
             _logger.LogInformation("Closing down scraper service...");
         }
     }
