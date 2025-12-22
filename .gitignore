@@ -370,3 +370,5 @@ FodyWeavers.xsd
 **/.env.local
 # Only allow .env.example to be committed (template with no secrets):
 !**/.env.example
+
+CLAUDE.md

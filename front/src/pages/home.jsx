@@ -156,7 +156,6 @@ const Home = () => {
             display: "flex",
             justifyContent: "center",
             gap: 2,
-            mb: 3,
             flexWrap: "wrap",
           }}
         >
@@ -198,7 +197,6 @@ const Home = () => {
 
         <FormControl
           sx={{
-            mt: 2,
             width: "100%",
             maxWidth: 300,
           }}
