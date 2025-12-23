@@ -79,8 +79,10 @@ namespace Scraper.Services.Scrapers
                     newEvent.Showtime = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
                     newEvent.HasShowtime = true;
 
-                    var eventPrices = priceNode.InnerText.Replace("Liput", "").Trim().Split('/');
+                    var eventPrices = priceNode.InnerText.Split('/');
                     newEvent.Price = _cleaner.CleanPrice(eventPrices);
+
+                    _logger.LogInformation("Found event {event}.", newEvent.ToString());
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
