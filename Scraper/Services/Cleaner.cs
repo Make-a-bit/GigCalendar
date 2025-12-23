@@ -19,8 +19,11 @@ namespace Scraper.Services
                 .Replace("&#x20AC;", "€")
                 .Replace("&#8211;", "–")
                 .Replace("&amp;", "&")
-                .Replace("&nbsp;", " ")
-                .Replace("&#038;", "&");
+                .Replace("&#038;", "&")
+                .Replace('\u00A0', ' ')
+                .Replace('\u202F', ' ')
+                .Replace('\u2009', ' ')
+                .Replace("&nbsp;", " ");
 
             return cleanedString.Trim();
         }
