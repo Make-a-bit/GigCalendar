@@ -2,6 +2,7 @@ using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
 using Scraper.Repositories;
+using System.Net;
 
 namespace Scraper.Services.Scrapers
 {
@@ -13,7 +14,7 @@ namespace Scraper.Services.Scrapers
         protected readonly ICityRepository _cityRepository;
         protected readonly IVenueRepository _venueRepository;
 
-        protected abstract string ScrapeUrl {  get; }
+        protected abstract string ScrapeUrl { get; }
 
         protected GLiveLabBaseScraper(
             ICleaner cleaner,
@@ -95,7 +96,7 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.count} events from {venue}. Skipped {skipped} pages.", 
+                _logger.LogInformation("Parsed {events.count} events from {venue}. Skipped {skipped} pages.",
                     Events.Count, Venue.Name, skippedCount);
 
                 return Events;
@@ -123,6 +124,12 @@ namespace Scraper.Services.Scrapers
 
                 var strings = text.Split('"');
                 var pageUrl = strings[1];
+
+                if (!IsValidUrl(pageUrl))
+                {
+                    _logger.LogWarning("Blocked potentially malicious URL: {url}", pageUrl);
+                    return newEvent;
+                }
 
                 var doc = new HtmlDocument();
                 var html = await client.GetStringAsync(pageUrl);

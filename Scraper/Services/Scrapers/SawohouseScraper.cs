@@ -105,10 +105,16 @@ namespace Scraper.Services.Scrapers
 
                 var urlNode = node.SelectSingleNode(".//div[contains(@class, 'mec-event-image')]");
                 var urls = urlNode.InnerHtml.Split("href=");
-                var url = urls[1].Split('"')[1].Trim();
+                var pageUrl = urls[1].Split('"')[1].Trim();
+
+                if (!IsValidUrl(pageUrl))
+                {
+                    _logger.LogWarning("Blocked potentially malicious URL: {pageUrl}", pageUrl);
+                    return newEvent;
+                }
 
                 var doc = new HtmlDocument();
-                var html = await client.GetStringAsync(url);
+                var html = await client.GetStringAsync(pageUrl);
                 doc.LoadHtml(html);
 
                 // Parse event details

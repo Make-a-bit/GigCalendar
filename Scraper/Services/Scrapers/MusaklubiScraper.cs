@@ -112,10 +112,16 @@ namespace Scraper.Services.Scrapers
                 _logger.LogInformation("Parsing event detail page...");
 
                 var strings = text.Split("href=");
-                var eventUrl = strings[2].Split('"')[1];
+                var pageUrl = strings[2].Split('"')[1];
+
+                if (!IsValidUrl(pageUrl))
+                {
+                    _logger.LogWarning("Blocked potentially malicious URL: {url}", pageUrl);
+                    return newEvent;
+                }
 
                 var doc = new HtmlDocument();
-                var html = await client.GetStringAsync(eventUrl);
+                var html = await client.GetStringAsync(pageUrl);
                 doc.LoadHtml(html);
 
                 var nodes = doc.DocumentNode.SelectNodes("//article[contains(@class, 'event')]");

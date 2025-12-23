@@ -119,6 +119,12 @@ namespace Scraper.Services.Scrapers
                 var strings = text.Split("href=");
                 var pageUrl = strings[1].Split('"')[1];
 
+                if (!IsValidUrl(pageUrl))
+                {
+                    _logger.LogWarning("Blocked potentially malicious URL: {url}", pageUrl);
+                    return newEvent;
+                }
+
                 var doc = new HtmlDocument();
                 var html = await client.GetStringAsync(pageUrl);
                 doc.LoadHtml(html);

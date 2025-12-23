@@ -70,7 +70,7 @@ namespace Scraper.Repositories
 
             // Call stored procedure to create new city
             using var cmd = new MySqlCommand("CALL add_city(@name);", connection);
-            cmd.Parameters.AddWithValue("name", name);
+            cmd.Parameters.AddWithValue("@name", name);
 
             // Execute the command and get the newly created city ID
             var result = await cmd.ExecuteScalarAsync();
