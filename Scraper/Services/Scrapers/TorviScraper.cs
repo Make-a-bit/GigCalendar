@@ -76,7 +76,7 @@ namespace Scraper.Services.Scrapers
                     // Clean and parse event details for the Event object
                     var eventTitle = _cleaner.Clean(titleNode.InnerText.Trim());
                     var eventDate = ParseDate(dateNode.InnerText.ToString(), startNode.InnerText.ToString());
-                    var eventPrice = _cleaner.Clean(priceNode.InnerText.Trim());
+                    var eventPrice = _cleaner.CleanPrice(priceNode);
 
                     // Create new Event object with extracted details
                     var newEvent = new Event
@@ -88,6 +88,8 @@ namespace Scraper.Services.Scrapers
                         HasShowtime = true,
                         Price = eventPrice
                     };
+
+                    _logger.LogInformation("Found event {event}.", newEvent.ToString());
 
                     // Compare if events already contains the new scraped event.
                     // If not, add it to the list.

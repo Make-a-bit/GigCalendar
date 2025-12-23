@@ -19,6 +19,13 @@ namespace Scraper.Services
         string CleanPrice(HtmlNodeCollection nodes);
 
         /// <summary>
+        /// Parses event price from the given HTML node.
+        /// </summary>
+        /// <param name="node">HTML node containing price information</param>
+        /// <returns>String representation of the event price</returns>
+        string CleanPrice(HtmlNode node);
+
+        /// <summary>
         /// Parses event prices from the given string array.
         /// </summary>
         /// <param name="prices"></param>

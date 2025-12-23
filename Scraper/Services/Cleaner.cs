@@ -52,6 +52,22 @@ namespace Scraper.Services
             return priceString;
         }
 
+        public string CleanPrice(HtmlNode node)
+        {
+            if (node == null)
+            {
+                return string.Empty;
+            }
+
+            var cleanedPrice = Clean(node.InnerText);
+
+            cleanedPrice = cleanedPrice
+                .Replace(" €", "€")
+                .Replace("\u00A0€", "€");
+
+            return cleanedPrice.Trim();
+        }
+
         public string CleanPrice(string[] prices)
         {
             var priceString = string.Empty;
