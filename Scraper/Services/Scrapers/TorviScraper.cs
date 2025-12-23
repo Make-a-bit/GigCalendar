@@ -31,11 +31,6 @@ namespace Scraper.Services.Scrapers
             City.Name = "Lahti";
         }
 
-
-        /// <summary>
-        /// Gets the list of events from Torvi.
-        /// </summary>
-        /// <returns></returns>
         public async Task<List<Event>> ScrapeEvents()
         {
             try
@@ -76,7 +71,7 @@ namespace Scraper.Services.Scrapers
                     // Clean and parse event details for the Event object
                     var eventTitle = _cleaner.Clean(titleNode.InnerText.Trim());
                     var eventDate = ParseDate(dateNode.InnerText.ToString(), startNode.InnerText.ToString());
-                    var eventPrice = _cleaner.CleanPrice(priceNode);
+                    var eventPrice = _cleaner.CleanPrice(priceNode).Replace(",", " /");
 
                     // Create new Event object with extracted details
                     var newEvent = new Event

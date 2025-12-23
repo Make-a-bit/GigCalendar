@@ -46,7 +46,8 @@ namespace Scraper.Services
                     priceString += " / ";
                 }
 
-                var cleanedPrice = Clean(node.InnerText);
+                var cleanedPrice = ReplacePrefixes(node.InnerText);
+                cleanedPrice = Clean(cleanedPrice);
                 priceString += cleanedPrice;
             }
 
@@ -60,7 +61,9 @@ namespace Scraper.Services
                 return string.Empty;
             }
 
-            var cleanedPrice = Clean(node.InnerText);
+            var cleanedPrice = ReplacePrefixes(node.InnerText);
+            cleanedPrice = Clean(cleanedPrice);
+
             return cleanedPrice.Trim();
         }
 
@@ -89,12 +92,21 @@ namespace Scraper.Services
             return priceString;
         }
 
+        /// <summary>
+        /// Replaces common prefixes in price strings.
+        /// </summary>
+        /// <param name="priceString">The price string to process.</param>
+        /// <returns>The price string with common prefixes replaced or removed.</returns>
         public string ReplacePrefixes(string priceString)
         {
             priceString = priceString
-                .Replace("Liput", "")
+                .Replace("alk. ", "")
+                .Replace("ennakkoon ", "")
+                .Replace("Liput ", "")
+                .Replace("liput ", "")
                 .Replace("Loppuunmyyty", "SOLD OUT!")
-                .Replace("Loppuunvarattu", "SOLD OUT!");
+                .Replace("Loppuunvarattu", "SOLD OUT!")
+                .Replace("ovelta ", "");
 
             return priceString.Trim();
         }
