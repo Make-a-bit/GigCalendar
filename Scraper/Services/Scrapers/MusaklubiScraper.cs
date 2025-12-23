@@ -133,10 +133,10 @@ namespace Scraper.Services.Scrapers
 
                     var detailNodes = node.SelectNodes(".//dd");
                     DateOnly date = DateOnly.Parse(detailNodes[0].InnerText);
-                    TimeOnly showtime = TimeOnly.Parse(detailNodes[1].InnerText);
-                    DateTime eventDate = new DateTime(date, showtime);
+                    TimeOnly time = TimeOnly.Parse(detailNodes[1].InnerText);
+                    DateTime showtime = new DateTime(date, time);
                     
-                    newEvent.Showtime = eventDate;
+                    newEvent.Showtime = showtime;
                     newEvent.HasShowtime = true;
 
                     if (detailNodes.Count > 2)

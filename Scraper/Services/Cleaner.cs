@@ -92,16 +92,14 @@ namespace Scraper.Services
             return priceString;
         }
 
-        /// <summary>
-        /// Replaces common prefixes in price strings.
-        /// </summary>
-        /// <param name="priceString">The price string to process.</param>
-        /// <returns>The price string with common prefixes replaced or removed.</returns>
         public string ReplacePrefixes(string priceString)
         {
             priceString = priceString
+                .Replace("(Lippu.fi)", "")
+                .Replace("(Ticketmaster)", "")
                 .Replace("alk. ", "")
                 .Replace("ennakkoon ", "")
+                .Replace("Liput:", "")
                 .Replace("Liput ", "")
                 .Replace("liput ", "")
                 .Replace("Loppuunmyyty", "SOLD OUT!")

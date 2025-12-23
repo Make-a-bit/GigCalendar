@@ -71,12 +71,12 @@ namespace Scraper.Services.Scrapers
                     // Parse event details
                     var titleNode = n.SelectSingleNode(".//h3");
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
-                    var startNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
+                    var timeNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
 
                     // Extract parsed details into Event object
                     newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
-                    newEvent.Showtime = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
+                    newEvent.Showtime = ParseShowtime(dateNode.InnerText.ToString().Trim(), timeNode.InnerText.Trim());
                     newEvent.HasShowtime = true;
 
                     var eventPrices = priceNode.InnerText.Split('/');
@@ -109,7 +109,7 @@ namespace Scraper.Services.Scrapers
         /// </summary>
         /// <param name="date">The date string to parse.</param>
         /// <returns>A DateTime object representing the parsed date.</returns>
-        private static DateTime ParseDate(string date, string time)
+        private static DateTime ParseShowtime(string date, string time)
         {
             var now = DateTime.Now;
 

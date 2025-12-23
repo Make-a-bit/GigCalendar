@@ -143,8 +143,8 @@ namespace Scraper.Services.Scrapers
                     var titleNode = node.SelectSingleNode(".//h1");
                     newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Split(',')[0].Trim());
 
-                    var dateNode = node.SelectSingleNode(".//div[contains(@class, 'datetime')]");
-                    newEvent.Showtime = ParseDate(dateNode?.InnerText.Trim() ?? string.Empty);
+                    var showtimeNode = node.SelectSingleNode(".//div[contains(@class, 'datetime')]");
+                    newEvent.Showtime = ParseShowtime(showtimeNode?.InnerText.Trim() ?? string.Empty);
                     newEvent.HasShowtime = true;
 
                     var priceNode = node.SelectNodes(".//span[contains(@class, 'prices')]");
@@ -167,7 +167,7 @@ namespace Scraper.Services.Scrapers
         /// </summary>
         /// <param name="date">The date string to parse.</param>
         /// <returns>A DateTime object representing the parsed date.</returns>
-        private static DateTime ParseDate(string date)
+        private static DateTime ParseShowtime(string date)
         {
             var now = DateTime.Now;
 

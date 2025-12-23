@@ -81,7 +81,7 @@ namespace Scraper.Services.Scrapers
 
                     // Clean and parse details nicely for the Event object
                     var eventTitle = _cleaner.Clean(titleNode?.InnerText.Trim() ?? "Ei otsikkoa");
-                    var eventDate = ParseDate(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
+                    var showtime = ParseShowtime(dateNode.InnerText.ToString().Trim(), startNode.InnerText.ToString().Trim());
 
                     // Create new Event object with extracted details
                     var newEvent = new Event
@@ -89,7 +89,7 @@ namespace Scraper.Services.Scrapers
                         EventCity = City,
                         EventVenue = Venue,
                         Artist = eventTitle,
-                        Showtime = eventDate,
+                        Showtime = showtime,
                         HasShowtime = true,
                         Price = priceText,
                     };
@@ -121,7 +121,7 @@ namespace Scraper.Services.Scrapers
         /// </summary>
         /// <param name="date">The date string to parse.</param>
         /// <returns>A DateTime object representing the parsed date.</returns>
-        private static DateTime ParseDate(string date, string time)
+        private static DateTime ParseShowtime(string date, string time)
         {
             var now = DateTime.Now;
 

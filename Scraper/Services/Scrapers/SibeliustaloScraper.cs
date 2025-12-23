@@ -65,17 +65,13 @@ namespace Scraper.Services.Scrapers
                     var titleNode = n.SelectSingleNode(".//h2");
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'field-type-datetime')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'ticket-info')]");
-                    var priceText = priceNode.InnerText
-                        .Replace("Liput:", "")
-                        .Replace("(Lippu.fi)", "")
-                        .Replace("(Ticketmaster)", "")
-                        .Trim();
+                    var priceText = _cleaner.ReplacePrefixes(priceNode.InnerText);
                     var prices = priceText.Split("/");               
                     var placeNode = n.SelectSingleNode(".//h6");
 
                     // Clean and parse event details for the Event object
                     var eventTitle = _cleaner.Clean(titleNode.InnerText.Trim());
-                    var eventDate = ParseDate(dateNode.InnerText.ToString().Trim());
+                    var showtime = ParseShowtime(dateNode.InnerText.ToString().Trim());
                     var eventPrice = _cleaner.CleanPrice(prices);
 
                     // Create new Event object with extracted details
@@ -84,7 +80,7 @@ namespace Scraper.Services.Scrapers
                         EventCity = City,
                         EventVenue = Venue,
                         Artist = eventTitle,
-                        Showtime = eventDate,
+                        Showtime = showtime,
                         HasShowtime = true,
                         Price = eventPrice
                     };
@@ -115,7 +111,7 @@ namespace Scraper.Services.Scrapers
         /// </summary>
         /// <param name="date">The date string to parse.</param>
         /// <returns>A DateTime object representing the parsed date.</returns>
-        private static DateTime ParseDate(string date)
+        private static DateTime ParseShowtime(string date)
         {
             var now = DateTime.Now;
 

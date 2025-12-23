@@ -31,5 +31,12 @@ namespace Scraper.Services
         /// <param name="prices"></param>
         /// <returns>Concatenated string of event prices</returns>
         string CleanPrice(string[] prices);
+
+        /// <summary>
+        /// Replaces known prefixes in the price string to standardize it.
+        /// </summary>
+        /// <param name="priceString">The price string to process.</param>
+        /// <returns>The price string with known prefixes replaced or removed.</returns>
+        string ReplacePrefixes(string priceString);
     }
 }
