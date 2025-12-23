@@ -1,8 +1,6 @@
-using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
 using Scraper.Repositories;
-using System.Threading.Tasks;
 
 namespace Scraper.Services.Scrapers
 {
