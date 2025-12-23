@@ -14,6 +14,8 @@ namespace Scraper.Services
             decoded = HtmlEntity.DeEntitize(decoded);
 
             var cleanedString = decoded
+                .Replace(" €", "€")
+                .Replace("\u00A0€", "€")
                 .Replace("&euro;", "€")
                 .Replace("&#8364;", "€")
                 .Replace("&#x20AC;", "€")
@@ -45,7 +47,6 @@ namespace Scraper.Services
                 }
 
                 var cleanedPrice = Clean(node.InnerText);
-                cleanedPrice = cleanedPrice.Replace(" €", "€");
                 priceString += cleanedPrice;
             }
 
@@ -60,11 +61,6 @@ namespace Scraper.Services
             }
 
             var cleanedPrice = Clean(node.InnerText);
-
-            cleanedPrice = cleanedPrice
-                .Replace(" €", "€")
-                .Replace("\u00A0€", "€");
-
             return cleanedPrice.Trim();
         }
 
@@ -84,16 +80,23 @@ namespace Scraper.Services
                     priceString += " / ";
                 }
 
-                var cleanedPrice = Clean(price);
-                cleanedPrice = cleanedPrice
-                    .Replace(" €", "€")
-                    .Replace("Liput", "")
-                    .Replace("Loppuunmyyty", "SOLD OUT!")
-                    .Trim();
+                var cleanedPrice = ReplacePrefixes(price);
+                cleanedPrice = Clean(cleanedPrice);
+
                 priceString += cleanedPrice;
             }
 
             return priceString;
+        }
+
+        public string ReplacePrefixes(string priceString)
+        {
+            priceString = priceString
+                .Replace("Liput", "")
+                .Replace("Loppuunmyyty", "SOLD OUT!")
+                .Replace("Loppuunvarattu", "SOLD OUT!");
+
+            return priceString.Trim();
         }
     }
 }
