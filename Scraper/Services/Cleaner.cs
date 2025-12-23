@@ -97,14 +97,17 @@ namespace Scraper.Services
             priceString = priceString
                 .Replace("(Lippu.fi)", "")
                 .Replace("(Ticketmaster)", "")
+                .Replace("alakertaan ", "")
                 .Replace("alk. ", "")
                 .Replace("ennakkoon ", "")
+                .Replace("eteispalvelumaksu", "")
                 .Replace("Liput:", "")
                 .Replace("Liput ", "")
                 .Replace("liput ", "")
                 .Replace("Loppuunmyyty", "SOLD OUT!")
                 .Replace("Loppuunvarattu", "SOLD OUT!")
-                .Replace("ovelta ", "");
+                .Replace("ovelta ", "")
+                .Replace("sis. ", "");
 
             return priceString.Trim();
         }
