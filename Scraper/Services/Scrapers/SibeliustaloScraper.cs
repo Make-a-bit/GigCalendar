@@ -88,7 +88,9 @@ namespace Scraper.Services.Scrapers
                         HasShowtime = true,
                         Price = eventPrice
                     };
-                   
+
+                    _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
+
                     // Compare if events already contains the new event. If not, add it to the list.
                     if (!Events.Exists(e => e.Equals(newEvent)))
                     {

@@ -74,6 +74,8 @@ namespace Scraper.Services.Scrapers
                     newEvent.HasShowtime = true;
                     newEvent.Price = ParsePrice(infoNode.InnerText);
 
+                    _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
+
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
                     if (!Events.Exists(e => e.Equals(newEvent)))

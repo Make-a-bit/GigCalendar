@@ -89,7 +89,7 @@ namespace Scraper.Services.Scrapers
                         Price = eventPrice
                     };
 
-                    _logger.LogInformation("Found event {event}.", newEvent.ToString());
+                    _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
 
                     // Compare if events already contains the new scraped event.
                     // If not, add it to the list.

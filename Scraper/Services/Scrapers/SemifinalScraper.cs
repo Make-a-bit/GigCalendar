@@ -82,7 +82,7 @@ namespace Scraper.Services.Scrapers
                     var eventPrices = priceNode.InnerText.Split('/');
                     newEvent.Price = _cleaner.CleanPrice(eventPrices);
 
-                    _logger.LogInformation("Found event {event}.", newEvent.ToString());
+                    _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
 
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
