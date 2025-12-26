@@ -128,7 +128,7 @@ namespace Scraper.Services.Scrapers
                 newEvent.HasShowtime = true;
 
                 var priceNode = details.SelectSingleNode(".//dd[contains(@class, 'event-cost')]");
-                newEvent.Price = priceNode.InnerText;
+                newEvent.Price = ParsePrice(priceNode.InnerText);
 
                 _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());
                 return newEvent;
@@ -138,6 +138,20 @@ namespace Scraper.Services.Scrapers
                 _logger.LogError(ex, "An error occurred while parsing event detail page.");
                 return newEvent;
             }
+        }
+
+        /// <summary>
+        /// Parse the price from the given string.
+        /// </summary>
+        /// <param name="price">The price string to parse.</param>
+        /// <returns>The parsed price string with standardized formatting. </returns>
+        private string ParsePrice(string price)
+        {
+            var priceString = price
+                .Replace("€", "")
+                .Replace(".", ",");
+
+            return priceString + "€";          
         }
 
         /// <summary>
