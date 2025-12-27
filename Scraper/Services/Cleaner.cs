@@ -102,6 +102,7 @@ namespace Scraper.Services
                 .Replace("ennakkoon ", "")
                 .Replace("eteispalvelumaksu", "")
                 .Replace("Liput:", "")
+                .Replace("Liput\n", "")
                 .Replace("Liput ", "")
                 .Replace("liput ", "")
                 .Replace("Loppuunmyyty", "SOLD OUT!")
