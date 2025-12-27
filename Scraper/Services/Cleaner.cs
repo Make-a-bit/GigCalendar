@@ -99,16 +99,24 @@ namespace Scraper.Services
                 .Replace("(Ticketmaster)", "")
                 .Replace("alakertaan ", "")
                 .Replace("alk. ", "")
+                .Replace("alkaen ", "")
+                .Replace("Ennakot ", "")
                 .Replace("ennakkoon ", "")
                 .Replace("eteispalvelumaksu", "")
+                .Replace("Eventualista ", "")
+                .Replace("ja ", "")
+                .Replace("kulut", "")
                 .Replace("Liput:", "")
                 .Replace("Liput\n", "")
                 .Replace("Liput ", "")
                 .Replace("liput ", "")
+                .Replace("lippukaupan ", "")
                 .Replace("Loppuunmyyty", "SOLD OUT!")
                 .Replace("Loppuunvarattu", "SOLD OUT!")
                 .Replace("ovelta ", "")
-                .Replace("sis. ", "");
+                .Replace("sis. ", "")
+                .Replace("Ticketmasterista ", "")
+                .Replace("Tiketistä ", "");
 
             return priceString.Trim();
         }

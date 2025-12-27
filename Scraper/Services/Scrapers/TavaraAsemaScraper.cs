@@ -188,7 +188,7 @@ namespace Scraper.Services.Scrapers
 
                 if (node.InnerText.Contains("Vapaa"))
                 {
-                    return "Vapaa pääsy";
+                    return "Vapaa pääsy!";
                 }
 
                 if (!node.InnerText.Contains("€"))

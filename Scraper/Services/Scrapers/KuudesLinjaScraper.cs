@@ -117,18 +117,26 @@ namespace Scraper.Services.Scrapers
         /// </summary>
         /// <param name="infoNode">The raw info node string containing price information.</param>
         /// <returns>A parsed price string.</returns>
-        private static string ParsePrice(string infoNode)
+        private string ParsePrice(string infoNode)
         {
             var priceString = string.Empty;
             var infoStrings = infoNode.Split('\n');
 
             foreach (var info in infoStrings)
             {
+                if (info.Contains("loppuunmyyty"))
+                {
+                    return "SOLD OUT!";
+                }
+
                 if (info.Contains(" €"))
                 {
                     var priceInfos = info.Split('.');
                     priceString = priceInfos[0].Trim();
                     priceString = priceString.Replace(" €", "€");
+
+                    priceString = _cleaner.ReplacePrefixes(priceString)
+                        .Replace(", ", " / ");
 
                     break;
                 }

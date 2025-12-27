@@ -162,7 +162,7 @@ namespace Scraper.Services.Scrapers
         /// </summary>
         /// <param name="nodes">The collection of HTML nodes to search for price information.</param>
         /// <returns>A string representing the event price, or an empty string if not found.</returns>
-        private static string ParseEventPrice(HtmlNodeCollection nodes)
+        private string ParseEventPrice(HtmlNodeCollection nodes)
         {
             var priceString = string.Empty;
 
@@ -175,7 +175,11 @@ namespace Scraper.Services.Scrapers
             {
                 if (node.InnerText.Contains('€'))
                 {
-                    priceString = node.InnerText.Trim();
+                    priceString = node.InnerText.Trim()
+                        .Replace("€€", "€")
+                        .Replace(" €", "€");
+
+                    priceString = _cleaner.ReplacePrefixes(priceString);
                     break;
                 }
             }
