@@ -86,7 +86,7 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.count} events from Kulttuuritalo.", Events.Count);
+                _logger.LogInformation("Parsed {events.count} events from Sawohouse.", Events.Count);
                 return Events;
 
             }
@@ -120,14 +120,14 @@ namespace Scraper.Services.Scrapers
                 // Parse event details
                 var details = doc.DocumentNode.SelectSingleNode(".//section[contains(@class, 'mec-container')]");
                 var title = details.SelectSingleNode(".//h1");
-                newEvent.Artist = _cleaner.Clean(title.InnerText.Trim());
-
                 var dateNode = details.SelectSingleNode(".//span[contains(@class, 'mec-start-date-label')]");
                 var timeNode = details.SelectSingleNode(".//div[contains(@class, 'single-event-time')]");
+                var priceNode = details.SelectSingleNode(".//dd[contains(@class, 'event-cost')]");
+
+                // Extract event details for event object
+                newEvent.Artist = _cleaner.Clean(title.InnerText.Trim());
                 newEvent.Showtime = ParseShowtime(dateNode.InnerText, timeNode.InnerText);
                 newEvent.HasShowtime = true;
-
-                var priceNode = details.SelectSingleNode(".//dd[contains(@class, 'event-cost')]");
                 newEvent.Price = ParsePrice(priceNode.InnerText);
 
                 _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());

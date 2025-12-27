@@ -129,13 +129,12 @@ namespace Scraper.Services.Scrapers
                 foreach (var node in nodes)
                 {
                     var titleNode = node.SelectSingleNode(".//h1");
-                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
-
                     var detailNodes = node.SelectNodes(".//dd");
                     DateOnly date = DateOnly.Parse(detailNodes[0].InnerText);
                     TimeOnly time = TimeOnly.Parse(detailNodes[1].InnerText);
                     DateTime showtime = new DateTime(date, time);
-                    
+
+                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
                     newEvent.Showtime = showtime;
                     newEvent.HasShowtime = true;
 

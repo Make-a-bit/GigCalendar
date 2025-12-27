@@ -131,18 +131,18 @@ namespace Scraper.Services.Scrapers
 
                 var nodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'fl-page-content')]");
 
-                // Extract event details
                 foreach (var node in nodes)
                 {
+                    // Parse event details
                     var titleNode = node.SelectSingleNode(".//h1");
-                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
-
                     var dateNode = node.SelectSingleNode(".//h2");
                     var timeNode = node.SelectSingleNode(".//div[contains(@class, 'fl-callout-text-wrap')]");
+                    var pricenodes = node.SelectNodes("//div[contains(@class, 'fl-module fl-module-rich-text fl-rich-text')]");
+
+                    // Extract event details for event object
+                    newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
                     newEvent.Showtime = ParseShowtime(dateNode.InnerText, timeNode.InnerText);
                     newEvent.HasShowtime = true;
-
-                    var pricenodes = node.SelectNodes("//div[contains(@class, 'fl-module fl-module-rich-text fl-rich-text')]");
                     newEvent.Price = ParseEventPrice(pricenodes);
                 }
 

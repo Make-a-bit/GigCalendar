@@ -103,7 +103,7 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.Count} events from Tavastia.", Events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from Tavastiaklubi.", Events.Count);
 
                 // Return the list of events
                 return Events;

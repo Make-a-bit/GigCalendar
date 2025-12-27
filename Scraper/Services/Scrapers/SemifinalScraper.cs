@@ -38,6 +38,8 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
+                _logger.LogInformation("Starting to scrape Semifinal events...");
+
                 // Initialize variables
                 using var client = _httpClientFactory.CreateClient();
 
@@ -73,13 +75,12 @@ namespace Scraper.Services.Scrapers
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
                     var timeNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
+                    var eventPrices = priceNode.InnerText.Split('/');
 
                     // Extract parsed details into Event object
                     newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
                     newEvent.Showtime = ParseShowtime(dateNode.InnerText.ToString().Trim(), timeNode.InnerText.Trim());
                     newEvent.HasShowtime = true;
-
-                    var eventPrices = priceNode.InnerText.Split('/');
                     newEvent.Price = _cleaner.CleanPrice(eventPrices);
 
                     _logger.LogInformation("Parsed event: {newEvent}", newEvent.ToString());

@@ -85,14 +85,14 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.Count} events from Torvi.", Events.Count);
+                _logger.LogInformation("Parsed {events.Count} events from {venue}.", Events.Count, Venue.Name);
 
                 // Return the list of events
                 return Events;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error occurred while scraping events from On The Rocks.");
+                _logger.LogError(ex, "Error occurred while scraping events from {venue}.", Venue.Name);
                 return Events;
             }
         }
