@@ -104,7 +104,6 @@ namespace Scraper.Services.Scrapers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while scraping {venue} events.", Venue.Name);
-
                 return Events;
             }
         }

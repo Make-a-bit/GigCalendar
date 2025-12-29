@@ -38,7 +38,7 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
-                _logger.LogInformation("Starting to scrape Sibeliustalo events...");
+                _logger.LogInformation("Starting to scrape {venue} events...", Venue.Name);
 
                 // Initialize variables
                 using var client = _httpClientFactory.CreateClient();
@@ -51,7 +51,7 @@ namespace Scraper.Services.Scrapers
                 // Select event nodes
                 var nodes = Doc.DocumentNode.SelectNodes("//div[contains(@class,'col-md-9')]");
 
-                _logger.LogInformation("Found {events.count} nodes from Sibeliustalo.", nodes.Count);
+                _logger.LogInformation("Found {events.count} nodes from {venue}.", nodes.Count, Venue.Name);
                 _logger.LogInformation("Starting to parse event details...");
 
                 // Update CityId and VenueId from database
@@ -94,14 +94,12 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.Count} events from Sibeliustalo.", Events.Count);
-
-                // Return the list of events
+                _logger.LogInformation("Parsed {count} events from {venue}.", Events.Count, Venue.Name);
                 return Events;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while parsing Sibeliustalo events.");
+                _logger.LogError(ex, "An error occurred while scraping {venue} events.", Venue.Name);
                 return Events;
             }
         }

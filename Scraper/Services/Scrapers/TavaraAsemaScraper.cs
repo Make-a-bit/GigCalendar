@@ -33,7 +33,7 @@ namespace Scraper.Services.Scrapers
         {
             try
             {
-                _logger.LogInformation("Starting to scrape Tavara-asema events...");
+                _logger.LogInformation("Starting to scrape {venue} events...", Venue.Name);
 
                 // Initialize variable
                 using var client = _httpClientFactory.CreateClient();
@@ -49,7 +49,7 @@ namespace Scraper.Services.Scrapers
                 // Select event nodes
                 var nodes = Doc.DocumentNode.SelectNodes("//div[contains(@class, 'event-feed-item__content')]");
 
-                _logger.LogInformation("Found {events} nodes from Tavara-asema.", nodes.Count);
+                _logger.LogInformation("Found {events.count} nodes from {venue}.", nodes.Count, Venue.Name);
                 _logger.LogInformation("Starting to parse event details...");
 
                 // Update CityId and VenueId from database
@@ -86,13 +86,13 @@ namespace Scraper.Services.Scrapers
                     }
                 }
 
-                _logger.LogInformation("Parsed {events.count} events from Tavara-Asema.", Events.Count);
+                _logger.LogInformation("Parsed {count} events from {venue}.", Events.Count, Venue.Name);
                 return Events;
 
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occurred while scraping Tavara-asema events.");
+                _logger.LogError(ex, "An error occurred while scraping {venue} events.", Venue.Name);
                 return Events;
             }
         }
