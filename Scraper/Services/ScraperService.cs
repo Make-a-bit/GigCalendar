@@ -55,7 +55,7 @@ namespace Scraper.Services
 
                     _logger.LogInformation("Starting scraping process...");
 
-                    // Run each scraper and display results
+                    // Run each scraper and update data into db
                     foreach (var scraper in _scrapers)
                     {
                         var events = await scraper.ScrapeEvents();

@@ -95,6 +95,7 @@ namespace Scraper.Services
         public string ReplacePrefixes(string priceString)
         {
             priceString = priceString
+                .Replace("+", "")
                 .Replace("(Lippu.fi)", "")
                 .Replace("(Ticketmaster)", "")
                 .Replace("alakertaan ", "")

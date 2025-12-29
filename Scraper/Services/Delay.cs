@@ -16,13 +16,13 @@ namespace Scraper.Services
 
 
         /// <summary>
-        /// Calculates the delay until the next scheduled run at 01:00
+        /// Calculates the delay until the next scheduled run at 06:00
         /// </summary>
         /// <returns></returns>
         public static TimeSpan CalculateNextRun()
         {
             var now = DateTime.Now;
-            var nextRun = DateTime.Today.AddDays(1).AddHours(1);
+            var nextRun = DateTime.Today.AddDays(1).AddHours(6);
 
             var delay = nextRun - now;
 
