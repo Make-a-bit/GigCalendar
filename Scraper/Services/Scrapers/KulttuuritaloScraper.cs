@@ -174,13 +174,16 @@ namespace Scraper.Services.Scrapers
 
             foreach (var node in nodes)
             {
+                var text = node.InnerText;
+
                 if (node.InnerText.Contains('€'))
                 {
-                    priceString = node.InnerText.Trim()
+                    priceString = _cleaner.ReplacePrefixes(
+                        text.Trim()
                         .Replace("€€", "€")
-                        .Replace(" €", "€");
+                        .Replace(" €", "€")
+                        );
 
-                    priceString = _cleaner.ReplacePrefixes(priceString);
                     break;
                 }
             }

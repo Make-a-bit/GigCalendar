@@ -84,9 +84,9 @@ namespace Scraper.Services
                 }
 
                 var cleanedPrice = ReplacePrefixes(price);
-                cleanedPrice = Clean(cleanedPrice);
+                var cleaned = Clean(cleanedPrice);
 
-                priceString += cleanedPrice;
+                priceString += cleaned;
             }
 
             return priceString;

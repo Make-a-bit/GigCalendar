@@ -68,10 +68,7 @@ namespace Scraper.Services.Scrapers
                     var dateNode = n.SelectSingleNode(".//div[contains(@class, 'date')]");
                     var startNode = n.SelectSingleNode(".//div[contains(@class, 'timetable')]");
                     var priceNode = n.SelectSingleNode(".//div[contains(@class, 'tickets')]");
-                    var priceText = priceNode.InnerText
-                        .Replace(" ", "")
-                        .Replace("Loppuunmyyty", "SOLD OUT!")
-                        .Trim();
+                    var priceText = _cleaner.ReplacePrefixes(priceNode.InnerText);
                     var prices = priceText.Split("/");
 
                     if (prices.Length > 1)
