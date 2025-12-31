@@ -89,50 +89,50 @@ The scraper service uses a **base class pattern** with automatic service discove
 
 ```
 GigCalendar/
-├── API/                          # Express.js backend
-│   ├── config/
-│   │   └── db.js                 # MySQL connection pool
-│   ├── routes/
-│   │   └── events.js             # Event endpoints
-│   ├── server.js                 # Entry point
-│   └── package.json
+├── API/                                    # Express.js backend
+│   ├── config/                             # Configuration files
+│   │   └── db.js                           # MySQL connection pool
+│   ├── routes/                             # API route handlers
+│   │   └── events.js                       # Event endpoints
+│   ├── server.js                           # Entry point
+│   └── package.json                        # Node.js dependencies
 │
-├── front/                        # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Event.jsx         # Event card component
-│   │   │   ├── EventList.jsx     # Event list container
-│   │   │   ├── FilterDrawer.jsx  # Filter sidebar
-│   │   │   └── FavoriteArtistsManager.jsx
-│   │   ├── pages/
-│   │   │   └── home.jsx          # Main application page
-│   │   └── App.js
-│   └── package.json
+├── front/                                  # React frontend
+│   ├── public/                             # Static assets
+│   ├── src/                                # Source code
+│   │   ├── components/                     # React components
+│   │   │   ├── Event.jsx                   # Event card component
+│   │   │   ├── EventList.jsx               # Event list container
+│   │   │   ├── FilterDrawer.jsx            # Filter sidebar
+│   │   │   └── FavoriteArtistsManager.jsx  # Favorite artist management
+│   │   ├── pages/                          # Page components
+│   │   │   └── home.jsx                    # Main application page
+│   │   └── App.js                          # Root component
+│   └── package.json                        # React dependencies
 │
-├── Scraper/                      # .NET 8 background service
-│   ├── Models/
-│   │   ├── Event.cs              # Event model with comparison logic
-│   │   ├── Venue.cs
-│   │   └── City.cs
-│   ├── Repositories/
-│   │   ├── EventRepository.cs
-│   │   ├── VenueRepository.cs
-│   │   └── CityRepository.cs
-│   ├── Services/
-│   │   ├── Scrapers/
-│   │   │   ├── BaseScraper.cs    # Base class with URL validation
-│   │   │   ├── IEventScraper.cs
-│   │   │   ├── GLiveLabBaseScraper.cs
-│   │   │   ├── TavarastemaScraper.cs
-│   │   │   └── ... (10+ scrapers)
-│   │   ├── EventInspector.cs     # Smart INSERT/UPDATE logic
-│   │   ├── Cleaner.cs            # HTML entity decoding
-│   │   └── ScraperBackgroundService.cs
-│   ├── Program.cs                # DI container & auto-discovery
-│   └── Scraper.csproj
+├── Scraper/                                # .NET 8 background service
+│   ├── Models/                             # Domain models
+│   │   ├── Event.cs                        # Event model with comparison logic
+│   │   ├── Venue.cs                        # Venue model
+│   │   └── City.cs                         # City model
+│   ├── Repositories/                       # Data access layer
+│   │   ├── EventRepository.cs              # Event database operations
+│   │   ├── VenueRepository.cs              # Venue database operations
+│   │   └── CityRepository.cs               # City database operations
+│   ├── Services/                           # Business logic
+│   │   ├── Scrapers/                       # Web scraper implementations
+│   │   │   ├── BaseScraper.cs              # Base class with URL validation
+│   │   │   ├── IEventScraper.cs            # Scraper interface
+│   │   │   ├── GLiveLabBaseScraper.cs      # Abstract GLiveLab scraper
+│   │   │   ├── TavaraAsemaScraper.cs       # Tavara-Asema venue scraper
+│   │   │   └── ... (10+ scrapers)          # Additional venue scrapers
+│   │   ├── EventInspector.cs               # Smart INSERT/UPDATE logic
+│   │   ├── Cleaner.cs                      # HTML entity decoding
+│   │   └── ScraperBackgroundService.cs     # Background service host
+│   ├── Program.cs                          # DI container & auto-discovery
+│   └── Scraper.csproj                      # .NET project file
 │
-└── README.md
+└── README.md                               # Project documentation
 ```
 
 ## Key Implementation Details
@@ -179,6 +179,14 @@ All dates are stored and displayed in Europe/Helsinki timezone:
 - Database: `timezone: '+00:00'` config prevents conversion
 - API: Returns dates as strings without timezone info
 - Frontend: Parses strings directly without Date object conversion
+
+### Deployment
+
+The project uses a GitHub Actions CI/CD pipeline that:
+
+1. Runs ESLint on frontend code
+2. Validates build process
+3. Automatically deploys on push to master
 
 ## License
 
