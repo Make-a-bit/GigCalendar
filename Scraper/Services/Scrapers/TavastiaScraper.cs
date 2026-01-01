@@ -137,10 +137,7 @@ namespace Scraper.Services.Scrapers
             }
 
             // Adjust year if the date has already passed this year
-            if (month < now.Month || month == now.Month && day < now.Day)
-            {
-                year = now.Year + 1;
-            }
+            year = DateHelper.AdjustYear(month, day);
 
             return new DateTime(year, month, day, hours, minutes, 0);
         }

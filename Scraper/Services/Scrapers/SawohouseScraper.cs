@@ -170,14 +170,11 @@ namespace Scraper.Services.Scrapers
             // Parse event date
             var dateStrings = date.Split(' ');
             year = now.Year;
-            month = ConvertMonthName(dateStrings[0]);
+            month = DateHelper.ConvertMonthName(dateStrings[0]);
             day = int.Parse(dateStrings[1]);
 
             // Adjust year if the date has already passed this year
-            if (month < now.Month || month == now.Month && day < now.Day)
-            {
-                year = now.Year + 1;
-            }
+            year = DateHelper.AdjustYear(month, day);
 
 
             // Parse event showtime
@@ -199,32 +196,6 @@ namespace Scraper.Services.Scrapers
             }
 
             return new DateTime(year, month, day, hours, minutes, 0);
-        }
-
-        /// <summary>
-        /// Get the month number from the Finnish month name.
-        /// </summary>
-        /// <param name="month">The Finnish name of the month.</param>
-        /// <returns>The month number (1-12).</returns>
-        /// <exception cref="ArgumentException">Thrown when the month name is invalid.</exception>
-        private static int ConvertMonthName(string month)
-        {
-            return month.Trim().ToLowerInvariant() switch
-            {
-                "tammi" => 1,
-                "helmi" => 2,
-                "maalis" => 3,
-                "huhti" => 4,
-                "touko" => 5,
-                "kesä" => 6,
-                "heinä" => 7,
-                "elo" => 8,
-                "syys" => 9,
-                "loka" => 10,
-                "marras" => 11,
-                "joulu" => 12,
-                _ => throw new ArgumentException($"Invalid month name: {month}")
-            };
         }
     }
 }

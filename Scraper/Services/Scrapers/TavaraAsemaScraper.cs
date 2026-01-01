@@ -226,10 +226,7 @@ namespace Scraper.Services.Scrapers
             day = int.Parse(dateStrings[1].Split(".")[0].Trim());
 
             // Adjust year if the date has already passed this year
-            if (month < now.Month || month == now.Month && day < now.Day)
-            {
-                year = now.Year + 1;
-            }
+            year = DateHelper.AdjustYear(month, day);
 
             var timeStrings = time.Split("Ovet ");
 
