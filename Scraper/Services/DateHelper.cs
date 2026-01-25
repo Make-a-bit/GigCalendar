@@ -34,7 +34,7 @@ namespace Scraper.Services
         /// <returns>True if the input starts with a weekday prefix; otherwise, false.</returns>
         public static bool IsWeekdayPrefix(string input)
         {
-            if (string.IsNullOrEmpty(input) || input.Length < 2)
+            if (string.IsNullOrEmpty(input) || input.Length != 2)
             {
                 return false;
             }
