@@ -12,7 +12,7 @@ namespace Scraper.Services.Scrapers
         private readonly ILogger<MusaklubiScraper> _logger;
         private readonly ICityRepository _cityRepository;
         private readonly IVenueRepository _venueRepository;
-
+        
         public MusaklubiScraper(ICleaner cleaner, 
             IHttpClientFactory httpClientFactory,
             ICityRepository cityRepository,
@@ -75,6 +75,12 @@ namespace Scraper.Services.Scrapers
                     // Parse event detail page and extract event details
                     newEvent = await ParseEventDetailsPage(node.InnerHtml, newEvent, client);
 
+                    if (newEvent == null)
+                    {
+                        await WaitBeforeNextRequest(eventIndex, nodes.Count);
+                        continue;
+                    }
+
                     // Compare if events already contains the new event.
                     // If not, add it to the list.
                     if (!Events.Exists(e => e.Equals(newEvent)))
@@ -85,10 +91,7 @@ namespace Scraper.Services.Scrapers
                     // Add delay before next iteration
                     if (eventIndex < nodes.Count)
                     {
-                        var delayMs = Delay.CalculateSeconds();
-                        _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, eventIndex + 1, nodes.Count);
-
-                        await Task.Delay(delayMs);
+                        await WaitBeforeNextRequest(eventIndex, nodes.Count);
                     }
                 }
 
@@ -100,6 +103,15 @@ namespace Scraper.Services.Scrapers
                 _logger.LogError(ex, "An error occurred while scraping {venue} events.", Venue.Name);
                 return Events;
             }
+        }
+
+
+        private async Task WaitBeforeNextRequest(int current, int total)
+        {
+            var delayMs = Delay.CalculateSeconds();
+            _logger.LogInformation("Waiting {delay}ms before next request ({current}/{total})...", delayMs, current, total);
+
+            await Task.Delay(delayMs);
         }
 
 
@@ -127,6 +139,13 @@ namespace Scraper.Services.Scrapers
                 foreach (var node in nodes)
                 {
                     var titleNode = node.SelectSingleNode(".//h1");
+
+                    if (titleNode.InnerText.Contains("Yksityistilaisuus", StringComparison.OrdinalIgnoreCase))
+                    {
+                        _logger.LogWarning("Skipping event: {title}", titleNode.InnerText.Trim());
+                        return null;
+                    }
+
                     var detailNodes = node.SelectNodes(".//dd");
                     DateOnly date = DateOnly.Parse(detailNodes[0].InnerText);
                     TimeOnly time = TimeOnly.Parse(detailNodes[1].InnerText);
