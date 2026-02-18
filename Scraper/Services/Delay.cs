@@ -22,7 +22,7 @@ namespace Scraper.Services
         public static TimeSpan CalculateNextRun()
         {
             var now = DateTime.Now;
-            var nextRun = DateTime.Today.AddDays(1).AddHours(6);
+            var nextRun = DateTime.Today.AddDays(1).AddHours(4);
 
             var delay = nextRun - now;
 
