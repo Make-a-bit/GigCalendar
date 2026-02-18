@@ -96,13 +96,13 @@ namespace Scraper.Services.Scrapers
             }
         }
 
-        private async Task<Event> ParseEventDetailPage(HtmlNode text, Event newEvent, HttpClient client)
+        private async Task<Event> ParseEventDetailPage(HtmlNode node, Event newEvent, HttpClient client)
         {
             try
             {
                 _logger.LogInformation("Parsing event detail page...");
 
-                var strings = text.InnerHtml.Split("href=");
+                var strings = node.InnerHtml.Split("href=");
                 var pageUrl = strings[1].Split('"')[1].Trim();
 
                 if (!IsValidUrl(pageUrl))
@@ -118,15 +118,15 @@ namespace Scraper.Services.Scrapers
                 var eventNode = doc.DocumentNode.SelectSingleNode(".//div[contains(@class, 'zak-primary')]");
 
                 // Parse event details
-                var titleNode = text.SelectSingleNode(".//h3");
-                var dateNode = eventNode.SelectSingleNode(".//div[contains(@class, 'em-event-date')]");
-                var dateStrings = dateNode.InnerText.Split("&nbsp");
+                var artistNode = node.SelectSingleNode(".//h3");
+                var dateNode = node.SelectSingleNode(".//div[contains(@class, 'em-event-date')]");
+                var dateString = dateNode.InnerText.Trim();
                 var timeNode = eventNode.SelectSingleNode(".//div[contains(@class, 'em-event-time')]");
                 var priceNode = eventNode.SelectSingleNode(".//section[contains(@class, 'em-event-content')]");
 
                 // Extract event details for event object
-                newEvent.Artist = _cleaner.Clean(titleNode.InnerText.Trim());
-                newEvent.Showtime = ParseShowtime(dateStrings[0], timeNode.InnerText);
+                newEvent.Artist = _cleaner.Clean(artistNode.InnerText.Trim());
+                newEvent.Showtime = ParseShowtime(dateString, timeNode.InnerText);
                 newEvent.HasShowtime = true;
                 newEvent.Price = ParsePrice(priceNode);
 
