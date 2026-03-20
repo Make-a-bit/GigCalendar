@@ -9,11 +9,11 @@ namespace Scraper.Services.DB
     public interface IEventUpdate
     {
         /// <summary>
-        /// Updates the price of an event in the database.
+        /// Updates all mutable fields (artist, date, has_showtime, price) of an event in the database.
         /// </summary>
-        /// <param name="eventToUpdate">The event with the updated price</param>
+        /// <param name="eventToUpdate">The event with updated values</param>
         /// <returns>True if the update was successful, otherwise false</returns>
-        Task<bool> UpdatePriceAsync(Event eventToUpdate);
+        Task<bool> UpdateEventAsync(Event eventToUpdate);
     }
 
     public class EventUpdate : IEventUpdate
@@ -25,14 +25,26 @@ namespace Scraper.Services.DB
             _dbManager = dbmanager;
         }
 
-        public async Task<bool> UpdatePriceAsync(Event eventToUpdate)
+        public async Task<bool> UpdateEventAsync(Event eventToUpdate)
         {
             using var connection = _dbManager.GetConnection();
             await connection.OpenAsync();
 
             using var cmd = new MySqlCommand(@"
-                UPDATE events SET event_price = @price
+                UPDATE events
+                SET event_artist = @artist,
+                    event_date = @date,
+                    event_has_showtime = @hasShowtime,
+                    event_price = @price
                 WHERE event_id = @id;", connection);
+
+            cmd.Parameters.AddWithValue("@artist", eventToUpdate.Artist);
+            var dateParam = new MySqlParameter("@date", MySqlDbType.DateTime)
+            {
+                Value = eventToUpdate.Showtime
+            };
+            cmd.Parameters.Add(dateParam);
+            cmd.Parameters.AddWithValue("@hasShowtime", eventToUpdate.HasShowtime);
             cmd.Parameters.AddWithValue("@price", eventToUpdate.Price);
             cmd.Parameters.AddWithValue("@id", eventToUpdate.EventId);
 

@@ -44,28 +44,37 @@ namespace Scraper.Services
                     continue;
                 }
 
-                // Find if item already exists (ignore price)
+                // Find if item already exists (venue + day + fuzzy artist)
                 var existingEvent = currentEvents.Find(e => e.IsSameEvent(item));
 
-                // If event exists but price has changed, update the price
-                if (existingEvent != null && (existingEvent.Price != item.Price))
+                // If event exists but any mutable field has changed, update it
+                if (existingEvent != null)
                 {
-                    _logger.LogInformation("Price change detected - DB: '{OldPrice}' -> New: '{NewPrice}' for {Event}",
-                  existingEvent.Price, item.Price, item.Artist);
+                    bool artistChanged = !string.Equals(existingEvent.Artist?.Trim(), item.Artist?.Trim(), StringComparison.OrdinalIgnoreCase);
+                    bool showtimeChanged = existingEvent.Showtime != item.Showtime;
+                    bool hasShowtimeChanged = existingEvent.HasShowtime != item.HasShowtime;
+                    bool priceChanged = existingEvent.Price != item.Price;
 
-                    existingEvent.Price = item.Price;
-                    var result = await _updater.UpdatePriceAsync(existingEvent);
+                    if (artistChanged || showtimeChanged || hasShowtimeChanged || priceChanged)
+                    {
+                        _logger.LogInformation(
+                            "Change detected for '{Artist}' at {Venue}: artist={ArtistChanged}, time={TimeChanged}, hasShowtime={HasShowtimeChanged}, price={PriceChanged}",
+                            existingEvent.Artist, existingEvent.EventVenue.Name,
+                            artistChanged, showtimeChanged, hasShowtimeChanged, priceChanged);
 
-                    // If update was successful, update current events list and log it
-                    if (result)
-                    {
-                        currentEvents.Remove(existingEvent);
-                        currentEvents.Add(item);
-                        _logger.LogInformation("Updated existing event to database: {Event}", item);
-                    }
-                    else
-                    {
-                        _logger.LogWarning("Failed to update event to database: {Event}", item);
+                        item.EventId = existingEvent.EventId;
+                        var result = await _updater.UpdateEventAsync(item);
+
+                        if (result)
+                        {
+                            currentEvents.Remove(existingEvent);
+                            currentEvents.Add(item);
+                            _logger.LogInformation("Updated existing event: {Event}", item);
+                        }
+                        else
+                        {
+                            _logger.LogWarning("Failed to update event: {Event}", item);
+                        }
                     }
 
                     continue;
