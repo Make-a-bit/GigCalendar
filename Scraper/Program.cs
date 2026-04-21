@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Scraper.Repositories;
 using Scraper.Services;
 using Scraper.Services.DB;
+using Scraper.Services.Scrapers;
 
 namespace Scraper
 {
@@ -36,6 +37,9 @@ namespace Scraper
                     services.AddTransient<IEventInspector, EventInspector>();
                     services.AddTransient<IEventRemover, EventRemover>();
                     services.AddTransient<IEventUpdate, EventUpdate>();
+
+                    // Test single scraper
+                    // services.AddTransient<IEventScraper, VastavirtaScraper>();
 
                     // Automated registration for all scrapers
                     var scraperTypes = typeof(Program).Assembly.GetTypes()
