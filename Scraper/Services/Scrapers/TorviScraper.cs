@@ -1,4 +1,3 @@
-using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Scraper.Models;
 using Scraper.Repositories;
