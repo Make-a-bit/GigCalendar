@@ -39,7 +39,7 @@ namespace Scraper
                     services.AddTransient<IEventUpdate, EventUpdate>();
 
                     // Test single scraper
-                    // services.AddTransient<IEventScraper, VastavirtaScraper>();
+                    // services.AddTransient<IEventScraper, KoteloScraper>();
 
                     // Automated registration for all scrapers
                     var scraperTypes = typeof(Program).Assembly.GetTypes()
