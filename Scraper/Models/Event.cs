@@ -26,12 +26,54 @@ namespace Scraper.Models
 
             bool sameDay = Showtime.Date == other.Showtime.Date;
 
-            string a1 = Artist?.Trim() ?? "";
-            string a2 = other.Artist?.Trim() ?? "";
-            bool artistMatch = a1.Contains(a2, StringComparison.OrdinalIgnoreCase)
-                            || a2.Contains(a1, StringComparison.OrdinalIgnoreCase);
+            return sameVenue && sameDay && ArtistMatch(Artist, other.Artist);
+        }
 
-            return sameVenue && sameDay && artistMatch;
+        private static bool IsTimeAnnotation(string part)
+        {
+            var s = part.TrimStart('(').TrimEnd(')');
+            var sep = s.IndexOfAny(new[] { '.', ':' });
+            if (sep < 1 || sep > 2) return false;
+            var minutePart = s[(sep + 1)..];
+            return minutePart.Length == 2
+                && int.TryParse(s[..sep], out int h) && h is >= 0 and <= 23
+                && int.TryParse(minutePart, out int m) && m is >= 0 and <= 59;
+        }
+
+        private static string StripTimeAnnotations(string token)
+        {
+            var parts = token.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            return string.Join(" ", parts.Where(p => !IsTimeAnnotation(p)));
+        }
+
+        private static string NormalizeArtist(string? artist)
+        {
+            if (string.IsNullOrWhiteSpace(artist)) return "";
+            var s = artist
+                .Replace("+", ",")
+                .Replace("&", ",")
+                .Replace("!", "")
+                .Replace(":", "");
+            var tokens = s.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            return string.Join(",", tokens.Select(StripTimeAnnotations)).ToLowerInvariant();
+        }
+
+        private static bool ArtistMatch(string? a1, string? a2)
+        {
+            var n1 = NormalizeArtist(a1);
+            var n2 = NormalizeArtist(a2);
+
+            if (n1.Contains(n2) || n2.Contains(n1)) return true;
+
+            var tokens1 = n1.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToHashSet();
+            var tokens2 = n2.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToHashSet();
+
+            if (tokens1.Count == 0 || tokens2.Count == 0) return false;
+
+            var smaller = tokens1.Count <= tokens2.Count ? tokens1 : tokens2;
+            var larger  = tokens1.Count <= tokens2.Count ? tokens2 : tokens1;
+
+            return smaller.All(t => larger.Any(l => l.Contains(t) || t.Contains(l)));
         }
 
         /// <summary>
